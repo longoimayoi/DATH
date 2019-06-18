@@ -1,0 +1,132 @@
+<?php
+session_start();
+ob_start();
+if(isset($_SESSION['uid']))
+{
+exit(header('Location: index.php'));
+}
+?>
+<!doctype html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9" lang=""> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js" lang="en">
+    <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Hutech - Đăng nhập</title>
+        <meta name="description" content="Sufee Admin - HTML5 Admin Template">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="apple-touch-icon" href="apple-icon.png">
+        <link rel="shortcut icon" href="https://www.hutech.edu.vn/favicon.ico" type="image/x-icon"/>
+        <link rel="stylesheet" href="vendors/bootstrap/dist/css/bootstrap.min.css">
+        <link rel="stylesheet" href="vendors/font-awesome/css/font-awesome.min.css">
+        <link rel="stylesheet" href="vendors/themify-icons/css/themify-icons.css">
+        <link rel="stylesheet" href="vendors/flag-icon-css/css/flag-icon.min.css">
+        <link rel="stylesheet" href="vendors/selectFX/css/cs-skin-elastic.css">
+        <link rel="stylesheet" href="assets/css/style.css">
+        <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
+        <?php include('connect/myconnect.php');?>
+    </head>
+    <body class="bg-dark">
+        <?php
+        if($_SERVER['REQUEST_METHOD']=='POST')
+        {
+        $error=array();
+        if(empty($_POST['Username']))
+        {
+        $error[]=$_POST['Username'];
+        }
+        else
+        {
+        $Username=$_POST['Username'];
+        }
+        if(empty($_POST['password']))
+        {
+        $error[]=$_POST['password'];
+        }
+        else
+        {
+        $password=md5(($_POST['password']));
+        }
+        if(empty($error))
+        {
+        $query="SELECT MaTK,TenDangNhap,MatKhau FROM tbltaikhoan WHERE
+        TenDangNhap='{$Username}'AND MatKhau='{$password}'";
+        $result=mysqli_query($connect,$query)or die("Query {$query} \n <br> MySql erros:".mysqli_errno($connect));
+        if(mysqli_num_rows($result)==1)
+        {
+        list($id,$Username,$password)=mysqli_fetch_array($result,MYSQLI_NUM);
+        $_SESSION['uid']=$id;
+        $_SESSION['Username']=$Username;
+        echo("<script>location.href = '"."index.php';</script>");//sửa lỗi Warning: Cannot modify header information - headers already sent by
+        }
+        else
+        {
+        $message="<p style='font-size:20px;' class='required'> username hoặc password k đúng</p>";
+        }
+        }
+        }
+        ?>
+        <div class="sufee-login d-flex align-content-center flex-wrap">
+            <div class="container">
+                <div class="login-content">
+                    <div class="login-logo">
+                        <a href="index.html">
+                            <img class="align-content" src="images/logo2.jpg" alt="">
+                        </a>
+                    </div>
+                    <div class="login-form">
+                        <form>
+                            <div class="form-group">
+                                <label>Email đăng nhập:</label>
+                                <input type="text" class="form-control" placeholder="Nhập vào email">
+                                <?php
+                                if(isset($error)&& in_array('Username', $error))
+                                {
+                                echo "<p class='required'>hãy nhập Username</p>";
+                                }
+                                ?>
+                            </div>
+                            <div class="form-group">
+                                <label>Mật khẩu</label>
+                                <input type="password" class="form-control" placeholder="Nhập vào mật khẩu">
+                                <?php
+                                if(isset($error)&& in_array('Username', $error))
+                                {
+                                echo "<p class='required'>hãy nhập password</p>";
+                                }
+                                ?>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox"> Ghi nhớ tôi
+                                </label>
+                                <label class="pull-right">
+                                    <a href="#">Quên mật khẩu?</a>
+                                </label>
+                            </div>
+                            <button type="submit" class="btn btn-success btn-flat m-b-30 m-t-30">Đăng nhập</button>
+                            <hr>
+                            <div class="register-link m-t-15 text-center">
+                                <p>Chưa có tài khoản? <a href="#">Đăng ký tại đây</a></p>
+                            </div>
+                            <?php
+                            if(isset($message))
+                            {
+                            echo $message;
+                            }
+                            ?>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="vendors/jquery/dist/jquery.min.js"></script>
+        <script src="vendors/popper.js/dist/umd/popper.min.js"></script>
+        <script src="vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+        <script src="assets/js/main.js"></script>
+    </body>
+</html>
