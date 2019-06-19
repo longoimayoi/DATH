@@ -50,3 +50,6 @@
  
 </body>
 </html>
+<script>
+    console.log(<?= json_encode('Long nè các bạn'); ?>);
+</script>

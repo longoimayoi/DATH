@@ -80,37 +80,8 @@ if(isset($_POST['Back']))
 </html>
 <?php ob_flush(); ?>
 <script >
-
-			(function($){  
-				function fetch_data()
-				{
-
-					$.ajax({
-						url:"yeucautrangbi.php?MaHD=<?php echo $_GET['MaHD'] ?>",
-						method:"GET",
-						dataType:"json",
-						success:function(data)
-						{
-							var html = '';
-							for(var count = 0; count < data.length; count++)
-							{
-								html += '<tr>';
-								html += '<td><input type="checkbox" STT="'+data[count].STT+'"data-TenVatTu="'+data[count].TenVatTu+'" data-DVT="'+data[count].DVT+'" data-SL="'+data[count].SL+'" data-DonGia="'+data[count].DonGia+'" data-ThanhTien="'+data[count].ThanhTien+'"data-GhiChu="'+data[count].GhiChu+'" class="check_box"  /></td>';
-								html += '<td>'+data[count].TenVatTu+'</td>';
-								html += '<td>'+data[count].DVT+'</td>';
-								html += '<td>'+data[count].SL+'</td>';
-								html += '<td>'+data[count].DonGia+'</td>';
-							/*	html += '<td>'+data[count].ThanhTien+'</td>';*/
-								html += '<td>'+data[count].GhiChu+'</td></tr>';
-
-							}
-							$('tbody').html(html);
-						}
-					});
-				}
-
-				fetch_data();
-				$(document).on('click', '.check_box', function(){
+	
+	$(document).on('click', '.check_box', function(){
 
 					var html = '';
 
@@ -164,5 +135,36 @@ if(isset($_POST['Back']))
 					}
 
 				});
-			})(jQuery);  
+
+		
+			$(document).ready(function() {
+				fetch_data();
+			});
+
+				function fetch_data()
+				{
+
+					$.ajax({
+						url:"yeucautrangbi.php?MaHD=<?php echo $_GET['MaHD'] ?>",
+						method:"GET",
+						dataType:"json",
+						success:function(data)
+						{
+							var html = '';
+							for(var count = 0; count < data.length; count++)
+							{
+								html += '<tr>';
+								html += '<td><input type="checkbox" STT="'+data[count].STT+'"data-TenVatTu="'+data[count].TenVatTu+'" data-DVT="'+data[count].DVT+'" data-SL="'+data[count].SL+'" data-DonGia="'+data[count].DonGia+'" data-ThanhTien="'+data[count].ThanhTien+'"data-GhiChu="'+data[count].GhiChu+'" class="check_box"  /></td>';
+								html += '<td>'+data[count].TenVatTu+'</td>';
+								html += '<td>'+data[count].DVT+'</td>';
+								html += '<td>'+data[count].SL+'</td>';
+								html += '<td>'+data[count].DonGia+'</td>';
+							/*	html += '<td>'+data[count].ThanhTien+'</td>';*/
+								html += '<td>'+data[count].GhiChu+'</td></tr>';
+
+							}
+							$('tbody').html(html);
+						}
+					});
+				}
 		</script>
