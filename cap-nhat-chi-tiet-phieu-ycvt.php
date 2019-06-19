@@ -75,12 +75,10 @@ if(isset($_POST['Back']))
 			</div>
 	</div>
 	<?php include 'scriptindex.php'; ?>
-</body>  
-
-</html>
-<?php ob_flush(); ?>
-<script >
-	
+	<script>
+	$(document).ready(function() {
+				fetch_data();
+			});
 	$(document).on('click', '.check_box', function(){
 
 					var html = '';
@@ -137,9 +135,7 @@ if(isset($_POST['Back']))
 				});
 
 		
-			$(document).ready(function() {
-				fetch_data();
-			});
+			
 
 				function fetch_data()
 				{
@@ -168,3 +164,8 @@ if(isset($_POST['Back']))
 					});
 				}
 		</script>
+</body>  
+
+</html>
+<?php ob_flush(); ?>
+
