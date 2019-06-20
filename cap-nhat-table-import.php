@@ -63,36 +63,12 @@ include('connect/myconnect.php');?>
 </html>
 <?php ob_flush(); ?>
 <script >
-
-      (function($){  
-        function fetch_data()
-        {
-
-          $.ajax({
-            url:"yeucautrangbi.php?MaHD=<?php echo $_GET['MaHD'] ?>",
-            method:"GET",
-            dataType:"json",
-            success:function(data)
-            {
-              var html = '';
-              for(var count = 0; count < data.length; count++)
-              {
-                html += '<tr>';
-                html += '<td><input type="checkbox" STT="'+data[count].STT+'"data-TenVatTu="'+data[count].TenVatTu+'" data-DVT="'+data[count].DVT+'" data-SL="'+data[count].SL+'" data-ThongSoKT="'+data[count].ThongSoKT+'" data-XuatXu="'+data[count].XuatXu+'"data-GhiChu="'+data[count].GhiChu+'" class="check_box"  /></td>';
-                html += '<td>'+data[count].TenVatTu+'</td>';
-                html += '<td>'+data[count].DVT+'</td>';
-                html += '<td>'+data[count].SL+'</td>';
-                html += '<td>'+data[count].ThongSoKT+'</td>';
-                html += '<td>'+data[count].XuatXu+'</td>';
-                html += '<td>'+data[count].GhiChu+'</td></tr>';
-
-              }
-              $('tbody').html(html); 
-            }
-          });
-        }
-
+$(document).ready(function() {
         fetch_data();
+      });
+
+
+     
         $(document).on('click', '.check_box', function(){
 
           var html = '';
@@ -168,7 +144,35 @@ include('connect/myconnect.php');?>
           }
 
         });
-      })(jQuery);  
+
+          
+        function fetch_data()
+        {
+
+          $.ajax({
+            url:"yeucautrangbi.php?MaHD=<?php echo $_GET['MaHD'] ?>",
+            method:"GET",
+            dataType:"json",
+            success:function(data)
+            {
+              var html = '';
+              for(var count = 0; count < data.length; count++)
+              {
+                html += '<tr>';
+                html += '<td><input type="checkbox" STT="'+data[count].STT+'"data-TenVatTu="'+data[count].TenVatTu+'" data-DVT="'+data[count].DVT+'" data-SL="'+data[count].SL+'" data-ThongSoKT="'+data[count].ThongSoKT+'" data-XuatXu="'+data[count].XuatXu+'"data-GhiChu="'+data[count].GhiChu+'" class="check_box"  /></td>';
+                html += '<td>'+data[count].TenVatTu+'</td>';
+                html += '<td>'+data[count].DVT+'</td>';
+                html += '<td>'+data[count].SL+'</td>';
+                html += '<td>'+data[count].ThongSoKT+'</td>';
+                html += '<td>'+data[count].XuatXu+'</td>';
+                html += '<td>'+data[count].GhiChu+'</td></tr>';
+
+              }
+              $('tbody').html(html); 
+            }
+          });
+        }
+    
     </script>
     <script>
      function goBack() {

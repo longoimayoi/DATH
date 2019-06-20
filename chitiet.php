@@ -467,7 +467,7 @@ if(isset($_POST['guiphieu']))
   </script>
 <script>
 //Add Input Fields
-(function($) {
+  $(document).ready(function(){
 var max_fields = 20; //Maximum allowed input fields
 var wrapper    = $(".wrapper"); //Input fields wrapper
 var add_button = $("#add_fields"); //Add button class or ID
@@ -488,7 +488,7 @@ $(wrapper).on("click",".remove_field", function(e){
 $(this).parent('div').remove(); //remove inout field
 x--;
 })
-})(jQuery);
+});
 </script>
 <script>
      function goBack() {

@@ -165,7 +165,9 @@ if (!isset($_GET["btn_search"]))
 {
   ?>
   <script >
-    (function($){
+  $(document).ready(function() {
+        fetch_data();
+      });
       function fetch_data()
       {
         $.ajax({
@@ -210,7 +212,7 @@ else
   {
     html += '<tr title="ĐÃ HẾT HẠN SỬ DỤNG" id="trcss"style="background-color:#f900188f">';
     html += '<td><a data-toggle="modal" data-target="#xemthongtin'+ data[count].id+'" class="ti-eye"></a></td>';
-      html += '<td>'+data[count].MaVatTu+'</td>';
+    html += '<td>'+data[count].MaVatTu+'</td>';
     html += '<td>'+data[count].TenHoaChat+'</td>';
   // html += '<td>'+data[count].CongThucHoaHoc+'</td>';
   html += '<td>'+data[count].SLT+'</td>';
@@ -226,12 +228,12 @@ else
   html += '</tr>';
 
 }
- else if ( ngayhhmn < dateNow )
- {
-   html += '<tr title="QUÁ THỜI HẠN CÓ THỂ SỬ DỤNG SAU MỞ NẮP" id="trcss"style="background-color:yellow">';
-    html += '<td><a data-toggle="modal" data-target="#xemthongtin'+ data[count].id+'" class="ti-eye"></a></td>';
-      html += '<td>'+data[count].MaVatTu+'</td>';
-    html += '<td>'+data[count].TenHoaChat+'</td>';
+else if ( ngayhhmn < dateNow )
+{
+ html += '<tr title="QUÁ THỜI HẠN CÓ THỂ SỬ DỤNG SAU MỞ NẮP" id="trcss"style="background-color:yellow">';
+ html += '<td><a data-toggle="modal" data-target="#xemthongtin'+ data[count].id+'" class="ti-eye"></a></td>';
+ html += '<td>'+data[count].MaVatTu+'</td>';
+ html += '<td>'+data[count].TenHoaChat+'</td>';
   // html += '<td>'+data[count].CongThucHoaHoc+'</td>';
   html += '<td>'+data[count].SLT+'</td>';
   html += '<td>'+data[count].DVT+'</td>';
@@ -244,7 +246,7 @@ else
   // html += '<td>'+data[count].DieuKienBaoQuan+'</td>';
   // html += '<td>'+data[count].YeuCauKhiSuDung+'</td>';
   html += '</tr>';
- }
+}
 else
 {
   html += '<tr>';
@@ -270,9 +272,9 @@ else
 $('tbody').html(html);
 }
 });
-      }
-      fetch_data();
-    })(jQuery);
+}
+
+
   </script>
   <?php
 }
@@ -280,7 +282,10 @@ else
 {
   ?>
   <script >
-    (function($){
+
+$(document).ready(function() {
+        fetch_data();
+      });
       function fetch_data()
       {
         $.ajax({
@@ -385,8 +390,7 @@ $('tbody').html(html);
 }
 });
       }
-      fetch_data();
-    })(jQuery);
+
   </script>
 <?php }
 ?>

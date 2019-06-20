@@ -403,123 +403,124 @@ list($TVT)=mysqli_fetch_array($result_c,MYSQLI_NUM);
         </div>
         <!-----===============================================SCRIPT===============================================--->
         <script >
-        (function($){
-        function fetch_data()
-        {
-        $.ajax({
-        url:"dataNhapKho.php?id=<?php echo $id ?>",
-        method:"GET",
-        dataType:"json",
-        success:function(data)
-        {
-        var html = '';
-        for(var count = 0; count < data.length; count++)
-        {
-        html += '<tr>';
-          html += '<td><input type="checkbox" STT="'+data[count].STT+'"data-TenVT="'+data[count].TenVT+'" data-DVT="'+data[count].DVT+'" data-SL="'+data[count].SL+'" data-ThongSoKT="'+data[count].ThongSoKT+'" data-XuatXu="'+data[count].XuatXu+'"data-GhiChu="'+data[count].GhiChu+'" class="check_box"  /></td>';
-          html += '<td>'+data[count].TenVT+'</td>';
-          html += '<td>'+data[count].DVT+'</td>';
-          html += '<td>'+data[count].SL+'</td>';
-          html += '<td>'+data[count].ThongSoKT+'</td>';
-          html += '<td>'+data[count].XuatXu+'</td>';
-          html += '<td>'+data[count].GhiChu+'</td></tr>';
-          }
-          $('tbody').html(html);
-          }
-          });
-          }
-          fetch_data();
-          $(document).on('click', '.check_box', function(){
-          var html = '';
-          if(this.checked)
-          {
-          html = '<td><input type="checkbox" STT="'+$(this).attr('stt')+'" data-TenVT="'+$(this).data('tenvt')+'" data-DVT="'+$(this).data('dvt')+'" data-SL="'+$(this).data('sl')+'" data-ThongSoKT="'+$(this).data('thongsokt')+'" data-XuatXu="'+$(this).data('xuatxu')+'" data-GhiChu="'+$(this).data('ghichu')+'" class="check_box" checked /></td>';
-          html += '<td><input type="text" id = "skill_input" name="TenVatTu[]" class="form-control" value="'+$(this).data("tenvt")+'" autocomplete = "off"/></td>';
-          html += '<td><input type="text" name="DVT[]" class="form-control" value="'+$(this).data("dvt")+'" /></td>';
-          html += '<td><input  type="text" name="SL[]" class="form-control" value="'+$(this).data("sl")+'" /></td>';
-          html += '<td><input type="text" name="ThongSoKT[]" class="form-control" value="'+$(this).data("thongsokt")+'" /></td>';
-          html += '<td><input  type="text" name="XuatXu[]" class="form-control" value="'+$(this).data("xuatxu")+'" /></td>';
-          html += '<td><input type="text" name="GhiChu[]" class="form-control" value="'+$(this).data("ghichu")+'" /><input type="hidden" name="hidden_id[]" value="'+$(this).attr('stt')+'" /></td>';
-          }
-          else
-          {
-          html = '<td><input type="checkbox" STT="'+$(this).attr('stt')+'" data-TenVT="'+$(this).data('tenvt')+'" data-DVT="'+$(this).data('dvt')+'" data-SL="'+$(this).data('sl')+'" data-ThongSoKT="'+$(this).data('thongsokt')+'" data-XuatXu="'+$(this).data('xuatxu')+'" data-GhiChu="'+$(this).data('ghichu')+'" class="check_box" /></td>';
-          html += '<td>'+$(this).data('tenvt')+'</td>';
-          html += '<td>'+$(this).data('dvt')+'</td>';
-          html += '<td>'+$(this).data('sl')+'</td>';
-          html += '<td>'+$(this).data('thongsokt')+'</td>';
-          html += '<td>'+$(this).data('xuatxu')+'</td>';
-          html += '<td>'+$(this).data('ghichu')+'</td>';
-          }
-          $(this).closest('tr').html(html);
-          })  ;
-          $('#update_form').on('submit',function(event){
-          if (confirm("Xác nhận lưu dữ liệu !"))
-          {
-          event.preventDefault();
-          if($('.check_box:checked').length > 0)
-          {
-          $.ajax({
-          url:"saveDataNhapKho.php",
-          method:"POST",
-          data:$(this).serialize(),
-          success:function()
-          {
-          alert('Cập nhật dữ liệu thành công !');
-          fetch_data();
-          }
-          })
-          }
-          }
-          });
-          $('#update_form').on('reset',function(event){
-          if (confirm("Xác nhận xóa dữ liệu !"))
-          {
-          event.preventDefault();
-          if($('.check_box:checked').length > 0)
-          {
-          $.ajax({
-          url:"deleteDataNhapKho.php",
-          method:"POST",
-          data:$(this).serialize(),
-          success:function()
-          {
-          alert('Cập nhật dữ liệu thành công !');
-          fetch_data();
-          }
-          })
-          }
-          }
-          });
-          })(jQuery);
-          </script>
-          <script>
+      $(document).ready(function() {
+        fetch_data();
+      });
+            $(document).on('click', '.check_box', function(){
+              var html = '';
+              if(this.checked)
+              {
+                html = '<td><input type="checkbox" STT="'+$(this).attr('stt')+'" data-TenVT="'+$(this).data('tenvt')+'" data-DVT="'+$(this).data('dvt')+'" data-SL="'+$(this).data('sl')+'" data-ThongSoKT="'+$(this).data('thongsokt')+'" data-XuatXu="'+$(this).data('xuatxu')+'" data-GhiChu="'+$(this).data('ghichu')+'" class="check_box" checked /></td>';
+                html += '<td><input type="text" id = "skill_input" name="TenVatTu[]" class="form-control" value="'+$(this).data("tenvt")+'" autocomplete = "off"/></td>';
+                html += '<td><input type="text" name="DVT[]" class="form-control" value="'+$(this).data("dvt")+'" /></td>';
+                html += '<td><input  type="text" name="SL[]" class="form-control" value="'+$(this).data("sl")+'" /></td>';
+                html += '<td><input type="text" name="ThongSoKT[]" class="form-control" value="'+$(this).data("thongsokt")+'" /></td>';
+                html += '<td><input  type="text" name="XuatXu[]" class="form-control" value="'+$(this).data("xuatxu")+'" /></td>';
+                html += '<td><input type="text" name="GhiChu[]" class="form-control" value="'+$(this).data("ghichu")+'" /><input type="hidden" name="hidden_id[]" value="'+$(this).attr('stt')+'" /></td>';
+              }
+              else
+              {
+                html = '<td><input type="checkbox" STT="'+$(this).attr('stt')+'" data-TenVT="'+$(this).data('tenvt')+'" data-DVT="'+$(this).data('dvt')+'" data-SL="'+$(this).data('sl')+'" data-ThongSoKT="'+$(this).data('thongsokt')+'" data-XuatXu="'+$(this).data('xuatxu')+'" data-GhiChu="'+$(this).data('ghichu')+'" class="check_box" /></td>';
+                html += '<td>'+$(this).data('tenvt')+'</td>';
+                html += '<td>'+$(this).data('dvt')+'</td>';
+                html += '<td>'+$(this).data('sl')+'</td>';
+                html += '<td>'+$(this).data('thongsokt')+'</td>';
+                html += '<td>'+$(this).data('xuatxu')+'</td>';
+                html += '<td>'+$(this).data('ghichu')+'</td>';
+              }
+              $(this).closest('tr').html(html);
+            })  ;
+            $('#update_form').on('submit',function(event){
+              if (confirm("Xác nhận lưu dữ liệu !"))
+              {
+                event.preventDefault();
+                if($('.check_box:checked').length > 0)
+                {
+                  $.ajax({
+                    url:"saveDataNhapKho.php",
+                    method:"POST",
+                    data:$(this).serialize(),
+                    success:function()
+                    {
+                      alert('Cập nhật dữ liệu thành công !');
+                      fetch_data();
+                    }
+                  })
+                }
+              }
+            });
+            $('#update_form').on('reset',function(event){
+              if (confirm("Xác nhận xóa dữ liệu !"))
+              {
+                event.preventDefault();
+                if($('.check_box:checked').length > 0)
+                {
+                  $.ajax({
+                    url:"deleteDataNhapKho.php",
+                    method:"POST",
+                    data:$(this).serialize(),
+                    success:function()
+                    {
+                      alert('Cập nhật dữ liệu thành công !');
+                      fetch_data();
+                    }
+                  })
+                }
+              }
+            });
+         
+           function fetch_data()
+            {
+              $.ajax({
+                url:"dataNhapKho.php?id=<?php echo $id ?>",
+                method:"GET",
+                dataType:"json",
+                success:function(data)
+                {
+                  var html = '';
+                  for(var count = 0; count < data.length; count++)
+                  {
+                    html += '<tr>';
+                    html += '<td><input type="checkbox" STT="'+data[count].STT+'"data-TenVT="'+data[count].TenVT+'" data-DVT="'+data[count].DVT+'" data-SL="'+data[count].SL+'" data-ThongSoKT="'+data[count].ThongSoKT+'" data-XuatXu="'+data[count].XuatXu+'"data-GhiChu="'+data[count].GhiChu+'" class="check_box"  /></td>';
+                    html += '<td>'+data[count].TenVT+'</td>';
+                    html += '<td>'+data[count].DVT+'</td>';
+                    html += '<td>'+data[count].SL+'</td>';
+                    html += '<td>'+data[count].ThongSoKT+'</td>';
+                    html += '<td>'+data[count].XuatXu+'</td>';
+                    html += '<td>'+data[count].GhiChu+'</td></tr>';
+                  }
+                  $('tbody').html(html);
+                }
+              });
+            }
+        </script>
+        <script>
           $('.addfiles').on('click', function() { $('#file-upload').click();return false;});
-          </script>
-          <script>
+        </script>
+        <script>
           //Add Input Fields
-          (function($) {
+      $(document).ready(function() {
           var max_fields = 20; //Maximum allowed input fields
           var wrapper    = $(".wrapper"); //Input fields wrapper
           var add_button = $("#add_fields"); //Add button class or ID
           var x = 1; //Initial input field is set to 1
           //When user click on add input button
           $(add_button).click(function(e){
-          e.preventDefault();
+            e.preventDefault();
           //Check maximum allowed input fields
           if(x < max_fields){
-          x++;
-          var selectPattern = $('#catalog-pattern').clone().html();
-          $(wrapper).append('<div> <div  style="display: flex;"> <div style="width: 110%"class="form-group"><input id = "skill_input" type="text" name="tenvt[]" value="" placeholder="Nhập vào tên vật tư"class="form-control" required autocomplete="off"> </div> <div style="width: 110%"class="form-group"> <input type="text" value="" name="dvtinh[]" placeholder="Đơn vị tính"class="form-control" required> </div>  <div style="width: 110%"class="form-group"> <input type="number" value="" name="sl[]" placeholder="Số lượng "class="form-control" required> </div> <div style="width: 110%"class="form-group"> <input type="text" value="" name="thongso[]" placeholder="Thông số kỹ thuật"class="form-control" >  </div> <div style="width: 110%"class="form-group">  <input type="text" value="" name="xuatxu[]" placeholder="Xuất xứ"class="form-control" > </div> <div style="width: 110%"class="form-group"> <input type="text" value="" name="ghichu[]" placeholder="Ghi chú"class="form-control">  </div>  <a href="javascript:void(0);" class="remove_field"><div class="input-group-addon"><i class="fa fa-minus-square"></i></div></a></div></div>');
+            x++;
+            var selectPattern = $('#catalog-pattern').clone().html();
+            $(wrapper).append('<div> <div  style="display: flex;"> <div style="width: 110%"class="form-group"><input id = "skill_input" type="text" name="tenvt[]" value="" placeholder="Nhập vào tên vật tư"class="form-control" required autocomplete="off"> </div> <div style="width: 110%"class="form-group"> <input type="text" value="" name="dvtinh[]" placeholder="Đơn vị tính"class="form-control" required> </div>  <div style="width: 110%"class="form-group"> <input type="number" value="" name="sl[]" placeholder="Số lượng "class="form-control" required> </div> <div style="width: 110%"class="form-group"> <input type="text" value="" name="thongso[]" placeholder="Thông số kỹ thuật"class="form-control" >  </div> <div style="width: 110%"class="form-group">  <input type="text" value="" name="xuatxu[]" placeholder="Xuất xứ"class="form-control" > </div> <div style="width: 110%"class="form-group"> <input type="text" value="" name="ghichu[]" placeholder="Ghi chú"class="form-control">  </div>  <a href="javascript:void(0);" class="remove_field"><div class="input-group-addon"><i class="fa fa-minus-square"></i></div></a></div></div>');
           }
-          });
+        });
           //when user click on remove button
           $(wrapper).on("click",".remove_field", function(e){
           e.preventDefault();
           $(this).parent('div').remove(); //remove inout field
           x--;
           })
-          })(jQuery);
+          });
           </script>
           <script type="text/javascript">
           $(document).ready(function(){

@@ -402,28 +402,9 @@ list($TVT)=mysqli_fetch_array($result_c,MYSQLI_NUM);
     </div>
     <!-----===============================================SCRIPT===============================================--->
     <script >
-      (function($){
-        function fetch_data()
-        {
-          $.ajax({
-            url:"dataXuatKho.php?id=<?php echo $id ?>",
-            method:"GET",
-            dataType:"json",
-            success:function(data)
-            {
-              var html = '';
-              for(var count = 0; count < data.length; count++)
-              {
-                html += '<tr>';
-                html += '<td><input type="checkbox" STT="'+data[count].STT+'"data-TenVT="'+data[count].TenVT+'" data-SL="'+data[count].SL+'" class="check_box"  /></td>';
-                html += '<td>'+data[count].TenVT+'</td>';
-                html += '<td>'+data[count].SL+'</td>';
-              }
-              $('tbody').html(html);
-            }
-          });
-        }
+   $(document).ready(function() {
         fetch_data();
+      });
         $(document).on('click', '.check_box', function(){
           var html = '';
           if(this.checked)
@@ -478,7 +459,27 @@ list($TVT)=mysqli_fetch_array($result_c,MYSQLI_NUM);
             }
           }
         });
-      })(jQuery);
+ 
+        function fetch_data()
+        {
+          $.ajax({
+            url:"dataXuatKho.php?id=<?php echo $id ?>",
+            method:"GET",
+            dataType:"json",
+            success:function(data)
+            {
+              var html = '';
+              for(var count = 0; count < data.length; count++)
+              {
+                html += '<tr>';
+                html += '<td><input type="checkbox" STT="'+data[count].STT+'"data-TenVT="'+data[count].TenVT+'" data-SL="'+data[count].SL+'" class="check_box"  /></td>';
+                html += '<td>'+data[count].TenVT+'</td>';
+                html += '<td>'+data[count].SL+'</td>';
+              }
+              $('tbody').html(html);
+            }
+          });
+        }
     </script>
     <!-----===============================================SCRIPT===============================================--->
     <script>
@@ -486,7 +487,7 @@ list($TVT)=mysqli_fetch_array($result_c,MYSQLI_NUM);
     </script>
     <script>
         //Add Input Fields
-        (function($) {
+      $(document).ready(function() {
         var max_fields = 20; //Maximum allowed input fields
         var wrapper    = $(".wrapper"); //Input fields wrapper
         var add_button = $("#add_fields"); //Add button class or ID
@@ -507,7 +508,7 @@ list($TVT)=mysqli_fetch_array($result_c,MYSQLI_NUM);
         $(this).parent('div').remove(); //remove inout field
         x--;
       })
-      })(jQuery);
+      });
     </script>
     <script type="text/javascript">
       $(document).ready(function(){

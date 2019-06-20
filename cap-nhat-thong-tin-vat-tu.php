@@ -38,30 +38,10 @@ if (!isset($_GET["btn_search"]))
 	{
 ?>
 <script >
-	$(document).ready(function(){
-		function fetch_data()
-		{
-			$.ajax({
-				url:"select_instruments.php",
-				method:"POST",
-				dataType:"json",
-				success:function(data)
-				{
-					var html = '';
-					for(var count = 0; count < data.length; count++)
-					{
-						html += '<tr>';
-							html += '<td><input type="checkbox" MaDungCu="'+data[count].MaDungCu+'" data-TenDungCu="'+data[count].TenDungCu+'" data-ChatLieu="'+data[count].ChatLieu+'" data-QuyCach="'+data[count].QuyCach+'" data-DVT="'+data[count].DVT+'"data-SLT="'+data[count].SLT+'" class="check_box"  /></td>';
-							html += '<td>'+data[count].TenDungCu+'</td>';
-							html += '<td>'+data[count].ChatLieu+'</td>';
-							html += '<td>'+data[count].QuyCach+'</td>';
-							html += '<td>'+data[count].DVT+'</td>';
-							html += '<td>'+data[count].SLT+'</td></tr>';
-						}
-						$('tbody').html(html);
-					}
-				});
-			}
+	$(document).ready(function() {
+				fetch_data();
+			});
+		
 			fetch_data();
 			$(document).on('click', '.check_box', function(){
 				var html = '';
@@ -105,7 +85,30 @@ if (!isset($_GET["btn_search"]))
 					}
 				}
 			});
-		})(jQuery);
+	
+		function fetch_data()
+		{
+			$.ajax({
+				url:"select_instruments.php",
+				method:"POST",
+				dataType:"json",
+				success:function(data)
+				{
+					var html = '';
+					for(var count = 0; count < data.length; count++)
+					{
+						html += '<tr>';
+							html += '<td><input type="checkbox" MaDungCu="'+data[count].MaDungCu+'" data-TenDungCu="'+data[count].TenDungCu+'" data-ChatLieu="'+data[count].ChatLieu+'" data-QuyCach="'+data[count].QuyCach+'" data-DVT="'+data[count].DVT+'"data-SLT="'+data[count].SLT+'" class="check_box"  /></td>';
+							html += '<td>'+data[count].TenDungCu+'</td>';
+							html += '<td>'+data[count].ChatLieu+'</td>';
+							html += '<td>'+data[count].QuyCach+'</td>';
+							html += '<td>'+data[count].DVT+'</td>';
+							html += '<td>'+data[count].SLT+'</td></tr>';
+						}
+						$('tbody').html(html);
+					}
+				});
+			}
 	</script>
 	<?php
 	}
@@ -113,74 +116,76 @@ if (!isset($_GET["btn_search"]))
 	{
 	?>
 	<script >
-		$(document).ready(function(){
+		$(document).ready(function() {
+				fetch_data();
+			});
+
+			$(document).on('click', '.check_box', function(){
+				var html = '';
+				if(this.checked)
+				{
+					html = '<td><input type="checkbox" MaDungCu="'+$(this).attr('madungcu')+'" data-TenDungCu="'+$(this).data('tendungcu')+'" data-ChatLieu="'+$(this).data('chatlieu')+'" data-QuyCach="'+$(this).data('quycach')+'" data-DVT="'+$(this).data('dvt')+'" data-SLT="'+$(this).data('slt')+'" class="check_box" checked /></td>';
+					html += '<td><input type="text" name="TenDungCu[]" class="form-control" value="'+$(this).data("tendungcu")+'" /></td>';
+					html += '<td><input type="text" name="ChatLieu[]" class="form-control" value="'+$(this).data("chatlieu")+'" /></td>';
+					html += '<td><input type="text" name="QuyCach[]" class="form-control" value="'+$(this).data("quycach")+'" /></td>';
+					html += '<td><input type="text" name="DVT[]" class="form-control" value="'+$(this).data("dvt")+'" /></td>';
+					html += '<td><input type="number" name="SLT[]" class="form-control" value="'+$(this).data("slt")+'" /><input type="hidden" name="hidden_id[]" value="'+$(this).attr('madungcu')+'" /></td>';
+				}
+				else
+				{
+					html = '<td><input type="checkbox" MaDungCu="'+$(this).attr('madungcu')+'" data-TenDungCu="'+$(this).data('tendungcu')+'" data-ChatLieu="'+$(this).data('chatlieu')+'" data-QuyCach="'+$(this).data('quycach')+'" data-DVT="'+$(this).data('dvt')+'" data-SLT="'+$(this).data('slt')+'" class="check_box" /></td>';
+					html += '<td>'+$(this).data('tendungcu')+'</td>';
+					html += '<td>'+$(this).data('chatlieu')+'</td>';
+					html += '<td>'+$(this).data('quycach')+'</td>';
+					html += '<td>'+$(this).data('dvt')+'</td>';
+					html += '<td>'+$(this).data('slt')+'</td>';
+				}
+				$(this).closest('tr').html(html);
+			})	;
+			$('#update_form').on('submit', function(event){
+
+				if (confirm("Xác nhận lưu !"))
+				{
+					event.preventDefault();
+					if($('.check_box:checked').length > 0)
+					{
+						$.ajax({
+							url:"multiupins.php",
+							method:"POST",
+							data:$(this).serialize(),
+							success:function()
+							{
+								alert('Cập nhật dữ liệu thành công !');
+								fetch_data();
+							}
+						})
+					}
+				}
+			});
+
 			function fetch_data()
 			{
 				$.ajax({
-	url:'searchselectinstruments.php?searchString=<?php echo $_GET['btn_search']; ?>',
-	method:"POST",
-	dataType:"json",
-	success:function(data)
-	{
-	var html = '';
-	for(var count = 0; count < data.length; count++)
-	{
-	html += '<tr>';
-		html += '<td><input type="checkbox" MaDungCu="'+data[count].MaDungCu+'" data-TenDungCu="'+data[count].TenDungCu+'" data-ChatLieu="'+data[count].ChatLieu+'" data-QuyCach="'+data[count].QuyCach+'" data-DVT="'+data[count].DVT+'"data-SLT="'+data[count].SLT+'" class="check_box"  /></td>';
-		html += '<td>'+data[count].TenDungCu+'</td>';
-		html += '<td>'+data[count].ChatLieu+'</td>';
-		html += '<td>'+data[count].QuyCach+'</td>';
-		html += '<td>'+data[count].DVT+'</td>';
-		html += '<td>'+data[count].SLT+'</td></tr>';
-		}
-		$('tbody').html(html);
-		}
-		});
-		}
-		fetch_data();
-		$(document).on('click', '.check_box', function(){
-		var html = '';
-		if(this.checked)
-		{
-		html = '<td><input type="checkbox" MaDungCu="'+$(this).attr('madungcu')+'" data-TenDungCu="'+$(this).data('tendungcu')+'" data-ChatLieu="'+$(this).data('chatlieu')+'" data-QuyCach="'+$(this).data('quycach')+'" data-DVT="'+$(this).data('dvt')+'" data-SLT="'+$(this).data('slt')+'" class="check_box" checked /></td>';
-		html += '<td><input type="text" name="TenDungCu[]" class="form-control" value="'+$(this).data("tendungcu")+'" /></td>';
-		html += '<td><input type="text" name="ChatLieu[]" class="form-control" value="'+$(this).data("chatlieu")+'" /></td>';
-		html += '<td><input type="text" name="QuyCach[]" class="form-control" value="'+$(this).data("quycach")+'" /></td>';
-		html += '<td><input type="text" name="DVT[]" class="form-control" value="'+$(this).data("dvt")+'" /></td>';
-		html += '<td><input type="number" name="SLT[]" class="form-control" value="'+$(this).data("slt")+'" /><input type="hidden" name="hidden_id[]" value="'+$(this).attr('madungcu')+'" /></td>';
-		}
-		else
-		{
-		html = '<td><input type="checkbox" MaDungCu="'+$(this).attr('madungcu')+'" data-TenDungCu="'+$(this).data('tendungcu')+'" data-ChatLieu="'+$(this).data('chatlieu')+'" data-QuyCach="'+$(this).data('quycach')+'" data-DVT="'+$(this).data('dvt')+'" data-SLT="'+$(this).data('slt')+'" class="check_box" /></td>';
-		html += '<td>'+$(this).data('tendungcu')+'</td>';
-		html += '<td>'+$(this).data('chatlieu')+'</td>';
-		html += '<td>'+$(this).data('quycach')+'</td>';
-		html += '<td>'+$(this).data('dvt')+'</td>';
-		html += '<td>'+$(this).data('slt')+'</td>';
-		}
-		$(this).closest('tr').html(html);
-		})	;
-		$('#update_form').on('submit', function(event){
-		
-		if (confirm("Xác nhận lưu !"))
-		{
-		event.preventDefault();
-		if($('.check_box:checked').length > 0)
-		{
-		$.ajax({
-		url:"multiupins.php",
-		method:"POST",
-		data:$(this).serialize(),
-		success:function()
-		{
-		alert('Cập nhật dữ liệu thành công !');
-		fetch_data();
-		}
-		})
-		}
-		}
-		});
-		})(jQuery);
+					url:'searchselectinstruments.php?searchString=<?php echo $_GET['btn_search']; ?>',
+					method:"POST",
+					dataType:"json",
+					success:function(data)
+					{
+						var html = '';
+						for(var count = 0; count < data.length; count++)
+						{
+							html += '<tr>';
+							html += '<td><input type="checkbox" MaDungCu="'+data[count].MaDungCu+'" data-TenDungCu="'+data[count].TenDungCu+'" data-ChatLieu="'+data[count].ChatLieu+'" data-QuyCach="'+data[count].QuyCach+'" data-DVT="'+data[count].DVT+'"data-SLT="'+data[count].SLT+'" class="check_box"  /></td>';
+							html += '<td>'+data[count].TenDungCu+'</td>';
+							html += '<td>'+data[count].ChatLieu+'</td>';
+							html += '<td>'+data[count].QuyCach+'</td>';
+							html += '<td>'+data[count].DVT+'</td>';
+							html += '<td>'+data[count].SLT+'</td></tr>';
+						}
+						$('tbody').html(html);
+					}
+				});
+			}
 		</script>
 		<?php }
 		?>
