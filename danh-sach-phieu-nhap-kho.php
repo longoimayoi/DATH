@@ -1,6 +1,27 @@
 <?php include 'header.php'; ?>
 <body>
-    <?php include 'leftpanel.php' ; ?>
+    <?php include 'leftpanel.php' ; 
+if(isset($_POST['submit']))
+{
+   date_default_timezone_set('Asia/Ho_Chi_Minh');
+   $NguoiLap=$_SESSION['uid'];
+   $NgayLapPhieu=$_POST['NgayLap'];
+   $GhiChu=$_POST['GhiChu'];
+   $NgayLap = date("Y-m-d h:i:s", strtotime($NgayLapPhieu));
+   $sql1 = "INSERT INTO tbl_phieunhapkho(NguoiLap,NgayLapPhieu,GhiChu)
+   VALUES('$NguoiLap','$NgayLap','$GhiChu')";
+   $query = mysqli_query($connect,$sql1);
+   if(mysqli_affected_rows($connect)==1)
+   {
+     $id=mysqli_insert_id($connect);
+     echo("<script>location.href = '"."chi-tiet-phieu-nhap-kho.php?id=$id';</script>");
+ }
+ else
+ {
+           // echo "<script>alert('Lập phiếu không thành công')</script>";
+ }
+}
+    ?>
     <div class="content mt-3">
         <div class="animated fadeIn">
             <div class="row">
@@ -77,28 +98,6 @@
 </div>
 <!-----====================================================================================================--->
 <!-----========================================POPUP THÊM PHIẾU NHẬP KHO==================================--->
-<?php
-if(isset($_POST['submit']))
-{
-   date_default_timezone_set('Asia/Ho_Chi_Minh');
-   $NguoiLap=$_SESSION['uid'];
-   $NgayLapPhieu=$_POST['NgayLap'];
-   $GhiChu=$_POST['GhiChu'];
-   $NgayLap = date("Y-m-d h:i:s", strtotime($NgayLapPhieu));
-   $sql1 = "INSERT INTO tbl_phieunhapkho(NguoiLap,NgayLapPhieu,GhiChu)
-   VALUES('$NguoiLap','$NgayLap','$GhiChu')";
-   $query = mysqli_query($connect,$sql1);
-   if(mysqli_affected_rows($connect)==1)
-   {
-     $id=mysqli_insert_id($connect);
-     echo("<script>location.href = '"."chi-tiet-phieu-nhap-kho.php?id=$id';</script>");
- }
- else
- {
-           // echo "<script>alert('Lập phiếu không thành công')</script>";
- }
-}
-?>
 
 <div class="modal fade" id="taophieuxuat" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" style="max-width: 800px!important;" role="document">
