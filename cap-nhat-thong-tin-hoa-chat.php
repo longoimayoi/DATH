@@ -49,7 +49,6 @@ if (!isset($_GET["btn_search"]))
 $(document).ready(function() {
 				fetch_data();
 			});
-
 	
 		$(document).on('click', '.check_box', function(){
 			var html = '';
@@ -114,7 +113,7 @@ $(document).ready(function() {
 							
 							fetch_data();
 							alert('Cập nhật dữ liệu thành công !');
-						}
+						} 
 					})
 				}
 			}

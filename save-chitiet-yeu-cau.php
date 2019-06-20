@@ -1,6 +1,6 @@
 <?php
 
-include('connect/myconnect.php');
+
 include('cn.php');
 $MaHD=$_GET['MaHD'];
 
