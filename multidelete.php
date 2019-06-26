@@ -9,7 +9,8 @@ $data = array(
 ':id'   => $id[$count]
 );
 $query = "
-DELETE FROM tblhoachat
+UPDATE tblhoachat
+SET TrangThai = -1
 WHERE id = :id
 ";
 $statement = $connect->prepare($query);

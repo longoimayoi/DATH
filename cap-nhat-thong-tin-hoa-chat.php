@@ -31,9 +31,9 @@
 							<!-- <th>Bảo quản</th> -->
 							<!-- 	<th width="15%">Điều kiện bảo quản</th>
 							<th width="15%">Yêu cầu khi sử dụng</th>-->
-							<th width="7%">Ngày mở nắp</th>
-							<th width="7%">Hạn sử dụng</th>
-							<th  width="7%">HSD sau mở nắp</th>
+							<th width="7%">Ngày mở</th>
+							<th width="7%">Ngày hết hạn</th>
+							<th title="Hạn sử dụng sau mở" width="7%">HSD sau mở</th>
 						</thead>
 					<tbody></tbody>
 				</table>
@@ -46,10 +46,40 @@ if (!isset($_GET["btn_search"]))
 {
 ?>
 <script >
-$(document).ready(function() {
-				fetch_data();
+	$(document).ready(function(){
+		function fetch_data()
+		{
+			$.ajax({
+				url:"select.php",
+				method:"POST",
+				dataType:"json",
+				success:function(data)
+				{
+					var html = '';
+					for(var count = 0; count < data.length; count++)
+					{
+						html += '<tr>';
+							html += '<td><input type="checkbox" id="'+data[count].id+'" data-TenHoaChat="'+data[count].TenHoaChat+'" data-CongThucHoaHoc="'+data[count].CongThucHoaHoc+'"data-SLT="'+data[count].SLT+'" data-DVT="'+data[count].DVT+'" data-NguyHiemChinh="'+data[count].NguyHiemChinh+'"data-ChuY="'+data[count].ChuY+'" data-ViTriDat="'+data[count].ViTriDat+'"data-NoiBaoQuan="'+data[count].NoiBaoQuan+'"data-DieuKienBaoQuan="'+data[count].DieuKienBaoQuan+'" data-YeuCauKhiSuDung="'+data[count].YeuCauKhiSuDung+'" data-NgayHetHan="'+data[count].NgayHetHan+'" data-NgayMoNap="'+data[count].NgayMoNap+'" data-SoNgayHetHanSMN="'+data[count].SoNgayHetHanSMN+'" data-HinhAnh="'+data[count].HinhAnh+'"class="check_box"  /></td>';
+							html += '<td>'+data[count].TenHoaChat+'</td>';
+							// html += '<td>'+data[count].CongThucHoaHoc+'</td>';
+							html += '<td>'+data[count].SLT+'</td>';
+							html += '<td>'+data[count].DVT+'</td>';
+							// html += '<td>'+data[count].NguyHiemChinh+'</td>';
+							// html += '<td>'+data[count].ChuY+'</td>';
+							html += '<td>'+data[count].ViTriDat+'</td>';
+							// html += '<td>'+data[count].NoiBaoQuan+'</td>';
+							// html += '<td>'+data[count].DieuKienBaoQuan+'</td>';
+							// html += '<td>'+data[count].YeuCauKhiSuDung+'</td>';
+							html += '<td>'+data[count].NgayMoNap+'</td>';
+							html += '<td>'+data[count].NgayHetHan+'</td>';
+							html += '<td>'+data[count].SoNgayHetHanSMN+'</td>';
+						html += '</tr>';
+					}
+					$('tbody').html(html);
+				}
 			});
-	
+		}
+		fetch_data();
 		$(document).on('click', '.check_box', function(){
 			var html = '';
 			$(document).ready(function(){
@@ -97,7 +127,6 @@ $(document).ready(function() {
 			}
 			$(this).closest('tr').html(html);
 			})	;
-
 		$('#update_form').on('submit', function(event){
 			if (confirm("Xác nhận lưu !"))
 			{
@@ -113,45 +142,12 @@ $(document).ready(function() {
 							
 							fetch_data();
 							alert('Cập nhật dữ liệu thành công !');
-						} 
+						}
 					})
 				}
 			}
 		});
-
-				function fetch_data()
-		{
-			$.ajax({
-				url:"select.php",
-				method:"POST",
-				dataType:"json",
-				success:function(data)
-				{
-					var html = '';
-					for(var count = 0; count < data.length; count++)
-					{
-						html += '<tr>';
-							html += '<td><input type="checkbox" id="'+data[count].id+'" data-TenHoaChat="'+data[count].TenHoaChat+'" data-CongThucHoaHoc="'+data[count].CongThucHoaHoc+'"data-SLT="'+data[count].SLT+'" data-DVT="'+data[count].DVT+'" data-NguyHiemChinh="'+data[count].NguyHiemChinh+'"data-ChuY="'+data[count].ChuY+'" data-ViTriDat="'+data[count].ViTriDat+'"data-NoiBaoQuan="'+data[count].NoiBaoQuan+'"data-DieuKienBaoQuan="'+data[count].DieuKienBaoQuan+'" data-YeuCauKhiSuDung="'+data[count].YeuCauKhiSuDung+'" data-NgayHetHan="'+data[count].NgayHetHan+'" data-NgayMoNap="'+data[count].NgayMoNap+'" data-SoNgayHetHanSMN="'+data[count].SoNgayHetHanSMN+'" data-HinhAnh="'+data[count].HinhAnh+'"class="check_box"  /></td>';
-							html += '<td>'+data[count].TenHoaChat+'</td>';
-							// html += '<td>'+data[count].CongThucHoaHoc+'</td>';
-							html += '<td>'+data[count].SLT+'</td>';
-							html += '<td>'+data[count].DVT+'</td>';
-							// html += '<td>'+data[count].NguyHiemChinh+'</td>';
-							// html += '<td>'+data[count].ChuY+'</td>';
-							html += '<td>'+data[count].ViTriDat+'</td>';
-							// html += '<td>'+data[count].NoiBaoQuan+'</td>';
-							// html += '<td>'+data[count].DieuKienBaoQuan+'</td>';
-							// html += '<td>'+data[count].YeuCauKhiSuDung+'</td>';
-							html += '<td>'+data[count].NgayMoNap+'</td>';
-							html += '<td>'+data[count].NgayHetHan+'</td>';
-							html += '<td>'+data[count].SoNgayHetHanSMN+'</td>';
-						html += '</tr>';
-					}
-					$('tbody').html(html);
-				}
-			});
-		}
-
+	})(jQuery);
 </script>
 <?php
 }
@@ -159,25 +155,57 @@ else
 {
 ?>
 <script >
-	$(document).ready(function() {
-				fetch_data();
-			});
-		
-	$(document).on('click', '.check_box', function(){
-			var html = '';
-			$(document).ready(function(){
-				$(".resize").click(function(){
-					$(".resize").css({
-						"width"    :"200px",
-						"height"   :"100px",
-						"transform":"5s",
-					});
-				});
-			});
-			if(this.checked)
-			{
-				html = '<td><input type="checkbox" id="'+$(this).attr('id')+'" data-TenHoaChat="'+$(this).data('tenhoachat')+'" data-CongThucHoaHoc="'+$(this).data('congthuchoahoc')+'" data-SLT="'+$(this).data('slt')+'" data-DVT="'+$(this).data('dvt')+'" data-NguyHiemChinh="'+$(this).data('nguyhiemchinh')+'" data-ChuY="'+$(this).data('chuy')+'" data-ViTriDat="'+$(this).data('vitridat')+'" data-NoiBaoQuan="'+$(this).data('noibaoquan')+'" data-DieuKienBaoQuan="'+$(this).data('dieukienbaoquan')+'" data-YeuCauKhiSuDung="'+$(this).data('yeucaukhisudung')+'" data-NgayHetHan="'+$(this).data('ngayhethan')+'" data-NgayMoNap="'+$(this).data('ngaymonap')+'" data-SoNgayHetHanSMN="'+$(this).data('songayhethansmn')+'" data-HinhAnh="'+$(this).data('hinhanh')+'"class="check_box" checked /></td>';
-				html += '<td><input type="text" name="TenHoaChat[]" class="resize form-control" value="'+$(this).data("tenhoachat")+'" /></td>';
+	$(document).ready(function(){
+		function fetch_data()
+		{
+			$.ajax({
+url:'searchselect.php?searchString=<?php echo $_GET['btn_search']; ?>',
+method:"POST",
+dataType:"json",
+success:function(data)
+{
+var html = '';
+for(var count = 0; count < data.length; count++)
+{
+html += '<tr>';
+	html += '<td><input type="checkbox" id="'+data[count].id+'" data-TenHoaChat="'+data[count].TenHoaChat+'" data-CongThucHoaHoc="'+data[count].CongThucHoaHoc+'"data-SLT="'+data[count].SLT+'" data-DVT="'+data[count].DVT+'" data-NguyHiemChinh="'+data[count].NguyHiemChinh+'"data-ChuY="'+data[count].ChuY+'" data-ViTriDat="'+data[count].ViTriDat+'"data-NoiBaoQuan="'+data[count].NoiBaoQuan+'"data-DieuKienBaoQuan="'+data[count].DieuKienBaoQuan+'" data-YeuCauKhiSuDung="'+data[count].YeuCauKhiSuDung+'" data-NgayHetHan="'+data[count].NgayHetHan+'" data-NgayMoNap="'+data[count].NgayMoNap+'" data-SoNgayHetHanSMN="'+data[count].SoNgayHetHanSMN+'" data-HinhAnh="'+data[count].HinhAnh+'"class="check_box"  /></td>';
+	html += '<td>'+data[count].TenHoaChat+'</td>';
+	// html += '<td>'+data[count].CongThucHoaHoc+'</td>';
+	html += '<td>'+data[count].SLT+'</td>';
+	html += '<td>'+data[count].DVT+'</td>';
+	// html += '<td>'+data[count].NguyHiemChinh+'</td>';
+	// html += '<td>'+data[count].ChuY+'</td>';
+	html += '<td>'+data[count].ViTriDat+'</td>';
+	// html += '<td>'+data[count].NoiBaoQuan+'</td>';
+	// html += '<td>'+data[count].DieuKienBaoQuan+'</td>';
+	// html += '<td>'+data[count].YeuCauKhiSuDung+'</td>';
+	html += '<td>'+data[count].NgayMoNap+'</td>';
+	html += '<td>'+data[count].NgayHetHan+'</td>';
+	html += '<td>'+data[count].SoNgayHetHanSMN+'</td>';
+
+	
+html += '</tr>';
+}
+$('tbody').html(html);
+}
+});
+}
+fetch_data();
+$(document).on('click', '.check_box', function(){
+var html = '';
+$(document).ready(function(){
+$(".resize").click(function(){
+$(".resize").css({
+"width"    :"200px",
+"height"   :"100px",
+"transform":"5s",
+});
+});
+});
+if(this.checked)
+{
+html = '<td><input type="checkbox" id="'+$(this).attr('id')+'" data-TenHoaChat="'+$(this).data('tenhoachat')+'" data-CongThucHoaHoc="'+$(this).data('congthuchoahoc')+'" data-SLT="'+$(this).data('slt')+'" data-DVT="'+$(this).data('dvt')+'" data-NguyHiemChinh="'+$(this).data('nguyhiemchinh')+'" data-ChuY="'+$(this).data('chuy')+'" data-ViTriDat="'+$(this).data('vitridat')+'" data-NoiBaoQuan="'+$(this).data('noibaoquan')+'" data-DieuKienBaoQuan="'+$(this).data('dieukienbaoquan')+'" data-YeuCauKhiSuDung="'+$(this).data('yeucaukhisudung')+'" data-NgayHetHan="'+$(this).data('ngayhethan')+'" data-NgayMoNap="'+$(this).data('ngaymonap')+'" data-SoNgayHetHanSMN="'+$(this).data('songayhethansmn')+'" data-HinhAnh="'+$(this).data('hinhanh')+'"class="check_box" checked /></td>';
+html += '<td><input type="text" name="TenHoaChat[]" class="resize form-control" value="'+$(this).data("tenhoachat")+'" /></td>';
 // html += '<td><input type="text" name="CongThucHoaHoc[]" class="resize form-control" value="'+$(this).data("congthuchoahoc")+'" /></td>';
 html += '<td><input type="text" name="SLT[]" class="resize form-control" value="'+$(this).data("slt")+'" /></td>';
 html += '<td><input type="text" name="DVT[]" class="resize form-control" value="'+$(this).data("dvt")+'" /></td>';
@@ -193,8 +221,8 @@ html += '<td><input type="text" name="SoNgayHetHanSMN[]" class="resize form-cont
 }
 else
 {
-	html = '<td><input type="checkbox" id="'+$(this).attr('id')+'"data-TenHoaChat="'+$(this).data('tenhoachat')+'"data-CongThucHoaHoc="'+$(this).data('congthuchoahoc')+'"data-SLT="'+$(this).data('slt')+'" data-DVT="'+$(this).data('dvt')+'"data-NguyHiemChinh="'+$(this).data('nguyhiemchinh')+'" data-ChuY="'+$(this).data('chuy')+'" data-ViTriDat="'+$(this).data('vitridat')+'" data-NoiBaoQuan="'+$(this).data('noibaoquan')+'" data-DieuKienBaoQuan="'+$(this).data('dieukienbaoquan')+'" data-YeuCauKhiSuDung="'+$(this).data('yeucaukhisudung')+'" data-NgayHetHan="'+$(this).data('ngayhethan')+'" data-NgayMoNap="'+$(this).data('ngaymonap')+'" data-SoNgayHetHanSMN="'+$(this).data('songayhethansmn')+'" data-HinhAnh="'+$(this).data('hinhanh')+'"class="check_box" /></td>';
-	html += '<td>'+$(this).data('tenhoachat')+'</td>';
+html = '<td><input type="checkbox" id="'+$(this).attr('id')+'"data-TenHoaChat="'+$(this).data('tenhoachat')+'"data-CongThucHoaHoc="'+$(this).data('congthuchoahoc')+'"data-SLT="'+$(this).data('slt')+'" data-DVT="'+$(this).data('dvt')+'"data-NguyHiemChinh="'+$(this).data('nguyhiemchinh')+'" data-ChuY="'+$(this).data('chuy')+'" data-ViTriDat="'+$(this).data('vitridat')+'" data-NoiBaoQuan="'+$(this).data('noibaoquan')+'" data-DieuKienBaoQuan="'+$(this).data('dieukienbaoquan')+'" data-YeuCauKhiSuDung="'+$(this).data('yeucaukhisudung')+'" data-NgayHetHan="'+$(this).data('ngayhethan')+'" data-NgayMoNap="'+$(this).data('ngaymonap')+'" data-SoNgayHetHanSMN="'+$(this).data('songayhethansmn')+'" data-HinhAnh="'+$(this).data('hinhanh')+'"class="check_box" /></td>';
+html += '<td>'+$(this).data('tenhoachat')+'</td>';
 // html += '<td>'+$(this).data('congthuchoahoc')+'</td>';
 html += '<td>'+$(this).data('slt')+'</td>';
 html += '<td>'+$(this).data('dvt')+'</td>';
@@ -210,67 +238,27 @@ html += '<td>'+$(this).data('songayhethansmn')+'</td>';
 }
 $(this).closest('tr').html(html);
 })	;
-
 $('#update_form').on('submit', function(event){
 
-	if (confirm("Xác nhận lưu !"))
-	{
-		event.preventDefault();
-		if($('.check_box:checked').length > 0)
-		{
-			$.ajax({
-				url:"multi.php",
-				method:"POST",
-				data:$(this).serialize(),
-				success:function()
-				{
-					alert('Cập nhật dữ liệu thành công !');
-					fetch_data();
-				}
-			})
-		}
-	}
-});
-
-	
-		function fetch_data()
-		{
-			$.ajax({
-				url:'searchselect.php?searchString=<?php echo $_GET['btn_search']; ?>',
-				method:"POST",
-				dataType:"json",
-				success:function(data)
-				{
-					var html = '';
-					for(var count = 0; count < data.length; count++)
-					{
-						html += '<tr>';
-						html += '<td><input type="checkbox" id="'+data[count].id+'" data-TenHoaChat="'+data[count].TenHoaChat+'" data-CongThucHoaHoc="'+data[count].CongThucHoaHoc+'"data-SLT="'+data[count].SLT+'" data-DVT="'+data[count].DVT+'" data-NguyHiemChinh="'+data[count].NguyHiemChinh+'"data-ChuY="'+data[count].ChuY+'" data-ViTriDat="'+data[count].ViTriDat+'"data-NoiBaoQuan="'+data[count].NoiBaoQuan+'"data-DieuKienBaoQuan="'+data[count].DieuKienBaoQuan+'" data-YeuCauKhiSuDung="'+data[count].YeuCauKhiSuDung+'" data-NgayHetHan="'+data[count].NgayHetHan+'" data-NgayMoNap="'+data[count].NgayMoNap+'" data-SoNgayHetHanSMN="'+data[count].SoNgayHetHanSMN+'" data-HinhAnh="'+data[count].HinhAnh+'"class="check_box"  /></td>';
-						html += '<td>'+data[count].TenHoaChat+'</td>';
-	// html += '<td>'+data[count].CongThucHoaHoc+'</td>';
-	html += '<td>'+data[count].SLT+'</td>';
-	html += '<td>'+data[count].DVT+'</td>';
-	// html += '<td>'+data[count].NguyHiemChinh+'</td>';
-	// html += '<td>'+data[count].ChuY+'</td>';
-	html += '<td>'+data[count].ViTriDat+'</td>';
-	// html += '<td>'+data[count].NoiBaoQuan+'</td>';
-	// html += '<td>'+data[count].DieuKienBaoQuan+'</td>';
-	// html += '<td>'+data[count].YeuCauKhiSuDung+'</td>';
-	html += '<td>'+data[count].NgayMoNap+'</td>';
-	html += '<td>'+data[count].NgayHetHan+'</td>';
-	html += '<td>'+data[count].SoNgayHetHanSMN+'</td>';
-
-	
-	html += '</tr>';
+if (confirm("Xác nhận lưu !"))
+{
+event.preventDefault();
+if($('.check_box:checked').length > 0)
+{
+$.ajax({
+url:"multi.php",
+method:"POST",
+data:$(this).serialize(),
+success:function()
+{
+alert('Cập nhật dữ liệu thành công !');
+fetch_data();
 }
-$('tbody').html(html);
+})
+}
 }
 });
-		}
-		
-
-
-
+})(jQuery);
 </script>
 <style>
 	

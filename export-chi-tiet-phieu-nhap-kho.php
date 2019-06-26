@@ -1,6 +1,6 @@
 <?php
 include 'header.php';
-$conn = mysqli_connect("localhost","root","root","dath");
+$conn = mysqli_connect("localhost","root","","dath");
 $output= '';
 // $mysqli_set_charset($conn,'utf8');
 $conn -> set_charset("utf8");

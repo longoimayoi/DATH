@@ -176,7 +176,7 @@ list($TVT)=mysqli_fetch_array($result_c,MYSQLI_NUM);
     }
     if(mysqli_affected_rows($connect)==1)
     {
-      echo "<script>alert('Thêm chi tiết thành công')</script>";
+      /*echo "<script>alert('Thêm chi tiết thành công')</script>";*/
       echo("<script>location.href = '"."chi-tiet-phieu-xuat-kho.php?id=$id';</script>");
     }
     else
@@ -330,13 +330,13 @@ list($TVT)=mysqli_fetch_array($result_c,MYSQLI_NUM);
           $tmp = 0;
           $check = 0;
           $escLoop = 0;
-           
+          $count = 0;
           foreach ($arrayPhieu as $keyPhieu => $valuePhieu) {
             if ($escLoop == 0)
           {
             foreach ($arraytk as $keytk => $valuetk) {
-             $count = 0;
-              if ($keyPhieu == $keytk)
+             
+              if (strtolower($keyPhieu) == strtolower($keytk))
               {
                 $count ++;
                 $sl = $valuetk - $valuePhieu;
@@ -420,6 +420,9 @@ list($TVT)=mysqli_fetch_array($result_c,MYSQLI_NUM);
             html += '<td>'+$(this).data('sl')+'</td>';
           }
           $(this).closest('tr').html(html);
+          $('.form-control').autocomplete({
+            source: "chemistry_name.php",
+          });
         })  ;
         $('#update_form').on('submit',function(event){
           if (confirm("Xác nhận lưu dữ liệu !"))
@@ -483,7 +486,11 @@ list($TVT)=mysqli_fetch_array($result_c,MYSQLI_NUM);
     </script>
     <!-----===============================================SCRIPT===============================================--->
     <script>
-      $('.addfiles').on('click', function() { $('#file-upload').click();return false;});
+      $('.addfiles').on('click', function() { 
+        $('#file-upload').click();
+        return false;
+
+      });
     </script>
     <script>
         //Add Input Fields
@@ -499,15 +506,20 @@ list($TVT)=mysqli_fetch_array($result_c,MYSQLI_NUM);
         if(x < max_fields){
           x++;
           var selectPattern = $('#catalog-pattern').clone().html();
-          $(wrapper).append('<div> <div  style="display: flex;"> <div style="width: 110%"class="form-group"><input id ="skill_input" type="text" name="tenvt[]" value="" placeholder="Nhập vào tên vật tư"class="form-control" required autocomplete = "off"> </div> <div style="width: 110%"class="form-group"> <input type="number" value="" name="sl[]" placeholder="Số lượng "class="form-control" required> </div>  <a href="javascript:void(0);" class="remove_field"><div class="input-group-addon"><i class="fa fa-minus-square"></i></div></a></div>');
+          $(wrapper).append('<div> <div  style="display: flex;"> <div style="width: 110%"class="form-group"><input id ="skill_input" type="text" name="tenvt[]" value="" placeholder="Nhập vào tên vật tư" class="form-control" required autocomplete = "off"> </div> <div style="width: 110%"class="form-group"> <input type="number" value="" name="sl[]" placeholder="Số lượng "class="form-control" required> </div>  <a href="javascript:void(0);" class="remove_field"><div class="input-group-addon"><i class="fa fa-minus-square"></i></div></a></div>');
         }
+           $('.form-control').autocomplete({
+            source: "chemistry_name.php",
+          });
       });
         //when user click on remove button
         $(wrapper).on("click",".remove_field", function(e){
           e.preventDefault();
         $(this).parent('div').remove(); //remove inout field
         x--;
-      })
+      });
+         
+       
       });
     </script>
     <script type="text/javascript">
@@ -518,13 +530,20 @@ list($TVT)=mysqli_fetch_array($result_c,MYSQLI_NUM);
         });
       });
     </script>
-        <!-- <script>
+       <!--  <script>
         $(function() {
         $("#skill_input").autocomplete({
         source: "chemistry_name.php",
         });
         });
       </script> -->
+       <script>
+      $(function() {
+        $('.form-control').autocomplete({
+            source: "chemistry_name.php",
+          });
+          });
+      </script>
       <script src="vendors/jquery/dist/jquery.min.js"></script>
       <script src="vendors/popper.js/dist/umd/popper.min.js"></script>
       <script src="vendors/bootstrap/dist/js/bootstrap.min.js"></script>

@@ -1,7 +1,7 @@
 <?php
 //select.php
 include('cn.php');
-$query = "SELECT * FROM tblhoachat ORDER BY id";
+$query = "SELECT * FROM tblhoachat WHERE TrangThai = 1 ORDER BY id";
 $statement = $connect->prepare($query);
 if($statement->execute())
 {

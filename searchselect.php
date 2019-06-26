@@ -2,7 +2,7 @@
 //select.php
 include('cn.php');
 $searchTerm = $_GET['searchString'];
-$query = "SELECT * FROM tblhoachat where TenHoaChat LIKE '%".$searchTerm."%'";
+$query = "SELECT * FROM tblhoachat where TrangThai = 1 and TenHoaChat LIKE '%".$searchTerm."%'";
 $statement = $connect->prepare($query);
 if($statement->execute())
 {

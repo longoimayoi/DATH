@@ -41,7 +41,7 @@
             {
                 ?>
                 <li class="menu-item-has-children dropdown">
-                    <a href="khoa.php" class="dropdown-toggle"  aria-haspopup="true" > <i class="menu-icon ti-ruler-pencil"></i>Khoa - Môn học</a>
+                    <a href="khoa.php" class="dropdown-toggle"  aria-haspopup="true" > <i class="menu-icon ti-calendar"></i>Khoa - Môn học</a>
                 </li>
             <?php }?>
 
@@ -68,6 +68,7 @@
                         <ul class="sub-menu children dropdown-menu">
                                  <li><i class="fa fa-plus"></i><a href="danh-sach-phieu-nhap-kho.php">Nhập kho</a></li>
                                 <li><i class="fa fa-share-square-o"></i><a href="danh-sach-phieu-xuat-kho.php">Xuất kho</a></li>
+                                <li><i class="fa fa-check-square-o"></i><a href="kiem-ke.php">Kiểm kê</a></li>
                         </ul>
                     </li>
                 <?php }?>

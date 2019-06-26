@@ -1,7 +1,7 @@
 <?php 
 
 //kết nối vs sql
-	$connect=mysqli_connect('localhost','root','root','dath');
+	$connect=mysqli_connect('localhost','root','','dath');
 
 	if(!$connect)
 	{

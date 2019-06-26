@@ -190,7 +190,7 @@ if(isset($_POST['huy']))
 }
 if(isset($_POST['guiphieu']))
 {
-  $query_g="UPDATE tblhoadon set TrangThai=0 WHERE MaHD='$MaHD'";
+  $query_g="UPDATE tblhoadon set TrangThai=6 WHERE MaHD='$MaHD'";
   $result_g=mysqli_query($connect,$query_g);
   if(mysqli_affected_rows($connect)==1)
   {
@@ -324,7 +324,7 @@ if(isset($_POST['luuhocphi']))
           <input class="form-control  overflow" type="text"  value="<?php $ChiPhi = $TongTien/$SLSV ; echo $ChiPhi; ?> VNĐ" disabled="">
         </div>
       <?php }  ?>
-      <?php if( $TrangThai==4 )   {?>
+      <?php if( $TrangThai==4 ){?>
          <div class="form-group  col-lg-6">
           <label for="">Lý do không duyệt</label>
           <input class="form-control  overflow" type="text"  value="<?php echo $LyDoHuy ?>" disabled="">
@@ -338,12 +338,11 @@ if(isset($_POST['luuhocphi']))
         <?php
         if($TrangThai==0){?>
           <span class="badge badge-pill badge-primary">Chờ báo giá </span>
-
         <?php }if($TrangThai==1) { ?>
           <span class="badge badge-pill badge-warning">Chờ duyệt</span>
-
         <?php } if($TrangThai==2) {?>
           <span class="badge badge-pill badge-success">Đã duyệt</span>
+
         <?php  }if($TrangThai==4) {?>
           <span style="width: 150px" class="badge badge-pill badge-danger">Phiếu không được duyệt</span>
         <?php  }if($TrangThai==5) {?>
@@ -351,6 +350,9 @@ if(isset($_POST['luuhocphi']))
           <label for="">Sửa thông tin đề xuất</label>
           <input type="checkbox" id="checkedit" name="edit">
           <button  style="background-color: #217346" type="submit" name="edit" id="show" class="hidden">Sửa</button>
+        <?php  }if($TrangThai==6) {?>
+          <span style="width: 150px" class="badge badge-pill badge-dark">Chờ tổng hợp</span>
+ 
         <?php } ?>
 
 
@@ -409,14 +411,10 @@ $tmp = $rowK['HeSoK'] -1;
                   <button  style="background-color: #217346" type="submit" name="file" name="import"class="addfiles"><i class="ti-upload"></i> Import</button>
                   <input data-toggle="collapse" href="#collapse" class="collapsed" id="file-upload" type="file" name="file" multiple style='display: none;'>
                   <button id="collapse" class="panel-collapse collapse" type="submit" name="import">Nhập excel</button>
-
                 </div>
               </form>
-
               <?php if($SL >0) {?>
-
                 <input style="float:right;"  type="button" id="savedl" onclick="window.location.href='cap-nhat-table-import.php?MaHD=<?php echo $MaHD ?>'" value="Chỉnh sửa chi tiết"/>
-
               <?php } ?>
               <button data-toggle="collapse" href="#collapse1" class="collapsed"  style="background-color: #217346" type="submit">Thêm chi tiết</button>
               <?php if($SL >0) {?>
@@ -445,7 +443,11 @@ $tmp = $rowK['HeSoK'] -1;
               </div>
             <?php } ?>
           </div>
-     
+     <?php }elseif($TrangThai==2) {?>
+          <div id="row" >
+            
+            <a href="report-chi-tiet-phieu-yeu-cau-trang-bi.php?MaHD=<?php echo $_GET['MaHD'] ?>"><button  type="submit" class="callback"  name="import">Report</button> </a>
+          </div>
         <?php }else echo ""; ?>
 
         <div  class="content mt-3 " style="padding: 0;">
@@ -489,6 +491,7 @@ $tmp = $rowK['HeSoK'] -1;
                           <div style="width: 90%;"id="lbform" class="form-control-label">
                             <label class="form-control-label">Ghi chú</label>
                           </div>
+                         
                           <div style="width: 178px;"id="lbempty" class="form-control-label">
                             <label class="form-control-label"></label>
                           </div>
@@ -512,6 +515,7 @@ $tmp = $rowK['HeSoK'] -1;
                           <div style="width: 110%"class="form-group">
                             <input type="text" value="" name="ghichu[]" placeholder="Ghi chú"class="form-control" >
                           </div>
+                           
                           <div class="form-group">
                             <div id="add_fields" class="add_fields input-group-addon"><i class="fa fa-plus-square"></i></div>
 

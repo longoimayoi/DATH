@@ -87,7 +87,7 @@
               <!--       <th width="10%">Chú ý</th> -->
               <th width="10%"title="Vị trí đặt">Vị trí đặt</th>
               <th width="8%">Ngày mở nắp</th>
-              <th width="15%">Hạn sử dụng</th>
+              <th width="15%">Ngày hết hạn</th>
               <!--     <th width="15%">Yêu cầu khi sử dụng</th> -->
             </thead>
             <tbody></tbody>

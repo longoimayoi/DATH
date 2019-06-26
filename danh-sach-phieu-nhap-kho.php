@@ -5,9 +5,8 @@ if(isset($_POST['submit']))
 {
    date_default_timezone_set('Asia/Ho_Chi_Minh');
    $NguoiLap=$_SESSION['uid'];
-   $NgayLapPhieu=$_POST['NgayLap'];
    $GhiChu=$_POST['GhiChu'];
-   $NgayLap = date("Y-m-d h:i:s", strtotime($NgayLapPhieu));
+   $NgayLap = date("Y-m-d h:i:s");
    $sql1 = "INSERT INTO tbl_phieunhapkho(NguoiLap,NgayLapPhieu,GhiChu)
    VALUES('$NguoiLap','$NgayLap','$GhiChu')";
    $query = mysqli_query($connect,$sql1);

@@ -110,6 +110,8 @@ $i=0;
                                 <td><span style="width: 118px;" class="badge badge-pill badge-danger">Không được duyệt</span></td>
                                 <?php } if($row['TrangThai']==5) {?>
                                 <td><span style="width: 106px;" class="badge badge-pill badge-info">Chờ thêm vật tư</span></td>
+                                <?php } if($row['TrangThai']==6) {?>
+                                <td><span style="width: 106px;" class="badge badge-pill badge-dark">Chờ tổng hợp</span></td>
                                 <?php } ?>
                             <td>
                                 <a class="ti-eye"href="chitiet-phieu-yeu-cau-trangbi.php?MaHD=<?php echo $row['MaHD'] ?>"></a>

@@ -557,3 +557,7 @@ label {
     color: #ff0000d6;
    transition: 0.5s ease-in-out;
 }
+#clone thead { 
+    
+    background-color:white;
+}

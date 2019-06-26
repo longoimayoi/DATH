@@ -8,8 +8,8 @@
                 <div class="col-sm-3">
 
                    <div class="card-body text-secondary"><button style="background:transparent;border: 1.65px solid #007bffeb"type="submit"data-toggle="modal" data-target="#taophieuxuat">    <i style="color: #007bffeb"class="fa fa-plus" aria-hidden="true"></i></button></div>
-
                </div>
+
                <div class="col">
 
                 <button style="display: none">X</button>
@@ -27,23 +27,27 @@
 
             </div>
                 <!--
-                <div style="height: 60px;margin:0 auto">
-                    
-                    
-                    
-                    
+                <div style="height: 60px;margin:0 auto">  
                 </div> -->
+                <?php 
+                            $queryKhoa="SELECT MaKhoa, TenKhoa FROM tblkhoa WHERE MaKhoa =".$_SESSION["MaKhoa"];
+                                $resultKhoa=mysqli_query($connect,$queryKhoa);
+                                $rowKhoa = mysqli_fetch_array($resultKhoa);
+                                $khoa = $rowKhoa[0];
+                ?>
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header">
-                            <strong class="card-title">DANH SÁCH PHIẾU XUẤT KHO</strong>
+                            <strong class="card-title">KIỂM KÊ - <?php echo $rowKhoa[1]; ?></strong>
                         </div>
                         <div class="card-body">
                             <table id="bootstrap-data-table-export" class="table table-striped table-bordered">
                                 <thead>
                                     <tr>
                                         <th>Số thứ tự</th>
+                                        <th>Tên phiếu</th>
                                         <th>Người lập phiếu</th>
+                                        <th>Năm học</th>
                                         <th>Ngày lập phiếu</th>
                                         <th>Ghi chú</th>
                                          <th></th>
@@ -52,7 +56,7 @@
                                 <tbody>
                                       <?php
                                        $soTT = 0;
-                                        $sql = "SELECT MaPhieu, TenDangNhap, NgayLapPhieu, GhiChu FROM tbl_phieuxuatkho pxk, tbltaikhoan tk WHERE pxk.NguoiLap = tk.MaTK ORDER BY MaPhieu DESC";
+                                        $sql = "SELECT MaPhieu, TenPhieu, TenDangNhap, pkk.NamHoc, NgayLapPhieu, GhiChu FROM phieukiemke pkk, tbltaikhoan tk, namhoc nh WHERE pkk.NguoiLapPhieu = tk.MaTK and pkk.NamHoc = nh.id and pkk.Khoa = '$khoa' ORDER BY MaPhieu DESC";
                                         $query = mysqli_query($connect, $sql);
                                         while ($row = mysqli_fetch_array($query)) {
                                             $soTT ++;
@@ -62,8 +66,10 @@
                                             <td><?php echo $row[1] ?></td>
                                             <td><?php echo $row[2] ?></td>
                                             <td><?php echo $row[3] ?></td>
+                                            <td><?php echo $row[4] ?></td>
+                                            <td><?php echo $row[5] ?></td>
                                             <td>
-                                            <a title="Xem chi tiết" href="chi-tiet-phieu-xuat-kho.php?id=<?php echo $row['MaPhieu'] ?>"  class="ti-eye"></a>
+                                            <a title="Xem chi tiết" href="chi-tiet-phieu-kiem-ke.php?id=<?php echo $row['MaPhieu'] ?>"  class="ti-eye"></a>
                                         </td>
                                     </tr>
                                          <?php } ?>
@@ -76,22 +82,31 @@
         </div><!-- .animated -->
     </div>
     <!-----====================================================================================================--->
-    <!-----========================================POPUP THÊM PHIẾU XUẤT KHO==================================--->
+    <!-----========================================POPUP THÊM PHIẾU KIỂM KÊ==================================--->
     <?php
     if(isset($_POST['submit']))
     {
          date_default_timezone_set('Asia/Ho_Chi_Minh');
-        $NguoiLap=$_SESSION['uid'];
+        $NguoiLapPhieu=$_SESSION['uid'];
+        $TenPhieu=$_POST['TenPhieu'];
         $GhiChu=$_POST['GhiChu'];
-        $NgayLap = date("Y-m-d h:i:s");
-        $sql1 = "INSERT INTO tbl_phieuxuatkho(NguoiLap,NgayLapPhieu,GhiChu)
-        VALUES('$NguoiLap','$NgayLap','$GhiChu')";
-        $query = mysqli_query($connect,$sql1);
+        $NgayLapPhieu = date("Y-m-d");
+
+        //Lay id nam hoc
+        $sqlNamHoc = "SELECT id from namhoc ORDER BY id DESC LIMIT 1";
+        $queryNamHoc = mysqli_query($connect, $sqlNamHoc);
+        $rowNamHoc = mysqli_fetch_array($queryNamHoc);
+        $MaKhoa = $_SESSION['MaKhoa'];
+        //Them vao bang phieukiemke
+        $sql1 = "INSERT INTO phieukiemke(TenPhieu, NguoiLapPhieu, NamHoc, Khoa, NgayLapPhieu,GhiChu, TrangThai)
+        VALUES('$TenPhieu', '$NguoiLapPhieu','$rowNamHoc[0]','$MaKhoa', '$NgayLapPhieu', '$GhiChu',0)";
+        
+         $query = mysqli_query($connect,$sql1);
         if(mysqli_affected_rows($connect)==1)
           {
      $id=mysqli_insert_id($connect);
-     echo("<script>location.href = '"."chi-tiet-phieu-xuat-kho.php?id=$id';</script>");
- }
+     echo("<script>location.href = '"."chi-tiet-phieu-kiem-ke.php?id=$id';</script>");
+          }
       /*  else
         {
           //  echo "<script>alert('Lập phiếu không thành công')</script>";
@@ -106,7 +121,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <!--   <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
-                    <label style="margin: 0 auto">LẬP PHIẾU XUẤT KHO</label>
+                    <label style="margin: 0 auto">KIỂM KÊ</label>
                         <!--    <input type="checkbox" id="checkedit" name="edit">
                             <button  style="background-color: #217346" type="submit" name="edit" id="show" class="hidden">Sửa</button> -->
                         </div>
@@ -115,26 +130,30 @@
                                 <div id="checkopenedit">
                                     <div class="row form-group">
                                         <div class="col col-md-3"><label class="form-control-label">Người lập phiếu:</label></div>
-                                        <div class="col-12 col-md-9"><input type="text" name="NguoiLap" class="form-control" value = "<?php echo $_SESSION['Username'] ?>"></div>
+                                        <div class="col-12 col-md-9"><input type="text" name="NguoiLap" class="form-control" value = "<?php if ($_SESSION['HoTen']!=null) echo $_SESSION['HoTen']; else echo $_SESSION['Username']; ?>" disabled></div>
                                     </div>
                                     <div class="row form-group">
                                         <div class="col col-md-3"><label class=" form-control-label">Ngày lập phiếu:</label></div>
-                                        <div class="col-12 col-md-9"><input type="text"class="form-control" name="NgayLap" value ="<?php  date_default_timezone_set('Asia/Ho_Chi_Minh'); echo date("d/m/Y h:i:s") ?>"></div>
+                                        <div class="col-12 col-md-9"><input type="text"class="form-control" name="NgayLap" value ="<?php  date_default_timezone_set('Asia/Ho_Chi_Minh'); echo date("d/m/Y") ?>" disabled></div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <div class="col col-md-3"><label class=" form-control-label">Tên Phiếu:</label></div>
+                                        <div class="col-12 col-md-9"><input type="text"class="form-control" name="TenPhieu" placeholder="Nhập tên phiếu" ></div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <?php $queryNH="SELECT NamHoc FROM namhoc ORDER BY NamHoc DESC LIMIT 1";
+                                $resultNH=mysqli_query($connect,$queryNH);
+                                $rowNH=mysqli_fetch_array($resultNH);
+                                    ?>
+                                        <div class="col col-md-3"><label class=" form-control-label">Năm học:</label></div>
+                                        <div class="col-12 col-md-9"><input type="text"class="form-control" name="NamHoc" value ="<?php  echo $rowNH[0] ?>" disabled></div>
                                     </div>
                                     <div class="row form-group">
                                         <div class="col col-md-3"><label  class=" form-control-label">Ghi chú:</label></div>
-                                        <div class="col-12 col-md-9"><input type="text" name="GhiChu"class="form-control"></div>
+                                        <div class="col-12 col-md-9"><input type="text" name="GhiChu"class="form-control" placeholder="Nhập ghi chú"></div>
                                     </div>
-                               <!--      <div class="row form-group">
-                                        <div class="col col-md-3"><label  class=" form-control-label">Tổng số mặt hàng:</label></div>
-                                        <div class="col-12 col-md-9"><input type="text"class="form-control"></div>
-                                    </div>
-                                    <div class="row form-group">
-                                        <div class="col col-md-3"><label class=" form-control-label">Tổng khối lượng:</label></div>
-                                        <div class="col-12 col-md-9"><input type="text"class="form-control"></div>
-                                    </div> -->
                                     <div class="modal-footer">
-                                        <button type="reset" class="btn btn-default" data-dismiss="modal">Hủy</button>
+                                        <button type="reset" class="btn btn-default" data-dismiss="modal">Thoát</button>
                                         <button type="submit" name = "submit" class="btn btn-primary">Lập phiếu</button>
                                     </div>
                                 </div>
@@ -145,17 +164,6 @@
                 </div>
             </div>
             <!-----===============================================SCRIPT===============================================--->
-            <script>
-                $('.addfiles').on('click', function() { $('#file-upload').click();return false;});
-            </script>
-            <script type="text/javascript">
-                $(document).ready(function(){
-                    $('input[type="file"]').change(function(e){
-                        var fileName = e.target.files[0].name;
-                        $(this).prev('button').text(fileName);
-                    });
-                });
-            </script>
             <script src="vendors/jquery/dist/jquery.min.js"></script>
             <script src="vendors/popper.js/dist/umd/popper.min.js"></script>
             <script src="vendors/bootstrap/dist/js/bootstrap.min.js"></script>

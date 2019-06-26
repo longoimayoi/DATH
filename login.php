@@ -54,16 +54,17 @@ exit(header('Location: index.php'));
         }
         if(empty($error))
         {
-        $query="SELECT MaTK,TenDangNhap,MatKhau,MaQH,TrangThai,MaKhoa FROM tbltaikhoan WHERE
+        $query="SELECT MaTK,TenDangNhap,MatKhau,MaQH,TrangThai,MaKhoa,HoTen FROM tbltaikhoan WHERE
         TenDangNhap='{$Username}'AND MatKhau='{$password}' ";
         $result=mysqli_query($connect,$query)or die("Query {$query} \n <br> MySql erros:".mysqli_errno($connect));
         if(mysqli_num_rows($result)==1)
         {
         
-        list($id,$Username,$password,$MaQH,$TrangThai,$MaKhoa)=mysqli_fetch_array($result,MYSQLI_NUM);
+        list($id,$Username,$password,$MaQH,$TrangThai,$MaKhoa,$HoTen)=mysqli_fetch_array($result,MYSQLI_NUM);
         $_SESSION['MaKhoa'] = $MaKhoa;
         $_SESSION['uid']=$id;
         $_SESSION['Username']=$Username;
+        $_SESSION['HoTen'] = $HoTen;
         $a=$MaQH;
         $b=explode(",",$a);
         if(in_array('1',$b))
@@ -151,9 +152,6 @@ exit(header('Location: index.php'));
                                 ?>
                             </div>
                             <div class="checkbox">
-                                <label>
-                                    <input type="checkbox"> Ghi nhớ tôi
-                                </label>
                                 <label class="pull-right">
                                     <a href="quenmatkhau.php">Quên mật khẩu?</a>
                                 </label>

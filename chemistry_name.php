@@ -9,7 +9,7 @@ $db = new mysqli($dbHost, $dbUsername, $dbPassword, $dbName);
 $db -> set_charset("utf8");
 // lay chuoi nhap tu script
 $searchTerm = $_GET['term'];
-$query = $db->query("SELECT * FROM tblhoachat WHERE TenHoaChat LIKE '%".$searchTerm."%'");
+$query = $db->query("SELECT * FROM tblhoachat WHERE TrangThai = 1 and TenHoaChat LIKE '%".$searchTerm."%'");
 //Tao mang dl
 $skillData = array();
 if($query->num_rows > 0){

@@ -58,13 +58,13 @@
               <?php
               if (!isset($_POST["btn_search"]))
               {
-              $sql = "Select * from tblhoachat";
+              $sql = "Select id,TenHoaChat,DVT from tblhoachat where TrangThai = 1";
               $query = mysqli_query($connect, $sql);
               while ($row = mysqli_fetch_row($query))
               {
               echo "<tr>";
-                echo '<td>'."$row[3]".'</td>';
-                echo '<td>'."$row[5]".'</td>';
+                echo '<td>'."$row[1]".'</td>';
+                echo '<td>'."$row[2]".'</td>';
                 echo '<td><a href = '."selectlist.php?item=$row[0]".'><span style="color:#007bffeb"class="ti-check-box"></span></a></td>';
               echo "</tr>";
               }
@@ -74,33 +74,33 @@
               $search = $_POST["btn_search"];
               if ($search == "")
               {
-              $sql = "Select * from tblhoachat";
+              $sql = "Select id, TenHoaChat,DVT from tblhoachat where TrangThai = 1";
               $query = mysqli_query($connect, $sql);
               while ($row = mysqli_fetch_row($query))
               {
               echo "<tr>";
-                echo '<td>'."<p>$row[3]" . "</p>".'</td>';
-                echo '<td>'."<p>$row[5]" . "</p>".'</td>';
-                echo '<td><a href = '."selectlist.php?item=$row[0]".'>Chọn</a></td>';
+                echo '<td>'."$row[1]" . '</td>';
+                echo '<td>'."$row[2]" . '</td>';
+                 echo '<td><a href = '."selectlist.php?item=$row[0]".'><span style="color:#007bffeb"class="ti-check-box"></span></a></td>';
               echo "</tr>";
               }
               }
               else
               {
-              $sql_search = "Select * from tblhoachat where TenHoaChat like '%$search%'";
-              $query = mysqli_query($connect, $sql_search);
-              if (mysqli_num_rows($query) > 0)
-              while ($row = mysqli_fetch_row($query))
+              $sql_search = "Select id,TenHoaChat,DVT from tblhoachat where TenHoaChat like '%$search%' and  TrangThai = 1";
+              $querySearch = mysqli_query($connect, $sql_search);
+              if (mysqli_num_rows($querySearch) > 0)
+              while ($row = mysqli_fetch_row($querySearch))
               {
               echo "<tr>";
-                echo '<td>'."<p>$row[3]" . "</p>".'</td>';
-                echo '<td>'."<p>$row[5]" . "</p>".'</td>';
-                echo '<td><a href = '."selectlist.php?item=$row[0]".'>Chọn</a></td>';
+                echo '<td>'."$row[1]" .'</td>';
+                echo '<td>'."$row[2]" .'</td>';
+                echo '<td><a href = '."selectlist.php?item=$row[0]".'><span style="color:#007bffeb"class="ti-check-box"></span></a></td>';
               echo "</tr>";
               }
               else
               {
-              echo "Không tìm thấy vật tư ".$search;
+              echo '<span style="color:red">'."Không tìm thấy vật tư ".$search.'</span>';
               }
               }
               }
