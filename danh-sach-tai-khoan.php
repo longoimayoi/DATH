@@ -209,7 +209,7 @@ include('mo-khoa-tai-khoan.php');
                                 <h3 class="agileinfo_sign" align="center">TẠO TÀI KHOẢN MỚI</h3>
                                 <p style="width: 50px;"></p>
                                 <form action="" method="post" id="formcttk" autocomplete="off">
-                                    <input type="hidden" name="form[_token]" value="{{ form._token.vars.value }}" />
+                                  
                                     <div class=" form-group">
                                         <input type="email" id="TenDangNhap" placeholder="Tên đăng nhập" name="TenDangNhap" required="" class="form-control">
                                         <p id="validate-user"></p>
