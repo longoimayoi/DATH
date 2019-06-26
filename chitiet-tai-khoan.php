@@ -134,21 +134,23 @@ $qh=explode(',', $a);
                   <input type="number" placeholder="Số điện thoại"  maxlength = "10" value="<?php echo $item["SDT"]; ?>" name="SDT" class="form-control">
                 </div>
                 <div style="border-bottom:1px solid #d3d3d3;margin-bottom: 10px;display: flex;">
-                  <div>
-                    <label for="" >Đổi mật khẩu</label>
-                    <input type="checkbox" id="checkchangepassword" name="changepassword">
+                  <div style="display: flex;float: left;">
+                    <label for="" >Đổi mật khẩu</label>&nbsp;
+                    <input style="margin-top: 5px;" type="checkbox" id="checkchangepassword" name="changepassword">
                   </div>
+                  <div style="float:right;;">
                   <?php if($item['TrangThai']==1) {?>
-                  <div style="margin-left: 928px;">
+                  <div style="margin-left: 926px">
                     <label for="" >Vô hiệu hóa</label>
                     <input type="checkbox" id="checkvohieuhoa" name="vohieuhoa">
                   </div>
                   <?php } else { ?>
-                  <div style="margin-left: 951px;">
+                  <div style="margin-left: 926px">
                     <label for="" >Mở khóa</label>
                     <input type="checkbox" id="checkmokhoa" name="mokhoa">
                   </div>
                   <?php } ?>
+                </div>
                 </div>
                 <div id="checkpass" class="check">
                   <div class="form-group" >

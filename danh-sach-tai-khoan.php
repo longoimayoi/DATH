@@ -266,10 +266,6 @@ include('mo-khoa-tai-khoan.php');
 <script src="assets/js/jquery-3.2.1.min.js"></script>
 <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script> -->
 <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.js"></script>
-
-</body>
-</html>
-<?php ob_flush(); ?>
 <script>
  
         $('#searchKhoa' ).on("change",function(){
@@ -329,3 +325,6 @@ include('mo-khoa-tai-khoan.php');
         window.history.back();
     }
 </script>
+</body>
+</html>
+<?php ob_flush(); ?>
