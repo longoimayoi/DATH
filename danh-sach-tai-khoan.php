@@ -17,7 +17,7 @@ $i=0;
 
     if (isset($_POST['submit']))
     {
-       var_dump($_POST['submit']); die();
+     
         $TenDangNhap = $_POST["TenDangNhap"];
         $HoTen = $_POST["HoTen"];
         $SDT = $_POST["SDT"];
@@ -253,7 +253,7 @@ include('mo-khoa-tai-khoan.php');
                             <?php } ?>
                         </div>
                         <hr>
-                        <button id="them" style="float:right;"type="submit" name="submit">THÊM TÀI KHOẢN</button>
+                        <button id="them" style="float:right;" type="submit" name="submit" >THÊM TÀI KHOẢN</button>
                     </form>
                 </div>
             </div>
