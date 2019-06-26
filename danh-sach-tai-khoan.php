@@ -5,34 +5,40 @@
     .table2{
         display: none;
     }
+    .themtk{
+        display: none;
+    }
 </style>
 <?php include 'header.php';
 ob_start();
 include('connect/myconnect.php');
 include ('leftpanel.php') ;
 $i=0;
-if (isset($_POST['submit']))
-{
-    $TenDangNhap = $_POST["TenDangNhap"];
-    $HoTen = $_POST["HoTen"];
-    $SDT = $_POST["SDT"];
-    $TrangThai = 1;
-    $password = md5($_POST["password"]);
-    $khoa=$_POST['khoa'];
-    if(isset($_POST['check']))
+
+    if (isset($_POST['submit']))
     {
-        $quyen=$_POST["check"];
-        $imp=implode(",",$quyen);
+       var_dump($_POST['submit']); die();
+        $TenDangNhap = $_POST["TenDangNhap"];
+        $HoTen = $_POST["HoTen"];
+        $SDT = $_POST["SDT"];
+        $TrangThai = 1;
+        $password = md5($_POST["password"]);
+        $khoa=$_POST['khoa'];
+        if(isset($_POST['check']))
+        {
+            $quyen=$_POST["check"];
+            $imp=implode(",",$quyen);
+        }
+        else
+        {
+            $imp=" ";
+        }
+        $sql1 = "INSERT INTO tbltaikhoan(TenDangNhap,MatKhau,HoTen,SDT,MaQH,MaKhoa,TrangThai)VALUES('$TenDangNhap','$password','$HoTen','$SDT','$imp','$khoa','$TrangThai')";
+        $query = mysqli_query($connect,$sql1);
+        echo "<script>alert('Thêm tài khoản thành công')</script>";
+        echo("<script>location.href = '"."danh-sach-tai-khoan.php';</script>");
     }
-    else
-    {
-        $imp=" ";
-    }
-    $sql1 = "INSERT INTO tbltaikhoan(TenDangNhap,MatKhau,HoTen,SDT,MaQH,MaKhoa,TrangThai)VALUES('$TenDangNhap','$password','$HoTen','$SDT','$imp','$khoa','$TrangThai')";
-    $query = mysqli_query($connect,$sql1);
-    echo "<script>alert('Thêm tài khoản thành công')</script>";
-    echo("<script>location.href = '"."danh-sach-tai-khoan.php';</script>");
-}
+
 include('vo-hieu-hoa-tai-khoan.php');
 include('mo-khoa-tai-khoan.php');
 ?>
@@ -58,8 +64,8 @@ include('mo-khoa-tai-khoan.php');
                                 $query_k="SELECT * FROM tblkhoa";
                                 $result_k=mysqli_query($connect,$query_k);
                                 while ($item_k=mysqli_fetch_array($result_k,MYSQLI_ASSOC)) {
-                                    
-                                    
+
+
                                     ?>
                                     <option  value="<?php echo $item_k['MaKhoa'] ?>"><?php echo $item_k['TenKhoa'] ?></option>
                                     <?php
@@ -67,13 +73,6 @@ include('mo-khoa-tai-khoan.php');
                                 ?>
                             </select>
                             <br>
-                  <!--                  <?php
-                            if(isset($_SESSION['delete'])) echo $_SESSION['delete'];unset($_SESSION['delete']);
-                            if(isset($message)){ ?>
-                            <div class="alert alert-danger">
-                                <?php echo  $message ?>
-                                <?php } else echo ""; ?>
-                            </div> -->
                             
                         </div>
                         
@@ -98,7 +97,7 @@ include('mo-khoa-tai-khoan.php');
                                 $STT=0;
                                 while ($row=mysqli_fetch_array($result,MYSQLI_ASSOC))
                                 {
-                                    
+
                                     $STT++;
                                     $i++;
                                     ?>
@@ -161,7 +160,7 @@ include('mo-khoa-tai-khoan.php');
                                 <div class="card-body card-block">
                                     <h3 class="agileinfo_sign">Vô hiệu hóa tài khoản</h3>
                                     <p style="width: 50px;"></p>
-                                    
+
                                     <form action="vo-hieu-hoa-tai-khoan.php?id=<?php echo $row_1['MaTK'] ?>" method="post" >
                                         <div class=" form-group">
                                             <input type="text" placeholder="Lý do vô hiệu hóa" name="lydo" class="form-control">
@@ -169,7 +168,7 @@ include('mo-khoa-tai-khoan.php');
                                             <button style="background-color: #217346;float:right;"type="submit" name="vohieu">Vô hiệu hóa</button>
                                         </div>
                                     </form>
-                                    
+
                                 </div>
                             </div>
                         </div>
@@ -184,7 +183,7 @@ include('mo-khoa-tai-khoan.php');
                                 <div class="card-body card-block">
                                     <h3 class="agileinfo_sign">Mở khóa tài khoản</h3>
                                     <p style="width: 50px;"></p>
-                                    
+
                                     <form action="mo-khoa-tai-khoan.php?id=<?php echo $row_1['MaTK'] ?>" method="post" >
                                         <div class=" form-group">
                                             <input type="text" placeholder="Lý do mở khóa tài khoản" name="lydo" class="form-control">
@@ -193,7 +192,7 @@ include('mo-khoa-tai-khoan.php');
                                             </button>
                                         </div>
                                     </form>
-                                    
+
                                 </div>
                             </div>
                         </div>
@@ -208,11 +207,11 @@ include('mo-khoa-tai-khoan.php');
                             <div class="card-body card-block">
                                 <h3 class="agileinfo_sign" align="center">TẠO TÀI KHOẢN MỚI</h3>
                                 <p style="width: 50px;"></p>
-                                <form action="" method="post" id="formcttk" autocomplete="off">
-                                  
+                                <form action="" method="post" id="formcttk" >
+
                                     <div class=" form-group">
                                         <input type="email" id="TenDangNhap" placeholder="Tên đăng nhập" name="TenDangNhap" required="" class="form-control">
-                                        <p id="validate-user"></p>
+                                        <p id="validate-user" ></p>
                                     </div>
                                     <div class=" form-group">
                                         <select class="form-control" name="khoa" id="">
@@ -227,11 +226,11 @@ include('mo-khoa-tai-khoan.php');
                                             ?>
                                         </select>
                                     </div>
-                                    
+
                                     <div class=" form-group">
                                         <input type="text" placeholder="Họ tên" name="HoTen" autocomplete="off"class="form-control">
                                     </div>
-                                    
+
                                     <div class=" form-group">
                                         <input type="number" placeholder="Số điện thoại" maxlength = "10" name="SDT" class="form-control">
                                     </div>
@@ -254,7 +253,7 @@ include('mo-khoa-tai-khoan.php');
                             <?php } ?>
                         </div>
                         <hr>
-                        <button style="float:right;"type="submit" name="submit">THÊM TÀI KHOẢN</button>
+                        <button id="them" style="float:right;"type="submit" name="submit">THÊM TÀI KHOẢN</button>
                     </form>
                 </div>
             </div>
