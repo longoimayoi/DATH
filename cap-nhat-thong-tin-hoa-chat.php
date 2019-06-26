@@ -52,7 +52,6 @@ if (!isset($_GET["btn_search"]))
 			});
 		$(document).on('click', '.check_box', function(){
 			var html = '';
-			$(document).ready(function(){
 				$(".resize").click(function(){
 					$(".resize").css({
 						"width"    :"200px",
@@ -60,7 +59,6 @@ if (!isset($_GET["btn_search"]))
 						"transform":"5s",
 					});
 				});
-			});
 			if(this.checked)
 			{
 				html = '<td><input type="checkbox" id="'+$(this).attr('id')+'" data-TenHoaChat="'+$(this).data('tenhoachat')+'" data-CongThucHoaHoc="'+$(this).data('congthuchoahoc')+'" data-SLT="'+$(this).data('slt')+'" data-DVT="'+$(this).data('dvt')+'" data-NguyHiemChinh="'+$(this).data('nguyhiemchinh')+'" data-ChuY="'+$(this).data('chuy')+'" data-ViTriDat="'+$(this).data('vitridat')+'" data-NoiBaoQuan="'+$(this).data('noibaoquan')+'" data-DieuKienBaoQuan="'+$(this).data('dieukienbaoquan')+'" data-YeuCauKhiSuDung="'+$(this).data('yeucaukhisudung')+'" data-NgayHetHan="'+$(this).data('ngayhethan')+'" data-NgayMoNap="'+$(this).data('ngaymonap')+'" data-SoNgayHetHanSMN="'+$(this).data('songayhethansmn')+'" data-HinhAnh="'+$(this).data('hinhanh')+'"class="check_box" checked /></td>';
@@ -163,7 +161,7 @@ fetch_data();
 });
 $(document).on('click', '.check_box', function(){
 var html = '';
-$(document).ready(function(){
+
 $(".resize").click(function(){
 $(".resize").css({
 "width"    :"200px",
@@ -171,7 +169,7 @@ $(".resize").css({
 "transform":"5s",
 });
 });
-});
+
 if(this.checked)
 {
 html = '<td><input type="checkbox" id="'+$(this).attr('id')+'" data-TenHoaChat="'+$(this).data('tenhoachat')+'" data-CongThucHoaHoc="'+$(this).data('congthuchoahoc')+'" data-SLT="'+$(this).data('slt')+'" data-DVT="'+$(this).data('dvt')+'" data-NguyHiemChinh="'+$(this).data('nguyhiemchinh')+'" data-ChuY="'+$(this).data('chuy')+'" data-ViTriDat="'+$(this).data('vitridat')+'" data-NoiBaoQuan="'+$(this).data('noibaoquan')+'" data-DieuKienBaoQuan="'+$(this).data('dieukienbaoquan')+'" data-YeuCauKhiSuDung="'+$(this).data('yeucaukhisudung')+'" data-NgayHetHan="'+$(this).data('ngayhethan')+'" data-NgayMoNap="'+$(this).data('ngaymonap')+'" data-SoNgayHetHanSMN="'+$(this).data('songayhethansmn')+'" data-HinhAnh="'+$(this).data('hinhanh')+'"class="check_box" checked /></td>';
