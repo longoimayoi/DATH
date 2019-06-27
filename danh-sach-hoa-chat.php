@@ -124,7 +124,7 @@
           </div>
           <div class="row form-group">
             <div class="col col-md-3"><label  class=" form-control-label">Hạn sử dụng sau mở nắp:</label></div>
-            <div class="col-12 col-md-9"><input type="text" value="<?php echo $row['SoNgayHetHanSMN']; ?> Ngày" name="SoNgayHetHanSMN" class="form-control"></div>
+            <div class="col-12 col-md-9"><input type="text" value="<?php echo $row['SoNgayHetHanSMN']; ?> " name="SoNgayHetHanSMN" class="form-control"></div>
           </div>
           <div class="modal-footer">
             <button type="submit" name="luu"  >Lưu</button> 
