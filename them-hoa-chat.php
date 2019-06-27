@@ -249,7 +249,7 @@ color: red;
                         <input type="text" value="" name="tenhc[]" placeholder="Tên vật tư"class="form-control" required>
                       </div>
                       <div style="width: 110%"class="form-group">
-                        <input type="text" value="" name="dvt[]" placeholder="Đơn vị tính"class="form-control" >
+                        <input type="text" value="" name="dvt[]" placeholder="Đơn vị tính"class="form-control" required>
                       </div>
                       <div style="width: 110%"class="form-group">
                         <input type="text" name="slt[]" value="" placeholder="Vị trí đặt"class="form-control" required>

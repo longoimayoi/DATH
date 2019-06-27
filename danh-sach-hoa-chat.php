@@ -133,7 +133,7 @@ if(isset($_POST['luu']))
           <div class="row form-group">
             <div class="col col-md-3"><label  class=" form-control-label">Hình ảnh:</label></div>
             <div style="height: 280px" class="col-12 col-md-9"><img style="height: 80%" src="HinhHoaChat/<?php echo $row['HinhAnh']?>">
-               <input type="file" name="hinh"  >
+             <!--   <input type="file" name="hinh"  > -->
             </div>
 
           </div>
