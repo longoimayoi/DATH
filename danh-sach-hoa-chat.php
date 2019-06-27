@@ -1,30 +1,7 @@
 <?php include 'header.php'; 
  include 'leftpanel.php' ;
 
-      // if(isset($_POST['save']))
-      // {
-      //   $TenVatTu=$_POST['TenVatTu'];
-      //   $SLT=$_POST['SLT'];
-      //   $DVT=$_POST['DVT'];
-      //   $VTD=$_POST['VTD'];
-      //   $NgayMoNap=$_POST['NgayMoNap'];
-      //   $NgayHetHan=$_POST['NgayHetHan'];
-      //   $SoNgayHetHanSMN=$_POST['SoNgayHetHanSMN'];
-      //   $query_sl="SELECT * FROM tblhoachat order by id";
-      //   $result_sl = mysqli_query($connect, $query_sl);
-      //   $query="UPDATE tblhoachat SET TenHoaChat='$TenVatTu',SLT='$SLT',DVT='$DVT',ViTriDat='$VTD',NgayMoNap='$NgayMoNap',NgayHetHan='$NgayHetHan',SoNgayHetHanSMN='$SoNgayHetHanSMN' WHERE id=".$row['id']."";
-      //   $result=mysqli_query($connect,$query);
-      //   if(mysqli_affected_rows($connect)==1)
-      //   {
-      //     echo "<script>alert('Sửa thành công')</script>";
-      //     echo("<script>location.href = '"."danh-sach-hoa-chat.php';</script>");
-      //   }
 
-      // }
-if(isset($_POST['luu']))
-{
-  include('sua-vat-tu.php');
-} 
   ?>
   <div class="container">
     <br />
@@ -133,7 +110,7 @@ if(isset($_POST['luu']))
           <div class="row form-group">
             <div class="col col-md-3"><label  class=" form-control-label">Hình ảnh:</label></div>
             <div style="height: 280px" class="col-12 col-md-9"><img style="height: 80%" src="HinhHoaChat/<?php echo $row['HinhAnh']?>">
-             <!--   <input type="file" name="hinh"  > -->
+               <input type="file" name="hinh"  >
             </div>
 
           </div>
