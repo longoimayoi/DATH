@@ -118,7 +118,7 @@ color: red;
   }
   else
   {
-  $ngayhethan=NULL;
+  $ngayhethan='0000-00-00';
   }
   if(isset($_POST['songayhethan']))
   {
@@ -126,7 +126,7 @@ color: red;
   }
   else
   {
-  $songayhethan=NULL;
+  $songayhethan='0000-00-00';
   }
   if(isset($_POST['ngaymonap']))
   {
@@ -134,7 +134,7 @@ color: red;
   }
   else
   {
-  $ngaymonap=NULL;
+  $ngaymonap='0000-00-00';
   }
   date_default_timezone_set('Asia/Ho_Chi_Minh');
   $day=date("Y-m-d-H-i-s");
@@ -172,6 +172,7 @@ color: red;
   else
   {
   echo "<script>alert('Thêm không thành công')</script>";
+   echo("<script>location.href = '"."them-hoa-chat.php';</script>");
   }
   }
   //    else
