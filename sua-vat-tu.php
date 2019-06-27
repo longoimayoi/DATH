@@ -1,7 +1,6 @@
 <?php 
 include('connect/myconnect.php');
-if(isset($_POST['luu']))
-{
+
 	$id=$_GET['id'];
   $TenVatTu=$_POST['TenVatTu'];
   $SLT=$_POST['SLT'];
@@ -41,7 +40,7 @@ if(isset($_POST['luu']))
 
   }
    echo("<script>location.href = '"."danh-sach-hoa-chat.php';</script>");
-}
+
 
 
  ?>

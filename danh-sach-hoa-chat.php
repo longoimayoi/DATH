@@ -21,7 +21,10 @@
       //   }
 
       // }
-      
+if(isset($_POST['luu']))
+{
+  include('sua-vat-tu.php');
+} 
   ?>
   <div class="container">
     <br />
