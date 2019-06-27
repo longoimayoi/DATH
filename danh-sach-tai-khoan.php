@@ -31,10 +31,10 @@ if (isset($_POST['submit']))
     }
     else
     {
-        $imp=0;
+        $imp=" ";
     }
     $query = "INSERT INTO tbltaikhoan(TenDangNhap,MatKhau,HoTen,SDT,MaQH,MaKhoa,TrangThai)VALUES('$TenDangNhap','$password','$HoTen','$SDT','$imp','$khoa','$TrangThai')";
-    $result = mysqli_query($connect,$query);
+    $result = mysqli_query($connect,$query)or die("Query {$query} \n <br> MySql erros:".mysqli_errno($connect));
     if(mysqli_affected_rows($connect)==1)
       {
         echo "<script>alert('Thêm tài khoản thành công')</script>";
