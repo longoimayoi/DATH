@@ -5,7 +5,7 @@ if(isset($_POST['luu']))
 	$id=$_GET['id'];
   $TenVatTu=$_POST['TenVatTu'];
   $SLT=$_POST['SLT'];
-  $DVT=$_POST['DVT'];
+  $DVT=$_POST['DVT']; 
   $VTD=$_POST['VTD'];
   $NgayMoNap=$_POST['NgayMoNap'];
   $NgayHetHan=$_POST['NgayHetHan'];
@@ -31,7 +31,7 @@ if(isset($_POST['luu']))
   }
 
   
-  $result=mysqli_query($connect,$query);
+  $result=mysqli_query($connect,$query)or die("Query {$query} \n <br> MySql erros:".mysqli_errno($connect));
   if(mysqli_affected_rows($connect)==1)
   {
     echo "<script>alert('Sửa thành công')</script>";
