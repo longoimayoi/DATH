@@ -126,7 +126,7 @@ color: red;
   }
   else
   {
-  $songayhethan='0000-00-00';
+  $songayhethan=" ";
   }
   if(isset($_POST['ngaymonap']))
   {
