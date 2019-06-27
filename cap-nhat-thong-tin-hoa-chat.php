@@ -235,7 +235,7 @@ function fetch_data()
 {
 	$.ajax({
 		url:'searchselect.php?searchString=<?php echo $_GET['btn_search']; ?>',
-		method:"POST",
+		method:"GET",
 		dataType:"json",
 		success:function(data)
 		{

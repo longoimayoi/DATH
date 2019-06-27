@@ -211,7 +211,7 @@ else
   if (ngayhethan < dateNow )
   {
     html += '<tr title="ĐÃ HẾT HẠN SỬ DỤNG" id="trcss"style="background-color:#f900188f">';
-    html += '<td><a data-toggle="modal" data-target="#xemthongtin'+ data[count].id+'" class="ti-eye"></a></td>';
+    html += '<td><a data-toggle="modal"  href="sua-vat-tu.php?id='+data[count].id+'" data-target="#xemthongtin'+ data[count].id+'" class="ti-eye"></a></td>';
     html += '<td>'+data[count].MaVatTu+'</td>';
     html += '<td>'+data[count].TenHoaChat+'</td>';
   // html += '<td>'+data[count].CongThucHoaHoc+'</td>';
@@ -231,7 +231,7 @@ else
 else if ( ngayhhmn < dateNow )
 {
  html += '<tr title="QUÁ THỜI HẠN CÓ THỂ SỬ DỤNG SAU MỞ NẮP" id="trcss"style="background-color:yellow">';
- html += '<td><a data-toggle="modal" data-target="#xemthongtin'+ data[count].id+'" class="ti-eye"></a></td>';
+ html += '<td><a data-toggle="modal"  href="sua-vat-tu.php?id='+data[count].id+'" data-target="#xemthongtin'+ data[count].id+'" class="ti-eye"></a></td>';
  html += '<td>'+data[count].MaVatTu+'</td>';
  html += '<td>'+data[count].TenHoaChat+'</td>';
   // html += '<td>'+data[count].CongThucHoaHoc+'</td>';
@@ -329,7 +329,7 @@ else
    if (ngayhethan < dateNow )
   {
     html += '<tr title="ĐÃ HẾT HẠN SỬ DỤNG" id="trcss"style="background-color:#f900188f">';
-    html += '<td><a data-toggle="modal" data-target="#xemthongtin'+ data[count].id+'" class="ti-eye"></a></td>';
+    html += '<td><a data-toggle="modal"  href="sua-vat-tu.php?id='+data[count].id+'" data-target="#xemthongtin'+ data[count].id+'" class="ti-eye"></a></td>';
       html += '<td>'+data[count].MaVatTu+'</td>';
     html += '<td>'+data[count].TenHoaChat+'</td>';
   // html += '<td>'+data[count].CongThucHoaHoc+'</td>';
@@ -349,7 +349,7 @@ else
  else if ( ngayhhmn < dateNow )
  {
    html += '<tr title="QUÁ THỜI HẠN CÓ THỂ SỬ DỤNG SAU MỞ NẮP" id="trcss"style="background-color:yellow">';
-    html += '<td><a data-toggle="modal" data-target="#xemthongtin'+ data[count].id+'" class="ti-eye"></a></td>';
+    html += '<td><a data-toggle="modal"  href="sua-vat-tu.php?id='+data[count].id+'" data-target="#xemthongtin'+ data[count].id+'" class="ti-eye"></a></td>';
       html += '<td>'+data[count].MaVatTu+'</td>';
     html += '<td>'+data[count].TenHoaChat+'</td>';
   // html += '<td>'+data[count].CongThucHoaHoc+'</td>';
