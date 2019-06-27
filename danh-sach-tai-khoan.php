@@ -15,29 +15,36 @@ include('connect/myconnect.php');
 include ('leftpanel.php') ;
 $i=0;
 
-    if (isset($_POST['submit']))
+if (isset($_POST['submit']))
+{
+
+    $TenDangNhap = $_POST["TenDangNhap"];
+    $HoTen = $_POST["HoTen"];
+    $SDT = $_POST["SDT"];
+    $TrangThai = 1;
+    $password = md5($_POST["password"]);
+    $khoa=$_POST['khoa'];
+    if(isset($_POST['check']))
     {
-     
-        $TenDangNhap = $_POST["TenDangNhap"];
-        $HoTen = $_POST["HoTen"];
-        $SDT = $_POST["SDT"];
-        $TrangThai = 1;
-        $password = md5($_POST["password"]);
-        $khoa=$_POST['khoa'];
-        if(isset($_POST['check']))
-        {
-            $quyen=$_POST["check"];
-            $imp=implode(",",$quyen);
-        }
-        else
-        {
-            $imp=" ";
-        }
-        $sql1 = "INSERT INTO tbltaikhoan(TenDangNhap,MatKhau,HoTen,SDT,MaQH,MaKhoa,TrangThai)VALUES('$TenDangNhap','$password','$HoTen','$SDT','$imp','$khoa','$TrangThai')";
-        $query = mysqli_query($connect,$sql1);
+        $quyen=$_POST["check"];
+        $imp=implode(",",$quyen);
+    }
+    else
+    {
+        $imp=" ";
+    }
+    $sql1 = "INSERT INTO tbltaikhoan(TenDangNhap,MatKhau,HoTen,SDT,MaQH,MaKhoa,TrangThai)VALUES('$TenDangNhap','$password','$HoTen','$SDT','$imp','$khoa','$TrangThai')";
+    $query = mysqli_query($connect,$sql1);
+    if(mysqli_affected_rows($connect)==1)
+      {
         echo "<script>alert('Thêm tài khoản thành công')</script>";
         echo("<script>location.href = '"."danh-sach-tai-khoan.php';</script>");
-    }
+      }
+      else
+      {
+        echo "<script>alert('Lập phiếu không thành công')</script>";
+      }  
+}
 
 include('vo-hieu-hoa-tai-khoan.php');
 include('mo-khoa-tai-khoan.php');

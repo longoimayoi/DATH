@@ -71,7 +71,7 @@ $i=0;
                                     <th  style="display: table-caption;width: 200px;height: 22px">Mã môn học</th>
                                     <th  style="display: table-caption;">Tên lớp</th>
                                  <!--    <th >Số lượng SV</th>  -->
-                                    <th  >Học kỳ</th>
+                                    <th  style="width: 150px">Học kỳ</th>
                                     <th style="width: 150px">Ngày lập</th>
                                      <!-- <th style="width: 150px">Ngày cập nhật</th> -->
 <!--                                      <?php if(isset($_SESSION['DPYCTB'])) {?>
@@ -151,12 +151,12 @@ $i=0;
                                 $i++;  
                                 ?>
                                 <td style="width: 10px"><?php echo $i ?></td>
-                                <td><?php echo $row['TenDangNhap']; ?></td> 
+                                <td style="width: 250px"><?php echo $row['TenDangNhap']; ?></td> 
                                 <td class="overflow" style="word-wrap:break-word;width: 217px;display: table-caption;border-bottom: 1px solid;"><?php  echo $row['MonHoc']  ?></td>
                                 <td class="overflow" style="word-wrap:break-word;width: 217px;display: table-caption;"><?php echo $row['NhomLop']  ?></td>
                                <!--  <td><?php echo $row['SLSV']  ?></td> -->
-                                <td style="width: 130px"><?php echo $row['TenHK']  ?></td>
-                                <td  style="width: 110px"><?php echo $datelap .'<br>'. $timelap ?></td>
+                                <td style="width: 150px"><?php echo $row['TenHK']  ?></td>
+                                <td  style="width: 160px"><?php echo $datelap .'  '. $timelap ?></td>
 
                                <!--  <td style="width: 110px"><?php  if($row['NgayCapNhat']){echo $datecn .'<br>'. $timecn; } ?></td> -->
                                 <!-- <?php if(isset($_SESSION['DPYCTB'])) { ?>
