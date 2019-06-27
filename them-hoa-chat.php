@@ -112,7 +112,7 @@ color: red;
   // $noibaoquan=$_POST['noibaoquan'];
   $dkbq=$_POST['dkbq'];
   // $ycsd=$_POST['ycsd'];
-  if($_POST['ngayhethan'])
+  if(isset($_POST['ngayhethan']))
   {
   $ngayhethan=$_POST['ngayhethan'];
   }
@@ -120,7 +120,7 @@ color: red;
   {
   $ngayhethan="";
   }
-  if($_POST['songayhethan'])
+  if(isset($_POST['songayhethan']))
   {
   $songayhethan=$_POST['songayhethan'];
   }
@@ -128,7 +128,7 @@ color: red;
   {
   $songayhethan="";
   }
-  if($_POST['ngaymonap'])
+  if(isset($_POST['ngaymonap']))
   {
   $ngaymonap=$_POST['ngaymonap'];
   }
