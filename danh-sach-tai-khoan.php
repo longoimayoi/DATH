@@ -33,8 +33,8 @@ if (isset($_POST['submit']))
     {
         $imp=" ";
     }
-    $sql1 = "INSERT INTO tbltaikhoan(TenDangNhap,MatKhau,HoTen,SDT,MaQH,MaKhoa,TrangThai)VALUES('$TenDangNhap','$password','$HoTen','$SDT','$imp','$khoa','$TrangThai')";
-    $query = mysqli_query($connect,$sql1);
+    $query = "INSERT INTO tbltaikhoan(TenDangNhap,MatKhau,HoTen,SDT,MaQH,MaKhoa,TrangThai)VALUES('$TenDangNhap','$password','$HoTen','$SDT','$imp','$khoa','$TrangThai')";
+    $result = mysqli_query($connect,$query);
     if(mysqli_affected_rows($connect)==1)
       {
         echo "<script>alert('Thêm tài khoản thành công')</script>";
@@ -42,7 +42,7 @@ if (isset($_POST['submit']))
       }
       else
       {
-        echo "<script>alert('Lập phiếu không thành công')</script>";
+        echo "<script>alert('Thêm tài khoản không thành công')</script>";
       }  
 }
 
@@ -235,7 +235,7 @@ include('mo-khoa-tai-khoan.php');
                                     </div>
 
                                     <div class=" form-group">
-                                        <input type="text" placeholder="Họ tên" name="HoTen" autocomplete="off"class="form-control">
+                                        <input type="text" placeholder="Họ tên" name="HoTen" class="form-control">
                                     </div>
 
                                     <div class=" form-group">
