@@ -21,7 +21,9 @@ if(isset($_POST['luu']))
   	 $file_name=$_FILES['hinh']['name'];
   	$file_tmp=$_FILES['hinh']['tmp_name']; 	
 	move_uploaded_file($file_tmp, "./HinhHoaChat/".$file_name);
-	unlink('./HinhHoaChat/'.$anh['HinhAnh']);
+	if($anh['HinhAnh'] != " "){
+    unlink('./HinhHoaChat/'.$anh['HinhAnh']);
+  }
 	$hinh=$file_name;
 	$query="UPDATE tblhoachat SET TenHoaChat='$TenVatTu',HinhAnh='$hinh',SLT='$SLT',DVT='$DVT',ViTriDat='$VTD',NgayMoNap='$NgayMoNap',NgayHetHan='$NgayHetHan',SoNgayHetHanSMN='$SoNgayHetHanSMN' WHERE id=".$id."";
   }
