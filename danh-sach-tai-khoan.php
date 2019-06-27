@@ -31,7 +31,7 @@ if (isset($_POST['submit']))
     }
     else
     {
-        $imp=" ";
+        $imp=0;
     }
     $query = "INSERT INTO tbltaikhoan(TenDangNhap,MatKhau,HoTen,SDT,MaQH,MaKhoa,TrangThai)VALUES('$TenDangNhap','$password','$HoTen','$SDT','$imp','$khoa','$TrangThai')";
     $result = mysqli_query($connect,$query);
@@ -43,6 +43,7 @@ if (isset($_POST['submit']))
       else
       {
         echo "<script>alert('Thêm tài khoản không thành công')</script>";
+        echo("<script>location.href = '"."danh-sach-tai-khoan.php';</script>");
       }  
 }
 
