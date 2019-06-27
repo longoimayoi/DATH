@@ -1,6 +1,6 @@
 <?php include 'header.php'; 
  include 'leftpanel.php' ;
- include 'sua-vat-tu.php' ;
+
       // if(isset($_POST['save']))
       // {
       //   $TenVatTu=$_POST['TenVatTu'];
