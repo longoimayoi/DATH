@@ -118,7 +118,7 @@ color: red;
   }
   else
   {
-  $ngayhethan=" ";
+  $ngayhethan=NULL;
   }
   if(isset($_POST['songayhethan']))
   {
@@ -126,7 +126,7 @@ color: red;
   }
   else
   {
-  $songayhethan=" ";
+  $songayhethan=NULL;
   }
   if(isset($_POST['ngaymonap']))
   {
@@ -134,7 +134,7 @@ color: red;
   }
   else
   {
-  $ngaymonap=" ";
+  $ngaymonap=NULL;
   }
   date_default_timezone_set('Asia/Ho_Chi_Minh');
   $day=date("Y-m-d-H-i-s");
