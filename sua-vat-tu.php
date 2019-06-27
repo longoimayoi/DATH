@@ -30,7 +30,7 @@ if(isset($_POST['luu']))
   }
   else
   {
-  	$query="UPDATE tblhoachat SET TenHoaChat='$TenVatTu',HinhAnh='".$anh['HinhAnh']."',SLT='$SLT',DVT='$DVT',ViTriDat='$VTD',NgayMoNap='$NgayMoNap',NgayHetHan='$NgayHetHan',SoNgayHetHanSMN='$SoNgayHetHanSMN' WHERE id=".$id."";
+  	$query="UPDATE tblhoachat SET TenHoaChat='$TenVatTu',SLT='$SLT',DVT='$DVT',ViTriDat='$VTD',NgayMoNap='$NgayMoNap',NgayHetHan='$NgayHetHan',SoNgayHetHanSMN='$SoNgayHetHanSMN' WHERE id=".$id."";
   }
 
   
