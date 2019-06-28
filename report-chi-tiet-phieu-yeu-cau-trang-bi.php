@@ -12,56 +12,21 @@ $query_tt = "SELECT * FROM tblphieuyeucautrangbi as tbl JOIN tblhoadon as hd WHE
 $result_tt = mysqli_query($connect,$query_tt);
 $query = "SELECT * FROM tblhoadon as hd JOIN monhoc as mh WHERE hd.MonHoc=mh.MaMon AND hd.MaHD=$MaHD";
 $result_sl = mysqli_query($connect,$query);
-$query_k = "SELECT TenKhoa FROM tblhoadon as hd JOIN tblkhoa as k WHERE k.MaKhoa=hd.MaKhoa AND hd.MaHD=$MaHD";
+$query_k = "SELECT TenKhoa,GhiChu FROM tblhoadon as hd JOIN tblkhoa as k WHERE k.MaKhoa=hd.MaKhoa AND hd.MaHD=$MaHD";
 $result_k = mysqli_query($connect,$query_k);
-list($TenKhoa)=mysqli_fetch_array($result_k,MYSQLI_NUM);
+list($TenKhoa,$GhiChu)=mysqli_fetch_array($result_k,MYSQLI_NUM);
 if(mysqli_num_rows($result)>0)
 {
 $output .='
-<table  id="bootstrap-data-table-export" class="table table-striped table-bordered" bordered="1">
-  <tr>
-    <th>TRƯỜNG ĐẠI HỌC CÔNG NGHỆ TP.HCM</th>
-    <th></th>
-    <th>CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM</th>
-  </tr>
-   <tr>
-    <th>'.$TenKhoa.'</th>
-    <th><th>
-    <th>Độc lập - Tự do - Hạnh phúc</th>
-  </tr>
-  <tr>
-    <th></th>
-    <th>Số:                  /YC-KD</th>
-  </tr>
-  <tr>
-    <th></th>
-    <th>PHIẾU YÊU CẦU TRANG BỊ</th>
-  </tr>
-   <tr>
-    <th></th>
-  <th>(V/v Cung cấp vật tư, trang thiết bị, nâng cấp tài sản)</th>
-  </tr>
-     <tr>
-    <th></th>
-    <th></th>
-    <th>Kính gửi:</th>
-    <th>Ban giám hiệu</th>
-  </tr>
-  </tr>
-     <tr>
-    <th></th>
-    <th></th>
-    <th></th>
-    <th>Phòng Quản trị</th>
-  </tr>
 
-<tr><th>I. Đề xuất:</th></tr>
-<tr><th>Đơn vị yêu cầu: '.$TenKhoa.'</th></tr>
-<tr><th>Lý do: Mua hóa chất phục vụ thí nghiệm môn SHPT-Hóa sinh 1</th></tr>
+<table  id="bootstrap-data-table-export" class="table table-striped table-bordered" bordered="1">
+<tr><td>I. Đề xuất:</td></tr>
+<tr><td>Đơn vị yêu cầu: '.$TenKhoa.'</td></tr>
+<tr><td>Lý do: '.$GhiChu.'</td></tr>
 <tr></tr>
 
 
-<tr> <th>Danh sách các môn học và số lượng sinh viên:</th></tr>
+
 <table  id="bootstrap-data-table-export" class="table table-striped table-bordered" bordered="1">
   <tr>
     <th>STT</th>

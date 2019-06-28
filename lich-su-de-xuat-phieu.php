@@ -34,10 +34,11 @@ $i=0;
                                 <tr>
                                     <th scope="col">STT</th>
                                     <th style="width: 150px">Người lập phiếu</th>
-                                    <th  style="display: table-caption;width: 133px;height: 30px">Mã môn học</th>
-                                    <th  style="display: table-caption;">Tên lớp</th>
+                                    <th  style="display: table-caption;width: 133px;height:50px">Mã môn học</th>
+                                    <th  style="display: table-caption;height:50px">Tên lớp</th>
                                  <!--    <th >Số lượng SV</th>  -->
                                     <th >Học kỳ</th>
+                                    <th  style="width: 150px;">Năm học</th>
                                     <th >Ngày lập</th>
                                     <!--  <th >Ngày cập nhật</th> -->
                                      <th style="width: 250px" >Ngày duyệt phiếu <hr> Ngày hủy phiếu</th>
@@ -51,24 +52,22 @@ $i=0;
                             <tbody>
                               <?php 
                             if(isset($_SESSION['YCTBVT']) && isset($_SESSION['DPYCTB'])) {
-                                 $query="SELECT *,hd.TrangThai FROM tblhoadon hd, tbltaikhoan tk ,tblhocky hk
-                                        WHERE hd.MaTK=tk.MaTK AND hk.MaHK=hd.HocKy 
+                                 $query="SELECT *,hd.TrangThai FROM tblhoadon hd, tbltaikhoan tk ,tblhocky hk,namhoc nh
+                                        WHERE hd.MaTK=tk.MaTK AND hk.MaHK=hd.HocKy AND nh.id=hd.NamHoc 
 
 
                                         ORDER BY NgayLapPhieu DESC ";
                                 $result = mysqli_query($connect, $query);
                             }elseif(isset($_SESSION['YCTBVT'])) {
-                                 $query="SELECT *,hd.TrangThai FROM tblhoadon hd, tbltaikhoan tk ,tblhocky hk
-                                        WHERE hd.MaTK=tk.MaTK AND hk.MaHK=hd.HocKy 
-                                        AND hd.TrangThai!=5
+                                 $query="SELECT *,hd.TrangThai FROM tblhoadon hd, tbltaikhoan tk ,tblhocky hk,namhoc nh
+                                        WHERE hd.MaTK=tk.MaTK AND hk.MaHK=hd.HocKy AND nh.id=hd.NamHoc 
                                         AND tk.MaTK=".$_SESSION['uid']."
                                         ORDER BY NgayLapPhieu DESC ";
                                 $result = mysqli_query($connect, $query);
                             }elseif(isset($_SESSION['DPYCTB'])) {
-                                 $query="SELECT *,hd.TrangThai FROM tblhoadon hd, tbltaikhoan tk ,tblhocky hk
-                                        WHERE hd.MaTK=tk.MaTK AND hk.MaHK=hd.HocKy 
-                                        AND hd.TrangThai!=5   AND hd.TrangThai!=0 AND hd.TrangThai!=1
-
+                                 $query="SELECT *,hd.TrangThai FROM tblhoadon hd, tbltaikhoan tk ,tblhocky hk,namhoc nh
+                                        WHERE hd.MaTK=tk.MaTK AND hk.MaHK=hd.HocKy AND nh.id=hd.NamHoc 
+                                        AND hd.TrangThai=2
                                         ORDER BY NgayLapPhieu DESC ";
                                 $result = mysqli_query($connect, $query);
                             }
@@ -95,6 +94,7 @@ $i=0;
                                 <td class="overflow" style="word-wrap:break-word;width: 150px;display: table-caption;"><?php echo $row['NhomLop']  ?></td>
                                <!--  <td><?php echo $row['SLSV']  ?></td> -->
                                 <td style="width: 150px "><?php echo $row['TenHK']  ?></td>
+                                   <td style="width: 150px"><?php echo $row['NamHoc']  ?></td>
                                 <td  style="width: 110px"><?php echo $datelap .'<br>'. $timelap ?></td>
 
                                 <!-- <td style="width: 110px"><?php  if($row['NgayCapNhat']){echo $datecn .'<br>'. $timecn; } ?></td> -->

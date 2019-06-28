@@ -35,6 +35,12 @@
                         <li><i class="fa fa-list-alt"></i><a href="danh-muc.php">Danh sách danh mục</a></li>
                     </ul>
                 </li>
+                <li class="menu-item-has-children dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon ti-list"></i>Năm học</a>
+                    <ul class="sub-menu children dropdown-menu">
+                         <li><i class="fa fa-list-alt"></i><a href="danh-sach-nam-hoc.php">Danh sách năm học</a></li>
+                    </ul>
+                </li>
         
                 <?php
             if (isset($_SESSION["QLVT"]))
@@ -92,6 +98,7 @@
                       {?>
                       <li><i class="fa fa-list-alt"></i><a href="lich-su-de-xuat-phieu.php">Lịch sử duyệt phiếu</a></li>
                       <?php } ?>
+                      <li><i class="fa fa-list-alt"></i><a href="danh-sach-phieu-cho-tong-hop.php">Danh sách phiếu chờ tổng hợp</a></li>
                     </ul>
                 </li>
               <?php } ?>

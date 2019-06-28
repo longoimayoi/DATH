@@ -158,9 +158,9 @@ if(isset($_POST['import']))
 
   }
 }
-$query1="SELECT TongTien,MonHoc,NhomLop,SLSV,MaKhoa,HocKy,TrangThai,GhiChu,HocPhiCoBan, LyDoHuy FROM tblhoadon WHERE MaHD='$MaHD' ";
+$query1="SELECT TongTien,MonHoc,NhomLop,SLSV,MaKhoa,NamHoc,HocKy,TrangThai,GhiChu,HocPhiCoBan, LyDoHuy FROM tblhoadon WHERE MaHD='$MaHD' ";
 $result1=mysqli_query($connect,$query1);
-list($TongTien,$MonHoc,$NhomLop,$SLSV,$Khoa,$HocKy,$TrangThai,$GhiChu,$HocPhiCoBan,$LyDoHuy)=mysqli_fetch_array($result1,MYSQLI_NUM);
+list($TongTien,$MonHoc,$NhomLop,$SLSV,$Khoa,$NamHoc,$HocKy,$TrangThai,$GhiChu,$HocPhiCoBan,$LyDoHuy)=mysqli_fetch_array($result1,MYSQLI_NUM);
 if(isset($_POST['edit']))
 {
 
@@ -290,8 +290,10 @@ if(isset($_POST['luuhocphi']))
             ?>
           </select>
         </div>
-        <div class="form-group  col-lg-6">
+        <div class="form-group  col-lg-6" >
           <label for="">Học kỳ</label>
+           <label for="" style="margin-left: 220px;">Năm học</label>
+          <div style="display: flex;">
           <select class="form-control edit" name="HocKy" id="" disabled="">
             <?php $query="SELECT * FROM tblhocky";
             $result=mysqli_query($connect,$query);
@@ -306,7 +308,22 @@ if(isset($_POST['luuhocphi']))
             }
             ?>
           </select>
-
+          
+           <select class="form-control edit" name="NamHoc" id="" disabled="">
+            <?php $query="SELECT * FROM namhoc ORDER BY id DESC LIMIT 0,1";
+            $result=mysqli_query($connect,$query);
+            while ($item1=mysqli_fetch_array($result,MYSQLI_ASSOC)) {
+              ?>
+              <option
+              <?php if($NamHoc==$item1['id'])
+              echo 'selected="selected"';
+              ?>
+              value="<?php echo $item1['id'] ?>"><?php echo $item1['NamHoc'] ?></option>
+              <?php
+            }
+            ?>
+          </select>
+          </div>
         </div>
          <div class="form-group  col-lg-6">
           <label for="">Ghi chú</label>

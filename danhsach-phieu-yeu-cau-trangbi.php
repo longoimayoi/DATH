@@ -27,11 +27,12 @@ $i=0;
     $MonHoc = $_POST["MonHoc"];
     $NhomLop = $_POST["NhomLop"];
     $SLSV = $_POST["SLSV"];
+    $NamHoc=$_POST['NamHoc'];
     $HocKy = $_POST["HocKy"];
     $khoa=$_SESSION['MaKhoa'];
-     $GhiChu=$_POST['GhiChu'];
-    $sql1 = "INSERT INTO tblhoadon(MaTK,MaKhoa,MonHoc,NhomLop,SLSV,HocKy,NgayLapPhieu,TrangThai,GhiChu)
-    VALUES('$MaTK','$khoa','$MonHoc','$NhomLop','$SLSV','$HocKy','$today',5,'$GhiChu')";
+    $GhiChu=$_POST['GhiChu'];
+    $sql1 = "INSERT INTO tblhoadon(MaTK,MaKhoa,MonHoc,NhomLop,SLSV,NamHoc,HocKy,NgayLapPhieu,TrangThai,GhiChu)
+    VALUES('$MaTK','$khoa','$MonHoc','$NhomLop','$SLSV','$NamHoc','$HocKy','$today',5,'$GhiChu')";
     $query = mysqli_query($connect,$sql1);
      if(mysqli_affected_rows($connect)==1)
       {
@@ -71,7 +72,8 @@ $i=0;
                                     <th  style="display: table-caption;width: 200px;height: 22px">Mã môn học</th>
                                     <th  style="display: table-caption;">Tên lớp</th>
                                  <!--    <th >Số lượng SV</th>  -->
-                                    <th  style="width: 150px">Học kỳ</th>
+                                    <th  style="width: 150px;">Học kỳ</th>
+                                     <th  style="width: 150px;">Năm học</th>
                                     <th style="width: 150px">Ngày lập</th>
                                      <!-- <th style="width: 150px">Ngày cập nhật</th> -->
 <!--                                      <?php if(isset($_SESSION['DPYCTB'])) {?>
@@ -86,52 +88,52 @@ $i=0;
                             <tbody>
                               <?php if(isset($_SESSION['YCTBVT']) && isset($_SESSION['DPYCTB']) && isset($_SESSION['BG']))
                                     {
-                                      $query="SELECT *,hd.TrangThai FROM tblhoadon hd, tbltaikhoan tk ,tblhocky hk
-                                        WHERE hd.MaTK=tk.MaTK AND hk.MaHK=hd.HocKy 
+                                      $query="SELECT *,hd.TrangThai FROM tblhoadon hd, tbltaikhoan tk ,tblhocky hk,namhoc nh
+                                        WHERE hd.MaTK=tk.MaTK AND hk.MaHK=hd.HocKy AND nh.id=hd.NamHoc 
                                          AND hd.TrangThai!=2 AND hd.TrangThai!=4
                                         ORDER BY NgayLapPhieu DESC ";
                                         $result = mysqli_query($connect, $query);
                                     }elseif(isset($_SESSION['YCTBVT']) && isset($_SESSION['BG']))
                                     {
-                                     $query="SELECT *,hd.TrangThai FROM tblhoadon hd, tbltaikhoan tk ,tblhocky hk
-                                        WHERE hd.MaTK=tk.MaTK AND hk.MaHK=hd.HocKy 
+                                     $query="SELECT *,hd.TrangThai FROM tblhoadon hd, tbltaikhoan tk ,tblhocky hk,namhoc nh
+                                        WHERE hd.MaTK=tk.MaTK AND hk.MaHK=hd.HocKy AND nh.id=hd.NamHoc 
                                         AND hd.TrangThai!=1 AND hd.TrangThai!=2 AND hd.TrangThai!=4
                                         ORDER BY NgayLapPhieu DESC ";   
                                         $result = mysqli_query($connect, $query);
                                     }
                                     elseif(isset($_SESSION['YCTBVT']) && isset($_SESSION['DPYCTB']))
                                     {
-                                      $query="SELECT *,hd.TrangThai FROM tblhoadon hd, tbltaikhoan tk ,tblhocky hk
-                                        WHERE hd.MaTK=tk.MaTK AND hk.MaHK=hd.HocKy 
+                                      $query="SELECT *,hd.TrangThai FROM tblhoadon hd, tbltaikhoan tk ,tblhocky hk,namhoc nh
+                                        WHERE hd.MaTK=tk.MaTK AND hk.MaHK=hd.HocKy AND nh.id=hd.NamHoc 
                                         AND hd.TrangThai!=0 AND hd.TrangThai!=2 AND hd.TrangThai!=4
                                         ORDER BY NgayLapPhieu DESC "; 
                                         $result = mysqli_query($connect, $query);
                                     } elseif(isset($_SESSION['DPYCTB']) && isset($_SESSION['BG']))
                                     {
-                                 $query="SELECT *,hd.TrangThai FROM tblhoadon hd, tbltaikhoan tk ,tblhocky hk
-                                        WHERE hd.MaTK=tk.MaTK AND hk.MaHK=hd.HocKy 
+                                 $query="SELECT *,hd.TrangThai FROM tblhoadon hd, tbltaikhoan tk ,tblhocky hk,namhoc nh
+                                        WHERE hd.MaTK=tk.MaTK AND hk.MaHK=hd.HocKy AND nh.id=hd.NamHoc 
                                          AND hd.TrangThai!=5 AND hd.TrangThai!=2 AND hd.TrangThai!=4
                                         ORDER BY NgayLapPhieu DESC ";
                                 
                                 $result = mysqli_query($connect, $query);
                                 }elseif(isset($_SESSION['BG'])) {
                              
-                                 $query="SELECT *,hd.TrangThai FROM tblhoadon hd, tbltaikhoan tk ,tblhocky hk
-                                        WHERE hd.MaTK=tk.MaTK AND hk.MaHK=hd.HocKy 
-                                        AND hd.TrangThai!=5 AND hd.TrangThai!=2 AND hd.TrangThai!=4 AND hd.TrangThai!=1
+                                 $query="SELECT *,hd.TrangThai FROM tblhoadon hd, tbltaikhoan tk ,tblhocky hk,namhoc nh
+                                        WHERE hd.MaTK=tk.MaTK AND hk.MaHK=hd.HocKy AND nh.id=hd.NamHoc 
+                                        AND hd.TrangThai=0
                                         ORDER BY NgayLapPhieu DESC ";
                                 $result = mysqli_query($connect, $query);
                             }elseif(isset($_SESSION['DPYCTB'])) {
                              
-                                 $query="SELECT *,hd.TrangThai FROM tblhoadon hd, tbltaikhoan tk ,tblhocky hk
-                                        WHERE hd.MaTK=tk.MaTK AND hk.MaHK=hd.HocKy 
-                                        AND hd.TrangThai!=5   AND hd.TrangThai!=0 AND hd.TrangThai!=4 AND hd.TrangThai!=2
+                                 $query="SELECT *,hd.TrangThai FROM tblhoadon hd, tbltaikhoan tk ,tblhocky hk,namhoc nh
+                                        WHERE hd.MaTK=tk.MaTK AND hk.MaHK=hd.HocKy AND nh.id=hd.NamHoc 
+                                        AND hd.TrangThai=1
                                         ORDER BY NgayLapPhieu DESC ";
                                 $result = mysqli_query($connect, $query);
                             }elseif(isset($_SESSION['YCTBVT']))
                               {
-                                 $query="SELECT *,hd.TrangThai FROM tblhoadon hd, tbltaikhoan tk ,tblhocky hk
-                                        WHERE hd.MaTK=tk.MaTK AND hk.MaHK=hd.HocKy 
+                                 $query="SELECT *,hd.TrangThai FROM tblhoadon hd, tbltaikhoan tk ,tblhocky hk,namhoc nh
+                                        WHERE hd.MaTK=tk.MaTK AND hk.MaHK=hd.HocKy AND nh.id=hd.NamHoc 
                                         AND hd.TrangThai!=0 AND hd.TrangThai!=2 AND hd.TrangThai!=4 AND hd.TrangThai!=1
                                         AND tk.MaTK=".$_SESSION['uid']."
                                         ORDER BY NgayLapPhieu DESC ";
@@ -156,6 +158,7 @@ $i=0;
                                 <td class="overflow" style="word-wrap:break-word;width: 217px;display: table-caption;"><?php echo $row['NhomLop']  ?></td>
                                <!--  <td><?php echo $row['SLSV']  ?></td> -->
                                 <td style="width: 150px"><?php echo $row['TenHK']  ?></td>
+                                   <td style="width: 150px"><?php echo $row['NamHoc']  ?></td>
                                 <td  style="width: 160px"><?php echo $datelap .'  '. $timelap ?></td>
 
                                <!--  <td style="width: 110px"><?php  if($row['NgayCapNhat']){echo $datecn .'<br>'. $timecn; } ?></td> -->
@@ -232,7 +235,7 @@ $i=0;
                                     }
                              ?>
                          </select>
-                           <!--  <input type="text" placeholder="Nhập mã môn học" name="MonHoc" class="form-control" required> -->
+                           
                         </div>
                        
                         <div class=" form-group">
@@ -241,7 +244,7 @@ $i=0;
                         <div class=" form-group">
                             <input type="text" placeholder="Nhập số lượng sinh viên" name="SLSV" class="form-control" required>
                         </div>
-                        <div class=" form-group">
+                        <div class="form-group" style="display: flex;">
                             <select class="form-control" name="HocKy" id="">
                                 <option   disabled="">Chọn học kỳ</option>
                         <?php $query="SELECT * FROM tblhocky";
@@ -253,7 +256,16 @@ $i=0;
                                 }
                          ?>
                          </select>
-                          
+                            <select class="form-control" name="NamHoc" id="" >
+                            <?php $query="SELECT * FROM namhoc ORDER BY id DESC LIMIT 0, 1";
+                                    $result=mysqli_query($connect,$query);
+                                    while ($item=mysqli_fetch_array($result,MYSQLI_ASSOC)) {
+                                        ?>
+                                        <option  value="<?php echo $item['id'] ?>"><?php echo $item['NamHoc'] ?></option>
+                                        <?php
+                                    }
+                             ?>
+                         </select>
                         </div>
                         <div class=" form-group">
                             <input type="text" placeholder="Nhập ghi chú" name="GhiChu" class="form-control">
