@@ -4,21 +4,37 @@ include 'leftpanel.php' ;
 
 if(isset($_POST['them']))
 {
+  
+    $query="SELECT NamHoc FROM namhoc ORDER BY id DESC LIMIT 0,1  ";
+    $result = mysqli_query($connect, $query);
     date_default_timezone_set('Asia/Ho_Chi_Minh');
-   $namhoc=date("Y").'-'.(date("Y")+1);
-   $query="INSERT INTO namhoc (NamHoc)VALUES('$namhoc')";
-   $result=mysqli_query($connect,$query);
-    if(mysqli_affected_rows($connect)==1)
-      {
-        echo "<script>alert('Thêm năm học thành công')</script>";
-          echo("<script>location.href = '"."danh-sach-nam-hoc.php';</script>");
-      }
-      else
-      {
-        echo "<script>alert('Thêm không thành công')</script>";
-          echo("<script>location.href = '"."danh-sach-nam-hoc.php';</script>");
-      }
+    $namhoc=date("Y").'-'.(date("Y")+1);
+    while($item=mysqli_fetch_array($result,MYSQLI_ASSOC))
+    {
+        if($item['NamHoc']!= $namhoc)
+        {
+            $query="INSERT INTO namhoc (NamHoc)VALUES('$namhoc')";
+            $result=mysqli_query($connect,$query);
+            if(mysqli_affected_rows($connect)==1)
+            {
+                echo "<script>alert('Thêm năm học thành công')</script>";
+                echo("<script>location.href = '"."danh-sach-nam-hoc.php';</script>");
+            }
+            else
+            {
+                echo "<script>alert('Thêm không thành công')</script>";
+                echo("<script>location.href = '"."danh-sach-nam-hoc.php';</script>");
+            }
+        }
+        else
+        {    
+            echo "<script>alert('Năm học ".$item['NamHoc']." đã được thêm trước đó. ')</script>";
+             echo("<script>location.href = '"."danh-sach-nam-hoc.php';</script>");
+        }
 }
+}
+
+
 
 ?>
 <div class="content mt-3">
@@ -29,11 +45,12 @@ if(isset($_POST['them']))
                     <div class="card-header">
                         <strong class="card-title">DANH SÁCH NĂM HỌC</strong>
                         <form action="" method="post">
-                       <button style="float: right;" type="submit" name="them" onclick="return confirm('Bạn có muốn thêm?')">
+                       <button style="float: right;" type="submit" name="them" onclick="return confirm('Năm học chỉ được thêm 1 lần vào năm học mới! Bạn có muốn thêm?')">
                         <span class="fa fa-plus" aria-hidden="true"></span> Thêm năm học
                         </button> 
                         </form>
                     </div>
+
                    <!--   <button data-toggle="collapse" href="#collapse1" class="collapsed"  style="background-color: #217346" type="submit">hiển thị</button> -->
                     <div class="card-body" >
                         <table  id="bootstrap-data-table-export"  class="table table-striped table-bordered">
