@@ -165,6 +165,7 @@ include('mo-khoa-tai-khoan.php');
                         <!-- Modal content-->
                         <div class="modal-content">
                             <div class="modal-body modal-body-sub_agile">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>  
                                 <div class="card-body card-block">
                                     <h3 class="agileinfo_sign">Vô hiệu hóa tài khoản</h3>
                                     <p style="width: 50px;"></p>
@@ -188,6 +189,7 @@ include('mo-khoa-tai-khoan.php');
                         <!-- Modal content-->
                         <div class="modal-content">
                             <div class="modal-body modal-body-sub_agile">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>  
                                 <div class="card-body card-block">
                                     <h3 class="agileinfo_sign">Mở khóa tài khoản</h3>
                                     <p style="width: 50px;"></p>
@@ -212,6 +214,7 @@ include('mo-khoa-tai-khoan.php');
                     <!-- Modal content-->
                     <div class="modal-content" style="width: 600px;">
                         <div class="modal-body modal-body-sub_agile">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>  
                             <div class="card-body card-block">
                                 <h3 class="agileinfo_sign" align="center">TẠO TÀI KHOẢN MỚI</h3>
                                 <p style="width: 50px;"></p>

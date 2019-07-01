@@ -77,28 +77,23 @@
                                 <li><i class="fa fa-check-square-o"></i><a href="kiem-ke.php">Kiểm kê</a></li>
                         </ul>
                     </li>
-                <?php }?>
-
-            <?php
+                <?php }
                 if (isset($_SESSION["YCTBVT"]) || isset($_SESSION["BG"]) || isset($_SESSION["DPYCTB"]))
                 {
                     ?>
                 <li class="menu-item-has-children dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon ti-pencil-alt"></i>Đề nghị vật tư </a>
                     <ul class="sub-menu children dropdown-menu">
-                      
-                        <li><i class="fa  fa-list-alt"></i><a href="danhsach-phieu-yeu-cau-trangbi.php">Danh sách phiếu</a></li>
+                        <li><i class="fa fa-list-alt"></i><a href="danhsach-phieu-yeu-cau-trangbi.php">Danh sách phiếu</a></li>
                         <?php if(isset($_SESSION["YCTBVT"]) && isset($_SESSION["DPYCTB"]) ) { ?>
-                        <li><i class="fa fa-list-alt"></i><a href="lich-su-de-xuat-phieu.php">Theo dõi phiếu đề xuất</a></li>
-                       <?php } elseif (isset($_SESSION["YCTBVT"]))
-                      {?>
-                      <li><i class="fa fa-list-alt"></i><a href="lich-su-de-xuat-phieu.php">Theo dõi phiếu đề xuất</a></li>
+                        <li><i class="fa fa-eye"></i><a href="lich-su-de-xuat-phieu.php">Theo dõi phiếu đề xuất</a></li>
+                       <?php } elseif (isset($_SESSION["YCTBVT"])){?>
+                      <li><i class="fa fa-eye"></i><a href="lich-su-de-xuat-phieu.php">Theo dõi phiếu đề xuất</a></li>
                       <?php }
-                      elseif (isset($_SESSION["DPYCTB"]))
-                      {?>
-                      <li><i class="fa fa-list-alt"></i><a href="lich-su-de-xuat-phieu.php">Lịch sử duyệt phiếu</a></li>
+                      elseif (isset($_SESSION["DPYCTB"])){?>
+                      <li><i class="fa fa-history"></i><a href="lich-su-de-xuat-phieu.php">Lịch sử duyệt phiếu</a></li>
                       <?php } ?>
-                      <li><i class="fa fa-list-alt"></i><a href="danh-sach-phieu-cho-tong-hop.php">Danh sách phiếu chờ tổng hợp</a></li>
+                     <!--  <li><i class="fa fa-list-alt"></i><a href="danh-sach-phieu-cho-tong-hop.php">Danh sách phiếu chờ tổng hợp</a></li> -->
                     </ul>
                 </li>
               <?php } ?>

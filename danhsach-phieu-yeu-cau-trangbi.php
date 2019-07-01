@@ -57,6 +57,7 @@ $i=0;
                         <strong class="card-title">DANH SÁCH PHIẾU ĐỀ XUẤT</strong>
                     <?php if(isset($_SESSION['YCTBVT'])) { ?>
                           <button style="float: right;" type="submit" data-toggle="modal" data-target="#myModala">
+
                         <span class="fa fa-plus" aria-hidden="true"></span> Thêm phiếu đề xuất</a>
                         </button>
                         <?php } ?>
@@ -114,10 +115,8 @@ $i=0;
                                         WHERE hd.MaTK=tk.MaTK AND hk.MaHK=hd.HocKy AND nh.id=hd.NamHoc 
                                          AND hd.TrangThai!=5 AND hd.TrangThai!=2 AND hd.TrangThai!=4
                                         ORDER BY NgayLapPhieu DESC ";
-                                
                                 $result = mysqli_query($connect, $query);
                                 }elseif(isset($_SESSION['BG'])) {
-                             
                                  $query="SELECT *,hd.TrangThai FROM tblhoadon hd, tbltaikhoan tk ,tblhocky hk,namhoc nh
                                         WHERE hd.MaTK=tk.MaTK AND hk.MaHK=hd.HocKy AND nh.id=hd.NamHoc 
                                         AND hd.TrangThai=0
@@ -201,8 +200,10 @@ $i=0;
         <!-- Modal content-->
         <div class="modal-content" style="width: 600px;">
             <div class="modal-body modal-body-sub_agile">
+                     <button type="button" class="close" data-dismiss="modal">&times;</button>  
                 <div class="card-body card-block">
                     <h3 class="agileinfo_sign" align="center">PHIẾU YÊU CẦU TRANG BỊ</h3>
+
                     <p style="width: 50px;"></p>
                     <form action="" method="post"  >
                       

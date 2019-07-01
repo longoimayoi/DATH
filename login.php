@@ -84,7 +84,7 @@ exit(header('Location: index.php'));
         $_SESSION['YCTBVT'] = 1;
         }
         if(in_array('7',$b))
-        {
+        {   
         $_SESSION['DPYCTB'] = 1;
         }
       /*  if(in_array('8',$b))

@@ -190,7 +190,7 @@ if(isset($_POST['huy']))
 }
 if(isset($_POST['guiphieu']))
 {
-  $query_g="UPDATE tblhoadon set TrangThai=6 WHERE MaHD='$MaHD'";
+  $query_g="UPDATE tblhoadon set TrangThai=0 WHERE MaHD='$MaHD'";
   $result_g=mysqli_query($connect,$query_g);
   if(mysqli_affected_rows($connect)==1)
   {
@@ -564,6 +564,7 @@ $tmp = $rowK['HeSoK'] -1;
           <div class="modal-dialog">
             <div class="modal-content" style="width: 600px;">
               <div class="modal-body modal-body-sub_agile">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>  
                 <div class="card-body card-block">
                   <h3 style="text-align: center;" class="agileinfo_sign">Không duyệt phiếu yêu cầu trang bị</h3>
                   <p style="width: 50px;"></p>
@@ -582,6 +583,7 @@ $tmp = $rowK['HeSoK'] -1;
           <div class="modal-dialog">
             <div class="modal-content" style="width: 600px;">
               <div class="modal-body modal-body-sub_agile">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>  
                 <div class="card-body card-block">
                   <h3 style="text-align: center;" class="agileinfo_sign">Đơn giá chuẩn</h3>
                   <p style="width: 50px;"></p>
