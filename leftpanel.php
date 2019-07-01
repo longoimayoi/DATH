@@ -28,13 +28,13 @@
                 <?php }?>
 
         
-                <li class="menu-item-has-children dropdown">
+              <!--   <li class="menu-item-has-children dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon ti-list"></i>Danh mục</a>
                     <ul class="sub-menu children dropdown-menu">
                         <li><i class="fa fa-plus"></i><a href="them-danh-muc.php">Thêm danh mục</a></li>
                         <li><i class="fa fa-list-alt"></i><a href="danh-muc.php">Danh sách danh mục</a></li>
-                    </ul>
-                </li>
+                    </ul> 
+                </li> -->
                 <li class="menu-item-has-children dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon ti-list"></i>Năm học</a>
                     <ul class="sub-menu children dropdown-menu">
@@ -87,7 +87,7 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon ti-pencil-alt"></i>Đề nghị vật tư </a>
                     <ul class="sub-menu children dropdown-menu">
                       
-                        <li><i class="fa fa-list-alt"></i><a href="danhsach-phieu-yeu-cau-trangbi.php">Danh sách phiếu</a></li>
+                        <li><i class="fa  fa-list-alt"></i><a href="danhsach-phieu-yeu-cau-trangbi.php">Danh sách phiếu</a></li>
                         <?php if(isset($_SESSION["YCTBVT"]) && isset($_SESSION["DPYCTB"]) ) { ?>
                         <li><i class="fa fa-list-alt"></i><a href="lich-su-de-xuat-phieu.php">Theo dõi phiếu đề xuất</a></li>
                        <?php } elseif (isset($_SESSION["YCTBVT"]))
@@ -179,14 +179,13 @@
                                 $result=mysqli_query($connect,$query); 
                             }elseif(isset($_SESSION["YCTBVT"]))
                           {
-                          $query="SELECT TrangThai FROM tblhoadon WHERE TrangThai !=2 AND TrangThai !=4 AND TrangThai !=0
-                          AND TrangThai !=1 AND MaTK=".$_SESSION['uid']." ";
+                          $query="SELECT TrangThai FROM tblhoadon WHERE  TrangThai =5 AND MaTK=".$_SESSION['uid']." ";
                          
                         }elseif(isset($_SESSION["BG"])){
-                            $query="SELECT TrangThai FROM tblhoadon WHERE TrangThai !=2 AND TrangThai !=4 AND TrangThai !=5 AND TrangThai !=1 ";
+                            $query="SELECT TrangThai FROM tblhoadon WHERE TrangThai =0 ";
                          
                         }elseif(isset($_SESSION["DPYCTB"])){
-                            $query="SELECT TrangThai FROM tblhoadon WHERE TrangThai !=0 AND TrangThai !=4 AND TrangThai !=5 AND TrangThai !=2";
+                            $query="SELECT TrangThai FROM tblhoadon WHERE TrangThai =1";
                           
                         }
                         $result=mysqli_query($connect,$query); 
