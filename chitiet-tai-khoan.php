@@ -105,7 +105,7 @@ $qh=explode(',', $a);
                 <h2 style="color: red"><?php // if($item['TrangThai']==1) echo "Còn hoạt động"; else echo "Đã bị vô hiệu hóa"; ?></h2>
                 <div class="form-group" >
                   <label for="" >Tên đăng nhập</label>
-                  <input type="email" placeholder="Tên đăng nhập" id="TenDangNhap" value="<?php echo $item['TenDangNhap'] ?>" name="TenDangNhap" required="" class="form-control" >
+                  <input type="text" placeholder="Tên đăng nhập" id="TenDangNhap" value="<?php echo $item['TenDangNhap'] ?>" name="TenDangNhap" required="" class="form-control" >
                   <p id="validate-user"></p>
                 </div>
                 <div class="form-group" >
