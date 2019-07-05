@@ -126,14 +126,18 @@ if(isset($_POST['import']))
   }
   if($data)
   {
-    $dem_tt=1;
+    // echo "<pre>";
+    // print_r($data);
+    // echo "</pre>";
+    $dem_tt=0;
     foreach ($data as $row)
     {
-      if($dem_tt>1)
+      if($dem_tt>=0)
       {
         $dongia=0;
         $matk=$_SESSION['uid'];
         $a1=$row['TenVatTu'];
+        echo $a1;
         $a2=$row['DVT'];
         $a3=$row['SL'];
         $a4=$row['ThongSoKT'];
@@ -463,7 +467,7 @@ $tmp = $rowK['HeSoK'] -1;
      <?php }elseif($TrangThai==2) {?>
           <div id="row" >
             
-            <a href="report-chi-tiet-phieu-yeu-cau-trang-bi.php?MaHD=<?php echo $_GET['MaHD'] ?>"><button  type="submit" class="callback"  name="import">Report</button> </a>
+            <a href="http://localhost:8888/Report/public/report?id=<?php echo $MaHD ?>"><button  type="submit" class="callback"  name="import">Report</button> </a>
           </div>
         <?php }else echo ""; ?>
 

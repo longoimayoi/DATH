@@ -152,26 +152,32 @@
                             </div> -->
   
                           <?php 
+                            if( isset($_SESSION['YCTBVT']) || isset($_SESSION['DPYCTB']) || isset($_SESSION['BG']))
+                            {
+
                           if( isset($_SESSION['YCTBVT']) && isset($_SESSION['DPYCTB']) && isset($_SESSION['BG']))
                             {
                               $query="SELECT TrangThai FROM tblhoadon WHERE 
                               TrangThai !=2  AND TrangThai!=4 ";
+                              
                             
                           }elseif(isset($_SESSION['YCTBVT']) && isset($_SESSION['BG']))
                             {
                               $query="SELECT TrangThai FROM tblhoadon WHERE 
                               TrangThai !=2 AND TrangThai!=4 AND TrangThai!=1  ";
-                               
+                              
                               }elseif( isset($_SESSION['YCTBVT']) && isset($_SESSION['DPYCTB']))
                             {
                               $query="SELECT TrangThai FROM tblhoadon WHERE 
                               TrangThai !=2 AND TrangThai!=0 AND TrangThai!=4 ";
+                           
                             
                           }elseif(isset($_SESSION['DPYCTB']) && isset($_SESSION['BG']))
                             {
                                $query="SELECT TrangThai FROM tblhoadon WHERE 
                                TrangThai !=2 AND TrangThai!=4 AND TrangThai !=5  ";
-                                $result=mysqli_query($connect,$query); 
+                            
+
                             }elseif(isset($_SESSION["YCTBVT"]))
                           {
                           $query="SELECT TrangThai FROM tblhoadon WHERE  TrangThai =5 AND MaTK=".$_SESSION['uid']." ";
@@ -179,11 +185,13 @@
                         }elseif(isset($_SESSION["BG"])){
                             $query="SELECT TrangThai FROM tblhoadon WHERE TrangThai =0 ";
                          
+                         
                         }elseif(isset($_SESSION["DPYCTB"])){
                             $query="SELECT TrangThai FROM tblhoadon WHERE TrangThai =1";
+                            
                           
                         }
-                        $result=mysqli_query($connect,$query); 
+                       $result=mysqli_query($connect,$query); 
                           while ($item=mysqli_fetch_array($result,MYSQLI_ASSOC)) {
                               if($item['TrangThai']==5)
                               {
@@ -202,7 +210,8 @@
                               }
                               $count[]=$item['TrangThai'];
                               $countall=count($count);
-                           }         
+                           }     
+                           }    
                           ?>
                           <div class="dropdown for-message">
                               <button class="btn btn-secondary dropdown-toggle" type="button"
