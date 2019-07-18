@@ -4,7 +4,7 @@ $(document).ready(function(){
         $('#formcttk').validate({
         rules:{
                     TenDangNhap:{
-                        required:true,minlength:8,email:true,
+                        required:true,minlength:8,
                     },
                     SDT:{
                       maxlength:10,minlength:10,
@@ -18,7 +18,7 @@ $(document).ready(function(){
                 },
                messages:{
                     TenDangNhap:{
-                        required:'Mời bạn nhập dô đây',minlength:'Độ dài lớn hơn 8 ký tự',email:'Xin nhập đúng định dạng email',
+                        required:'Mời bạn nhập dô đây',minlength:'Độ dài lớn hơn 8 ký tự',
                     },
                     SDT:{
                       maxlength:'Không được lớn hơn 10 ký tự',minlength:'Không được nhỏ hơn 10 ký tự',
