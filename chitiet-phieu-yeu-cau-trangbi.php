@@ -38,7 +38,12 @@ if(isset($_POST['submit']))
   $thongso=$_POST['thongso'];
   $xuatxu=$_POST['xuatxu'];
   $ghichu=$_POST['ghichu'];
-  $goiydg=$_POST['goiydg'];
+  if(isset($_POST['goiydg'])){
+    $goiydg=$_POST['goiydg'];
+  }
+  else{
+    $goiydg=0;
+  }
   $dongia=0;
   if($sl < 0)
   {
