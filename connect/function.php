@@ -16,8 +16,8 @@
 	function hienthi($name,$class)
 	{
 		global $connect;
-		echo "<select id='catalog-pattern' name='".$name."' class ='".$class."'>";
-		echo "<option value='0'>--Chọn danh mục--</option>";
+		echo "<select id='catalog-pattern' name='".$name."' class ='".$class."' required> ";
+		echo "<option value='' >--Chọn danh mục--</option>";
 		hienthidanhmuc();
 		echo "</select>";
 	}

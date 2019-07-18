@@ -85,7 +85,7 @@ exit(header('Location: index.php'));
         }
         if(in_array('7',$b))
         {   
-        $_SESSION['DPYCTB'] = 1;
+        $_SESSION['DP_BGH'] = 1;
         }
       /*  if(in_array('8',$b))
         {
@@ -99,10 +99,22 @@ exit(header('Location: index.php'));
         {
         $_SESSION['QLK'] = 1;
         }
-       /* if(in_array('13',$b))
+        if(in_array('13',$b))
         {
-        $_SESSION['XK'] = 1;
-        }*/
+        $_SESSION['DP_LDDV'] = 1;
+        }
+        if(in_array('14',$b))
+        {
+        $_SESSION['DP_NVPQT'] = 1;
+        }
+        if(in_array('15',$b))
+        {
+        $_SESSION['DP_LDPQT'] = 1;
+        }
+         if(in_array('16',$b))
+        {
+        $_SESSION['HP'] = 1;
+        }
         if($TrangThai==1)
         {
             echo("<script>location.href = '"."index.php';</script>");

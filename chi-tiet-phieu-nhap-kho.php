@@ -76,13 +76,13 @@
     }
   }
   ?>
-  <div class="content mt-3">
+  <!-- <div class="content mt-3">
     <div class="col-lg-12">
-      <div class="card">
-        <div class="card-header">
+      <div class="card"> -->
+        <!-- <div class="card-header">
           <strong>CHI TIẾT PHIẾU NHẬP KHO</strong>
-        </div>
-        <div class="card-body card-block">
+        </div> -->
+       <!--  <div class="card-body card-block">
           <div class="row">
             <div class="col-6">
               <?php
@@ -122,10 +122,10 @@
               </div>
             <?php } ?>
           </div>
-        </div>
-      </div>
-    </div>
-  </div>
+        </div> -->
+      <!-- </div> -->
+   <!--  </div>
+  </div> -->
   <!----============================HẾT BẢNG CHI TIẾT -> BẢNG THÔNG TIN NHẬP=====================================---->
   <div class="content mt-3">
     <div class="col-lg-12">
@@ -138,11 +138,11 @@
         if ($status == 0)
         {
           ?>
-          <div class="col-sm-3">
+         <!--  <div class="col-sm-3">
             <div class="card-body text-secondary">
               <button data-toggle="collapse" href="#collapse1" class="collapsed"  style="background-color: #217346" type="submit">Thêm vật tư</button>
             </div>
-          </div>
+          </div> -->
         <?php } ?>
         <div class="col">
           <button style="display: none">X</button>
@@ -152,9 +152,9 @@
           { ?>
             <div>
               <form action="" method="post" enctype="multipart/form-data">
-                <button for="file-upload" style="background-color: #217346" type="submit" name="file" name="import"class="addfiles"><i class="ti-upload"> Chọn</i> </button>
+            <!--     <button for="file-upload" style="background-color: #217346" type="submit" name="file" name="import"class="addfiles"><i class="ti-upload"> Chọn</i> </button> -->
                 <input id="file-upload" type="file" name="file" multiple style='display: none;'>
-                <button type="submit" name="import">Nhập excel</button> 
+                <button type="submit" name="import">Xuất excel</button> 
               </form>
             </div>
           <?php } if($TVT >0) {?>
@@ -201,7 +201,7 @@
         }
       }
       ?>
-      <div id="collapse1" class="col-lg-12 panel-collapse collapse">
+    <!--   <div id="collapse1" class="col-lg-12 panel-collapse collapse">
         <div class="card" >
           <div class="card-header">
             <strong>Nhập kho</strong>
@@ -270,9 +270,27 @@
             </form>
           </div>
         </div>
-      </div>
+      </div> -->
+      <?php 
+      if (isset($_POST['luuTamThoi']))
+          {
+            $sqlSum = "SELECT MaHD, SUM(SL) AS SL, SUM(SLDaNhap) AS SLDaNhap FROM tblphieuyeucautrangbi WHERE MaHD = '$id' GROUP BY MaHD";
+            $querySum = mysqli_query($connect, $sqlSum);
+            $rowSum = mysqli_fetch_assoc($querySum);
+            $mucDoHoanThanh = ($rowSum["SLDaNhap"]/$rowSum["SL"])*100;
+            $stt = $_POST["stt"];
+            $sldn = $_POST["sl"];
+            $tt = $_POST["TinhTrang"];
+            foreach ($stt as $key => $value) {
+           $sqlUpdate = "UPDATE tblphieuyeucautrangbi SET  SLDaNhap = '$sldn[$key]', TinhTrangNhap = '$tt[$key]' WHERE STT = '$value' ";
+           $queryUpdate = mysqli_query($connect, $sqlUpdate);
+            }
+             $sqlUpdatePhieu = "UPDATE tblhoadon SET  MucDoHoanThanh = '$mucDoHoanThanh' WHERE MaHD = '$id' ";
+           $queryUpdatePhieu = mysqli_query($connect, $sqlUpdatePhieu);
+          }
+           ?>
       <?php
-      $sqlct = "SELECT * FROM ctphieunhapkho WHERE MaPhieu=".$id;
+      $sqlct = "SELECT * FROM tblphieuyeucautrangbi WHERE MaHD=".$id;
       $queryct = mysqli_query($connect, $sqlct);
       $count = mysqli_num_rows($queryct);
       if ($count > 0)
@@ -280,19 +298,10 @@
         ?>
         <div class="col-lg-12">
           <div class="card">
-            <form method="post" id="update_form">
+            <form method="post" >
               <div class="card-header">
                 <strong style="position: relative;" class="card-title">DANH SÁCH VẬT TƯ NHẬP KHO</strong>
-                <?php
-                if ($status == 0)
-                {
-                  ?>
-                  <div style="margin-top: -28px; position: absolute;">
-                    <button style="width: 60px" class="cusbtn1"title="Lưu vật tư" type="submit" id="submit"><span style="margin-left: -6px"class="ti-save"></span></button>
-                    &nbsp
-                    <button style="width: 60px"class="cusbtn2"title="Xóa vật tư" type="reset" id ="delete"><span  style="margin-left: -6px"class="ti-trash"></span></button>
-                  </div>
-                <?php } ?>
+
                 <!--  -->
               </div>
               <!--    <form method="post" id="update_form"> -->
@@ -300,17 +309,54 @@
                 <div class="card-body">
                   <table class="table table-striped table-bordered">
                     <thead>
-                      <th></th>
-                      <th width="20%">Tên Vật tư</th>
+                      <th width="10%">Mã vật tư</th>
+                      <th width="20%">Tên vật tư</th>
                       <th width="10%">Đơn vị tính</th>
-                      <th width="10%">Số lượng</th>
+                      <th width="5%">Số lượng</th>
+                      <th width="10%">Số lượng đã nhập</th>
                       <th width="20%">Thông số KT</th>
-                      <th width="20%">Xuất xứ</th>
+                      <th width="10%">Xuất xứ</th>
                       <th width="20%">Ghi chú</th>
+                      <th width="20%">Tình trạng</th>
                     </thead>
-                    <tbody>
-                    </tbody>
+                    <?php  while ($row=mysqli_fetch_array($queryct,MYSQLI_ASSOC)) {
+                      $ttn = $row['TinhTrangNhap'];
+                     ?>
+
+                     <tbody>
+                      <input type="hidden" value="<?php echo $row['STT'] ?>" name="stt[]" placeholder=""class="form-control" >
+                      <td><?php echo $row['MaVatTu'] ?></td>
+                      <td><?php echo $row['TenVatTu'] ?></td>
+                      <td><?php echo $row['DVT'] ?></td>
+                      <td><?php echo $row['SL'] ?></td>
+                      <th width="10%"><input type="number" value="<?php echo $row['SLDaNhap'] ?>" name="sl[]" placeholder="" class="form-control" ></th>
+                      <td><?php echo $row['ThongSoKT'] ?></td>
+                      <td><?php echo $row['XuatXu'] ?></td>
+                      <td><?php echo $row['GhiChu'] ?></td>
+                      <td> <select name = "TinhTrang[]">
+                        <option value="0" <?php if($ttn==0) echo 'selected' ?> >Không</option>
+                        <option value="1" <?php if($ttn==1) echo 'selected' ?> >Có</option>
+                        <option value="2" <?php if($ttn==2) echo 'selected' ?> >Thiếu</option>
+                      </select>
+                      </td>
+                      </tbody>
+                    <?php } ?>
                   </table>
+                </div>
+                 <div class="col-md-6 offset-md-3">
+                  <section style="border:none"class="card">
+                    <div class="submit" style="margin:0 auto" >
+                      <button type="submit" name="lapPhieu" >
+                        Tiến hành nhập kho
+                      </button>
+                       <button type="submit" name="luuTamThoi" >
+                        Lưu
+                      </button>
+                      <button type="submit" name ="xoaPhieu" style="background-color:red" >
+                        Hủy phiếu
+                      </button>
+                    </div>
+                  </section>
                 </div>
               </form>
           <!--        <form method = "post">
@@ -319,31 +365,34 @@
           <?php
           if (isset($_POST['xoaPhieu']))
           {
-            $sqlDelete = "DELETE FROM tbl_phieunhapkho WHERE MaPhieu=".$id;
+           /* $sqlDelete = "DELETE FROM tbl_phieunhapkho WHERE MaPhieu=".$id;
             $sqlDeleteDetail = "DELETE FROM ctphieunhapkho WHERE MaPhieu=".$id;
             $queryDelete = mysqli_query($connect, $sqlDelete);
-            $queryDeleteDetail = mysqli_query($connect, $sqlDeleteDetail);
+            $queryDeleteDetail = mysqli_query($connect, $sqlDeleteDetail);*/
             echo("<script>location.href = '"."danh-sach-phieu-nhap-kho.php';</script>");
           }
+
           if (isset($_POST['lapPhieu']))
           {
-            $sql = "SELECT * FROM ctphieunhapkho WHERE  MaPhieu='$id'  ";
+            $sql = "SELECT * FROM tblphieuyeucautrangbi WHERE  MaHD='$id'  ";
             $query = mysqli_query($connect, $sql);
             $arr = array();
             $arrayPhieu = array();
+            $arrayTVT = array();
             while ($row = mysqli_fetch_assoc($query))
             {
-              array_push($arr, $row['TenVT']);
-              $arrayPhieu[$row['TenVT']]=$row['SL'];
+              array_push($arr, $row['MaVatTu']);
+              $arrayPhieu[$row['MaVatTu']]=$row['SL'];
+               $arrayTVT[$row['MaVatTu']]=$row['TenVatTu'];
             }
             $arraytk = array();
             foreach($arr as $tvt)
             {
-              $sqltk = "SELECT * FROM tblhoachat WHERE TenHoaChat in (SELECT TenVT from ctphieunhapkho where MaPhieu='$id'  and TenVT = '$tvt' )  ";
+              $sqltk = "SELECT * FROM tblhoachat WHERE MaVatTu in (SELECT MaVatTu from tblphieuyeucautrangbi where MaHD='$id'  and MaVatTu = '$tvt' )  ";
               $querytk = mysqli_query($connect, $sqltk);
               while ($rowtk = mysqli_fetch_assoc($querytk))
               {
-                $arraytk[$rowtk['TenHoaChat']]=$rowtk['SLT'];
+                $arraytk[$rowtk['MaVatTu']]=$rowtk['SLT'];
               }
             }
             
@@ -353,7 +402,7 @@
                 if ($keyPhieu == $keytk)
                 {
                   $sl = $valuePhieu + $valuetk;
-                  $sqlUpdate = "UPDATE tblhoachat SET  SLT = '$sl' WHERE TenHoaChat = '$keytk' ";
+                  $sqlUpdate = "UPDATE tblhoachat SET  SLT = '$sl' WHERE MaVatTu = '$keytk' ";
                   $queryUpdate = mysqli_query($connect, $sqlUpdate);
                   $count ++;
                   break;
@@ -361,13 +410,13 @@
               }
               if ($count == 0)
               {
-                $sqlInsert="INSERT INTO tblhoachat (TenHoaChat,SLT)
-                VALUES('{$keyPhieu}','{$valuePhieu}')";
+                $sqlInsert="INSERT INTO tblhoachat (MaVatTu,TenHoaChat, SLT, TrangThai, NgayHetHan, NgayMoNap)
+                VALUES('{$keyPhieu}','{$arrayTVT[$keyPhieu]}','{$valuePhieu}',1,'0000-00-00', '0000-00-00')";
                 $queryInsert=mysqli_query($connect,$sqlInsert);
               }
             }
-            $sqlTTP = "UPDATE tbl_phieunhapkho SET  TrangThai = 1 WHERE MaPhieu = '$id' ";
-            $queryTTP = mysqli_query($connect, $sqlTTP);
+           /* $sqlTTP = "UPDATE tbl_phieunhapkho SET  TrangThai = 1 WHERE MaPhieu = '$id' ";
+            $queryTTP = mysqli_query($connect, $sqlTTP);*/
             echo("<script>location.href = '"."danh-sach-phieu-nhap-kho.php';</script>");
           }
           ?>
@@ -375,19 +424,7 @@
           { ?>
             <form method="post" >
               <div id="row" >
-                <div class="col-md-6 offset-md-3">
-                  <section style="border:none"class="card">
-                    <div class="submit" style="margin:0 auto" >
-                      <button type="submit" name="lapPhieu" >
-                        Tiến hành nhập kho
-                      </button>
-                      
-                      <button type="submit" name ="xoaPhieu" style="background-color:red" >
-                        Hủy phiếu
-                      </button>
-                    </div>
-                  </section>
-                </div>
+               
                 
               </div>
             </form>
@@ -402,102 +439,11 @@
         ?>
       </div>
       <!-----===============================================SCRIPT===============================================--->
-      <script >
-        $(document).ready(function() {
-          fetch_data();
-        });
-        $(document).on('click', '.check_box', function(){
-          var html = '';
-          if(this.checked)
-          {
-            html = '<td><input type="checkbox" STT="'+$(this).attr('stt')+'" data-TenVT="'+$(this).data('tenvt')+'" data-DVT="'+$(this).data('dvt')+'" data-SL="'+$(this).data('sl')+'" data-ThongSoKT="'+$(this).data('thongsokt')+'" data-XuatXu="'+$(this).data('xuatxu')+'" data-GhiChu="'+$(this).data('ghichu')+'" class="check_box" checked /></td>';
-            html += '<td><input type="text" id = "skill_input" name="TenVatTu[]" class="form-control" value="'+$(this).data("tenvt")+'" autocomplete = "off"/></td>';
-            html += '<td><input type="text" name="DVT[]" class="form-control" value="'+$(this).data("dvt")+'" /></td>';
-            html += '<td><input  type="text" name="SL[]" class="form-control" value="'+$(this).data("sl")+'" /></td>';
-            html += '<td><input type="text" name="ThongSoKT[]" class="form-control" value="'+$(this).data("thongsokt")+'" /></td>';
-            html += '<td><input  type="text" name="XuatXu[]" class="form-control" value="'+$(this).data("xuatxu")+'" /></td>';
-            html += '<td><input type="text" name="GhiChu[]" class="form-control" value="'+$(this).data("ghichu")+'" /><input type="hidden" name="hidden_id[]" value="'+$(this).attr('stt')+'" /></td>';
-          }
-          else
-          {
-            html = '<td><input type="checkbox" STT="'+$(this).attr('stt')+'" data-TenVT="'+$(this).data('tenvt')+'" data-DVT="'+$(this).data('dvt')+'" data-SL="'+$(this).data('sl')+'" data-ThongSoKT="'+$(this).data('thongsokt')+'" data-XuatXu="'+$(this).data('xuatxu')+'" data-GhiChu="'+$(this).data('ghichu')+'" class="check_box" /></td>';
-            html += '<td>'+$(this).data('tenvt')+'</td>';
-            html += '<td>'+$(this).data('dvt')+'</td>';
-            html += '<td>'+$(this).data('sl')+'</td>';
-            html += '<td>'+$(this).data('thongsokt')+'</td>';
-            html += '<td>'+$(this).data('xuatxu')+'</td>';
-            html += '<td>'+$(this).data('ghichu')+'</td>';
-          }
-          $(this).closest('tr').html(html);
-        })  ;
-        $('#update_form').on('submit',function(event){
-          if (confirm("Xác nhận lưu dữ liệu !"))
-          {
-            event.preventDefault();
-            if($('.check_box:checked').length > 0)
-            {
-              $.ajax({
-                url:"saveDataNhapKho.php",
-                method:"POST",
-                data:$(this).serialize(),
-                success:function()
-                {
-                  alert('Cập nhật dữ liệu thành công !');
-                  fetch_data();
-                }
-              })
-            }
-          }
-        });
-        $('#update_form').on('reset',function(event){
-          if (confirm("Xác nhận xóa dữ liệu !"))
-          {
-            event.preventDefault();
-            if($('.check_box:checked').length > 0)
-            {
-              $.ajax({
-                url:"deleteDataNhapKho.php",
-                method:"POST",
-                data:$(this).serialize(),
-                success:function()
-                {
-                  alert('Cập nhật dữ liệu thành công !');
-                  fetch_data();
-                }
-              })
-            }
-          }
-        });
-        
-        function fetch_data()
-        {
-          $.ajax({
-            url:"dataNhapKho.php?id=<?php echo $id ?>",
-            method:"GET",
-            dataType:"json",
-            success:function(data)
-            {
-              var html = '';
-              for(var count = 0; count < data.length; count++)
-              {
-                html += '<tr>';
-                html += '<td><input type="checkbox" STT="'+data[count].STT+'"data-TenVT="'+data[count].TenVT+'" data-DVT="'+data[count].DVT+'" data-SL="'+data[count].SL+'" data-ThongSoKT="'+data[count].ThongSoKT+'" data-XuatXu="'+data[count].XuatXu+'"data-GhiChu="'+data[count].GhiChu+'" class="check_box"  /></td>';
-                html += '<td>'+data[count].TenVT+'</td>';
-                html += '<td>'+data[count].DVT+'</td>';
-                html += '<td>'+data[count].SL+'</td>';
-                html += '<td>'+data[count].ThongSoKT+'</td>';
-                html += '<td>'+data[count].XuatXu+'</td>';
-                html += '<td>'+data[count].GhiChu+'</td></tr>';
-              }
-              $('tbody').html(html);
-            }
-          });
-        }
-      </script>
+
       <script>
         $('.addfiles').on('click', function() { $('#file-upload').click();return false;});
       </script>
-      <script>
+    <!--   <script>
           //Add Input Fields
           $(document).ready(function() {
           var max_fields = 20; //Maximum allowed input fields
@@ -521,7 +467,7 @@
           x--;
         })
         });
-      </script>
+      </script> -->
       <script type="text/javascript">
         $(document).ready(function(){
           $('input[type="file"]').change(function(e){

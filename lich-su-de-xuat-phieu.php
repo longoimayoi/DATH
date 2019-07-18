@@ -24,7 +24,7 @@ $i=0;
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <strong class="card-title"><?php if(isset($_SESSION['YCTBVT']) && isset($_SESSION['DPYCTB'])) { echo "DANH SÁCH THEO DÕI & LỊCH SỬ DUYỆT PHIẾU"; }elseif(isset($_SESSION['YCTBVT'])) { echo "DANH SÁCH THEO DÕI PHIẾU ĐỀ XUẤT"; } elseif(isset($_SESSION['DPYCTB'])) { echo "DANH SÁCH LỊCH SỬ DUYỆT PHIẾU";  } ?></strong>
+                        <strong class="card-title"><?php if(isset($_SESSION['YCTBVT']) && isset($_SESSION['DPYCTB'])) { echo "DANH SÁCH THEO DÕI & LỊCH SỬ DUYỆT PHIẾU"; }elseif(isset($_SESSION['YCTBVT'])) { echo "LỊCH SỬ ĐỀ XUẤT"; } elseif(isset($_SESSION['DPYCTB'])) { echo "LỊCH SỬ DUYỆT PHIẾU";  } ?></strong>
 
                     </div>
                    <!--   <button data-toggle="collapse" href="#collapse1" class="collapsed"  style="background-color: #217346" type="submit">hiển thị</button> -->
@@ -41,7 +41,7 @@ $i=0;
                                     <th  style="width: 150px;">Năm học</th>
                                     <th >Ngày lập</th>
                                     <!--  <th >Ngày cập nhật</th> -->
-                                     <th style="width: 250px" >Ngày duyệt phiếu <hr> Ngày hủy phiếu</th>
+                                     <th style="width: 250px" >Ngày duyệt phiếu </th>
                                     <th style="width: 80px">Trạng thái</th>
                                     <th scope="colo"></th>
                                     
@@ -51,26 +51,41 @@ $i=0;
 
                             <tbody>
                               <?php 
-                            if(isset($_SESSION['YCTBVT']) && isset($_SESSION['DPYCTB'])) {
-                                 $query="SELECT *,hd.TrangThai FROM tblhoadon hd, tbltaikhoan tk ,tblhocky hk,namhoc nh
-                                        WHERE hd.MaTK=tk.MaTK AND hk.MaHK=hd.HocKy AND nh.id=hd.NamHoc 
-
-
-                                        ORDER BY NgayLapPhieu DESC ";
+                              $YCTBVT=0;
+                                  $DP_LDDV=0;
+                                   $status = array();
+                                    
+                                    if (isset($_SESSION['DP_NVPQT']))
+                                    {
+                                      array_push($status, 10);
+                                    }
+                                    if (isset($_SESSION['QLK']))
+                                    {
+                                      array_push($status, 6);
+                                      array_push($status, 9);
+                                    }
+                                     if (isset($_SESSION['YCTBVT']))
+                                    {
+                                      $YCTBVT=1;
+                                      array_push($status, 5);
+                                      array_push($status, 7);
+                                      array_push($status, 3);
+                                    }
+                                    $strStatus = implode(",", $status);
+                                    if($YCTBVT==1)
+                                    {
+                                    $query="SELECT *,hd.TrangThai FROM tblhoadon hd, tbltaikhoan tk ,tblhocky hk,namhoc nh
+                                    WHERE hd.MaTK=tk.MaTK AND hk.MaHK=hd.HocKy AND nh.id=hd.NamHoc 
+                                     AND tk.MaTK=".$_SESSION['uid']."
+                                    ORDER BY NgayLapPhieu DESC ";
+                                }else{
+                                     $query="SELECT *,hd.TrangThai FROM tblhoadon hd, tbltaikhoan tk ,tblhocky hk,namhoc nh
+                                    WHERE hd.MaTK=tk.MaTK AND hk.MaHK=hd.HocKy AND nh.id=hd.NamHoc 
+                                    AND tk.MaTK=".$_SESSION['uid']."
+                                    ORDER BY NgayLapPhieu DESC ";
+                                }
                                 $result = mysqli_query($connect, $query);
-                            }elseif(isset($_SESSION['YCTBVT'])) {
-                                 $query="SELECT *,hd.TrangThai FROM tblhoadon hd, tbltaikhoan tk ,tblhocky hk,namhoc nh
-                                        WHERE hd.MaTK=tk.MaTK AND hk.MaHK=hd.HocKy AND nh.id=hd.NamHoc 
-                                        AND tk.MaTK=".$_SESSION['uid']."
-                                        ORDER BY NgayLapPhieu DESC ";
-                                $result = mysqli_query($connect, $query);
-                            }elseif(isset($_SESSION['DPYCTB'])) {
-                                 $query="SELECT *,hd.TrangThai FROM tblhoadon hd, tbltaikhoan tk ,tblhocky hk,namhoc nh
-                                        WHERE hd.MaTK=tk.MaTK AND hk.MaHK=hd.HocKy AND nh.id=hd.NamHoc 
-                                        AND hd.TrangThai=2
-                                        ORDER BY NgayLapPhieu DESC ";
-                                $result = mysqli_query($connect, $query);
-                            }
+                            
                                 $a=0;
                                  while ($row=mysqli_fetch_array($result,MYSQLI_ASSOC))
                                  { 
@@ -82,7 +97,6 @@ $i=0;
 
                                     $dateduyet = date('d-m-Y', strtotime($row['NgayDuyetPhieu'] ));
                                     $timeduyet = date('H:i:s', strtotime($row['NgayDuyetPhieu']));
-
 
                                     $datehuy = date('d-m-Y', strtotime($row['NgayHuyPhieu'] ));
                                     $timehuy = date('H:i:s', strtotime($row['NgayHuyPhieu']));
@@ -98,21 +112,31 @@ $i=0;
                                 <td  style="width: 110px"><?php echo $datelap .'<br>'. $timelap ?></td>
 
                                 <!-- <td style="width: 110px"><?php  if($row['NgayCapNhat']){echo $datecn .'<br>'. $timecn; } ?></td> -->
-                                  <td style="width: 110px"><?php if(isset($row['NgayDuyetPhieu'])){echo $dateduyet .'<br>'. $timeduyet; } elseif(isset($row['NgayHuyPhieu'])) {echo $datehuy .'<br>'. $timehuy; }?></td>
+                                  <td style="width: 110px"><?php if(isset($row['NgayDuyetPhieu'])){echo $dateduyet .'<br>'. $timeduyet; }?></td>
                                 <?php 
-                                if($row['TrangThai']==0) { ?>
-                                <td><span class="badge badge-pill badge-primary">Chờ báo giá </span></td>
-                                <?php } if($row['TrangThai']==1) { ?>
-                                <td><span class="badge badge-pill badge-warning">Chờ duyệt</span></td>
-                                <?php } if($row['TrangThai']==2) {?>
-                                <td><span class="badge badge-pill badge-success">Đã duyệt</span></td>
-                                <?php } if($row['TrangThai']==4) {?>
-                                <td><span style="width: 118px;" class="badge badge-pill badge-danger">Không được duyệt</span></td>
-                                <?php } if($row['TrangThai']==5) {?>
-                                <td><span style="width: 106px;" class="badge badge-pill badge-info">Chờ thêm vật tư</span></td>
-                                <?php } if($row['TrangThai']==6) {?>
-                                <td><span style="width: 106px;" class="badge badge-pill badge-dark">Chờ tổng hợp</span></td>
-                                <?php } ?>
+                               if($row['TrangThai']==0) { ?>
+                                    <td  style="text-align: center;"><span style="background-color: #ba60c9;width: auto;height: auto" class="badge badge-pill badge-primary">Chờ báo giá </span></td>
+                                  <?php } if($row['TrangThai']==1) { ?>
+                                    <td style="text-align: center;"><span style="background-color: #cd9513;width: auto;height: auto"class="badge badge-pill badge-warning">Chờ lãnh đạo phòng<br> quản trị duyệt</span></td>
+                                  <?php } if($row['TrangThai']==2) { ?>
+                                    <td style="text-align: center;"><span  style="width: auto;height: auto" class="badge badge-pill badge-warning">Chờ ban giám <br> hiệu duyệt</span></td>
+                                  <?php } if($row['TrangThai']==3) {?>
+                                    <td style="text-align: center;"><span  style="width: auto;height: auto" class="badge badge-pill badge-success">Đã duyệt</span></td>
+                                  <?php } if($row['TrangThai']==5) {?>
+                                    <td style="text-align: center;"><span style="background-color: #7ec960;width: auto;height: auto" class="badge badge-pill badge-info">Chờ thêm vật tư</span></td>
+                                  <?php } if($row['TrangThai']==6) {?>
+                                    <td style="text-align: center;"><span style="background-color: #b0afab;width: auto;height: auto"class="badge badge-pill badge-dark">Chờ nhân viên<br> quản lý kho duyệt</span></td>
+                                  <?php } if($row['TrangThai']==7 || $row['TrangThai']==9) {?>
+                                    <td style="text-align: center;"><span style="width: auto;height: auto" class="badge badge-pill badge-danger">Không duyệt phiếu</span></td>
+                                  <?php } if($row['TrangThai']==8) {?>
+                                    <td style="text-align: center;"><span style="width: auto;height: auto;background-color: #98979669" class="badge badge-pill badge-dark">Chờ lãnh đạo<br> đơn vị duyệt</span></td>
+                                    
+                                  <?php } if($row['TrangThai']==10) {?>
+                                    <td style="text-align: center;"><span style="background-color: #b7ab8a;width: auto;height: auto" class="badge badge-pill badge-dark">Chờ tổng hợp </span></td>
+                                  <?php } if($row['TrangThai']==11) {?>
+
+                                  <td style="text-align: center;"><span style="background-color: #6ecf72; width: auto;height: auto" class="badge badge-pill badge-dark">Đã tổng hợp </span></td>
+                                  <?php } ?>
                             <td>
                                 <a class="ti-eye"href="chitiet-phieu-yeu-cau-trangbi.php?MaHD=<?php echo $row['MaHD'] ?>"></a>
                             </td>

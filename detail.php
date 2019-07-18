@@ -1,4 +1,4 @@
-<?php include 'header.php'; ?>
+<?php include 'header1.php'; ?>
 <?php include('connect/myconnect.php');?>
 <body>
     <?php include 'leftpanel.php' ; ?>

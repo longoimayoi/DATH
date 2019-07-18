@@ -212,7 +212,7 @@ include('mo-khoa-tai-khoan.php');
             <div class="modal fade" id="myModala" tabindex="-1" role="dialog">
                 <div class="modal-dialog">
                     <!-- Modal content-->
-                    <div class="modal-content" style="width: 600px;">
+                    <div class="modal-content" style="width: 850px;">
                         <div class="modal-body modal-body-sub_agile">
                             <button type="button" class="close" data-dismiss="modal">&times;</button>  
                             <div class="card-body card-block">
@@ -221,7 +221,7 @@ include('mo-khoa-tai-khoan.php');
                                 <form action="" method="post" id="formcttk" >
 
                                     <div class=" form-group">
-                                        <input type="email" id="TenDangNhap" placeholder="Tên đăng nhập" name="TenDangNhap" required="" class="form-control">
+                                        <input type="text" id="TenDangNhap" placeholder="Tên đăng nhập" name="TenDangNhap" required="" class="form-control">
                                         <p id="validate-user" ></p>
                                     </div>
                                     <div class=" form-group">

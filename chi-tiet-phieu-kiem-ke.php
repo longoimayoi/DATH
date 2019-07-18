@@ -77,7 +77,7 @@ list($TVT)=mysqli_fetch_array($result_c,MYSQLI_NUM);
   }
   ?>
    <?php
-    $sql = "SELECT TenPhieu, TenDangNhap, NgayLapPhieu, nh.NamHoc, k.TenKhoa, GhiChu FROM phieukiemke pkk, tbltaikhoan tk, tblkhoa k, namhoc nh WHERE pkk.NguoiLapPhieu = tk.MaTK and pkk.Khoa = k.MaKhoa and pkk.NamHoc = nh.id and MaPhieu =" . $id;
+    $sql = "SELECT TenPhieu, TenDangNhap, NgayLapPhieu, nh.NamHoc, k.TenKhoa, GhiChu, pkk.TrangThai FROM phieukiemke pkk, tbltaikhoan tk, tblkhoa k, namhoc nh WHERE pkk.NguoiLapPhieu = tk.MaTK and pkk.Khoa = k.MaKhoa and pkk.NamHoc = nh.id and MaPhieu =" . $id;
     $query = mysqli_query($connect, $sql);
     $row = mysqli_fetch_assoc ($query);
     $tenPhieu = mb_strtoupper($row["TenPhieu"]);
@@ -179,17 +179,17 @@ list($TVT)=mysqli_fetch_array($result_c,MYSQLI_NUM);
       $slxuattrongky = $_POST["slxuattrongky"];
       $sltontrongky = $_POST["sltontrongky"];
       $sltonthucte = $_POST["sltonthucte"];
-    /*  $sltoncuoiky = $_POST["sltoncuoiky"];*/
+      $sltoncuoiky = $_POST["sltoncuoiky"];
       $slsddencuoiky = $_POST["slsddencuoiky"];
       $ghichu = $_POST["ghichu"];
     foreach ($tenvattu as $k => $v) {
-      $sqlInsert = "INSERT INTO ctphieukiemke (MaPhieu, TenVatTu, SLTonDauKy, SLNhapTrongKy, SLXuatTrongKy, SLTonTrongKy, SLTonThucTe, SLSuDungDenCuoiKy, GhiChu)
-    VALUES ('$id', '$v', '$sltondauky[$k]', '$slnhaptrongky[$k]', '$slxuattrongky[$k]','$sltontrongky[$k]', '$sltonthucte[$k]','$slsddencuoiky[$k]', '$ghichu[$k]')";
+      $sqlInsert = "INSERT INTO ctphieukiemke (MaPhieu, TenVatTu, SLTonDauKy, SLNhapTrongKy, SLXuatTrongKy, SLTonTrongKy, SLTonThucTe, SLSuDungDenCuoiKy,SLTonCuoiKy, GhiChu)
+    VALUES ('$id', '$v', '$sltondauky[$k]', '$slnhaptrongky[$k]', '$slxuattrongky[$k]','$sltontrongky[$k]', '$sltonthucte[$k]','$slsddencuoiky[$k]','$sltoncuoiky[$k]', '$ghichu[$k]')";
       $queryInsert = mysqli_query($connect, $sqlInsert);
     }
     $sqlUpdateKK = "UPDATE phieukiemke SET TrangThai = 1 WHERE MaPhieu =".$id;
     $queryUpdateKK = mysqli_query($connect, $sqlUpdateKK);
-
+    echo("<script>location.href = '"."kiem-ke.php';</script>");
     }
      ?>
         <form method="post">
@@ -205,12 +205,14 @@ list($TVT)=mysqli_fetch_array($result_c,MYSQLI_NUM);
               <th >SL Tồn trong kỳ</th>
               <th >SL Tồn thực tế</th>
               <th >SL Sử dụng đến cuối kỳ</th>
-             <!--  <th >SL Tồn cuối kỳ</th> -->
+              <th >SL Tồn cuối kỳ</th>
               <th width="20%">Ghi Chú</th>
             </thead>
             <tbody>
               <?php
-            
+              if ($row['TrangThai'] == 0)
+              {
+              $index = 0;
             
              
              //List sl nhap trong ky
@@ -234,9 +236,9 @@ list($TVT)=mysqli_fetch_array($result_c,MYSQLI_NUM);
               {
                 ?>
              <tr>
-                <td><input type="text" name = "tenvattu[]" class = "form-control" value="<?php echo $rowVT['TenHoaChat']; ?>" ></td>
+                <td><input type="text" name = "tenvattu[]" class = "form-control" value="<?php echo $rowVT['TenHoaChat']; ?>" readonly></td>
                 <td><?php echo $rowVT['DVT']; ?></td>
-                <td><input type="number" name = "sltondauky[]" class = "form-control" value="<?php echo $rowVT['SLT']; ?>"></td>
+                <td><input type="number" name = "sltondauky[]" class = "form-control" value="<?php echo $rowVT['SLT']; ?>" ></td>
                 <?php 
                 //lay sl nhap trong ky
                 foreach ($arrayPNK as $TenVTNK => $SLNK) {
@@ -268,12 +270,12 @@ list($TVT)=mysqli_fetch_array($result_c,MYSQLI_NUM);
                 $SLTTK = $rowVT['SLT'] + $SLNTK - $SLXTK;
                
                  ?>
-                <td><input type="number" name = "slnhaptrongky[]" class = "form-control" value="<?php echo $SLNTK; ?>"></td>
-                <td><input type="number" name = "slxuattrongky[]" class = "form-control" value="<?php echo $SLXTK; ?>"></td>
-                <td><input type="number" name = "sltontrongky[]" class = "form-control" value="<?php echo $SLTTK; ?>"></td>
-                <td><input type="number" name = "sltonthucte[]" class = "form-control"></td>
-                <td><input type="number" name = "slsddencuoiky[]" class = "form-control"></td>
-               <!--  <td><input type="number" name = "sltoncuoiky[]" class = "form-control" value="<?php echo $rowVT['SLT']; ?>"></td> -->
+                <td><input type="number" name = "slnhaptrongky[]" class = "form-control" value="<?php echo $SLNTK; ?>" readonly></td>
+                <td><input type="number" name = "slxuattrongky[]" class = "form-control" value="<?php echo $SLXTK; ?>" readonly></td>
+                <td><input type="number" name = "sltontrongky[]" class = "form-control" value="<?php echo $SLTTK; ?>" readonly></td>
+                <td><input type="number" id = "sltonthucte_<?php echo $rowVT['id']; ?>" name = "sltonthucte[]" class = "form-control"></td>
+                <td><input type="number" id = "slsddck-<?php echo $rowVT['id']; ?>" name = "slsddencuoiky[]" class = "form-control1"></td>
+                <td><input type="number" id = "sltoncuoiky_<?php echo $rowVT['id']; ?>" name = "sltoncuoiky[]" class = "form-control" readonly></td>
                 <td><input type="text" name = "ghichu[]" class = "form-control"></td>
 
               </tr>
@@ -281,7 +283,29 @@ list($TVT)=mysqli_fetch_array($result_c,MYSQLI_NUM);
           
              <?php
               }
+              }
+              else
+              {
+                $sqlXemPhieu = "SELECT * FROM ctphieukiemke WHERE MaPhieu=".$id;
+                $queryXemPhieu = mysqli_query($connect, $sqlXemPhieu);
+               
+                while ( $rowXemPhieu = mysqli_fetch_assoc($queryXemPhieu)) {
+                
              ?>
+                <tr>
+                <td><input type="text" name = "tenvattu[]" class = "form-control" value="<?php echo $rowXemPhieu['TenVatTu']; ?>" readonly></td>
+                <td><input type="text" name = "dvt[]" class = "form-control" value="<?php echo $rowXemPhieu['DVT']; ?>" readonly> </td>
+                <td><input type="number" name = "sltondauky[]" class = "form-control" value="<?php echo $rowXemPhieu['SLTonDauKy']; ?>" ></td>
+                <td><input type="number" name = "slnhaptrongky[]" class = "form-control" value="<?php echo $rowXemPhieu['SLNhapTrongKy']; ?>"></td>
+                <td><input type="number" name = "slxuattrongky[]" class = "form-control" value="<?php echo $rowXemPhieu['SLXuatTrongKy']; ?>"></td>
+                <td><input type="number" name = "sltontrongky[]" class = "form-control" value="<?php echo $rowXemPhieu['SLTonTrongKy']; ?>"></td>
+                <td><input type="number" id = "sltonthucte_<?php echo $rowXemPhieu['id']; ?>" name = "sltonthucte[]" class = "form-control" value = "<?php echo $rowXemPhieu['SLTonThucTe'] ?>"></td>
+                <td><input type="number" id = "slsddck-<?php echo $rowXemPhieu['id']; ?>" name = "slsddencuoiky[]" class = "form-control1" value = "<?php echo $rowXemPhieu['SLSuDungDenCuoiKy'] ?>"></td>
+                <td><input type="number" id = "sltoncuoiky_<?php echo $rowXemPhieu['id']; ?>" name = "sltoncuoiky[]" class = "form-control" value = "<?php echo $rowXemPhieu['SLTonCuoiKy'] ?>"></td>
+                <td><input type="text" name = "ghichu[]" class = "form-control" value = "<?php echo $rowXemPhieu['GhiChu'] ?>"></td>
+
+              </tr>
+           <?php } } ?>
             </tbody>
           </table>
           <table id="bottom_anchor"></table>
@@ -313,6 +337,22 @@ list($TVT)=mysqli_fetch_array($result_c,MYSQLI_NUM);
           var fileName = e.target.files[0].name;
           $(this).prev('button').text(fileName);
           });
+
+            
+           $(".form-control1").keyup(function(){
+              var id = this.id;
+              var split = id.split("-");
+             var slttt = $("#sltonthucte_"+split[1]).val();
+              var slsddck = $("#slsddck-"+split[1]).val();
+              var sub = slttt - slsddck;
+              $("#sltoncuoiky_"+split[1]).val(sub);
+
+              if ($("#sltoncuoiky_"+split[1]).val() < 0)
+              {
+                $("#sltoncuoiky_"+split[1]).val(0);
+              }
+           });
+
           });
           </script>
           <script>

@@ -5,6 +5,7 @@ include('cn.php');
 
 if(isset($_POST['hidden_id']))
 {
+$MaVatTu = $_POST['MaVatTu'];
  $TenVatTu = $_POST['TenVatTu'];
  $DVT = $_POST['DVT'];
  $SL = $_POST['SL'];
@@ -16,7 +17,8 @@ if(isset($_POST['hidden_id']))
  for($count = 0; $count < count($id); $count++)
  {
   $data = array(
-   ':TenVatTu'   => $TenVatTu[$count],
+   ':MaVatTu'   => $MaVatTu[$count],
+  ':TenVatTu'   => $TenVatTu[$count],
    ':DVT'   => $DVT[$count],
    ':SL'   => $SL[$count],
    ':ThongSoKT'  => $ThongSoKT[$count],
@@ -26,7 +28,7 @@ if(isset($_POST['hidden_id']))
  );
   $query = "
   UPDATE tblphieuyeucautrangbi 
-  SET TenVatTu = :TenVatTu, DVT = :DVT, SL = :SL, ThongSoKT = :ThongSoKT, XuatXu = :XuatXu, GhiChu = :GhiChu
+  SET MaVatTu=:MaVatTu,TenVatTu = :TenVatTu, DVT = :DVT, SL = :SL, ThongSoKT = :ThongSoKT, XuatXu = :XuatXu, GhiChu = :GhiChu
   WHERE STT = :id
   ";
   $statement = $connect->prepare($query);

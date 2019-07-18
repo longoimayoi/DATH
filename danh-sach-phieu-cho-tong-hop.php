@@ -1,114 +1,210 @@
 <style>
-    .overflow{
-    
+  .callback{
+    font-size: 16px;
+    padding: 5px 40px;
+    position: relative;
+    background-color: #ff0000d6;
+    color: #FFF;
+    border: none;
+    border-radius: 0px;
+    outline: none;
+    float: none;
+    cursor: pointer;
+    border-radius: 25px;
+    box-shadow: 0px 14px 80px rgba(34, 35, 58, 0.2);
     overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    width: 200px;
-    }
-    .overflow:hover { 
-    overflow: visible;
-    white-space: pre-line;
-    width: 500px;
-    }
+    opacity: 0.9;
+}
 </style>
 <?php include 'header.php';
-include('connect/myconnect.php');
-include 'leftpanel.php' ;
-$i=0;
+ob_start();
+include('connect/myconnect.php');?>
+<body>  
+  <?php include 'leftpanel.php' ; ?>
+  <div class="container">  
+    <br />
+    <div class="table-responsive">  
+      <h4 align="center">DANH SÁCH PHIẾU CHỜ TỔNG HỢP</h4><br />
+      <?php 
+      if (isset($_POST['submit']) && isset($_POST['MaPhieu']))
+      {
+        $MaPhieu = $_POST['MaPhieu'];
+        $listCheck = implode(",",$MaPhieu);
 
+        
+        //Lay DS MonHoc theo checkbox
+        $sqlGetListMonHoc = "SELECT DISTINCT MonHoc FROM tblhoadon WHERE TrangThai = 10 AND MaHD in ($listCheck) ";
+        $queryMonHoc = mysqli_query($connect, $sqlGetListMonHoc);
 
-?>
-<div class="content mt-3">
-    <div class="animated fadeIn">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-header">
-                        <strong class="card-title">DANH SÁCH PHIẾU CHỜ TỔNG HỢP</strong>
-            
+         //Lay DS NhomLop theo checkbox
+        $sqlGetListNhomLop = "SELECT DISTINCT NhomLop FROM tblhoadon WHERE TrangThai = 10 AND MaHD in ($listCheck) ";
+        $queryNhomLop = mysqli_query($connect, $sqlGetListNhomLop);
 
-                    </div>
-                   <!--   <button data-toggle="collapse" href="#collapse1" class="collapsed"  style="background-color: #217346" type="submit">hiển thị</button> -->
-                    <div class="card-body" >
-                        <table  id="bootstrap-data-table-export"  class="table table-striped table-bordered">
-                            <thead>
-                                <tr>
-                                    <th scope="col">STT</th>
-                                    <th >Người lập phiếu</th>
-                                    <th  style="display: table-caption;width: 200px;height: 22px">Mã môn học</th>
-                                    <th  style="display: table-caption;">Tên lớp</th>
-                                 <!--    <th >Số lượng SV</th>  -->
-                                    <th  style="width: 150px">Học kỳ</th>
-                                       <th  style="width: 150px;">Năm học</th>
-                                    <th style="width: 150px">Ngày lập</th>
-                                     <!-- <th style="width: 150px">Ngày cập nhật</th> -->
-<!--                                      <?php if(isset($_SESSION['DPYCTB'])) {?>
-                                    <th >Ngày duyệt phiếu || Ngày hủy phiếu</th>
-                                    <?php } ?> -->
-                                    <th style="width: 150px">Trạng thái</th>
-                                    <th scope="colo"></th>
-                                    
-                                </tr>
-                            
-                            </thead>
-                            <tbody>
-                              <?php 
-                                      $query="SELECT *,hd.TrangThai FROM tblhoadon hd, tbltaikhoan tk ,tblhocky hk,namhoc nh
-                                        WHERE hd.MaTK=tk.MaTK AND hk.MaHK=hd.HocKy AND nh.id=hd.NamHoc  AND hd.MaKhoa=".$_SESSION['MaKhoa']."
-                                        AND hd.TrangThai=6 
-                                        ORDER BY NgayLapPhieu DESC ";
-                                        $result = mysqli_query($connect, $query);
-                                    
-                                $a=0;
-                                 while ($row=mysqli_fetch_array($result,MYSQLI_ASSOC))
-                                 { 
-                                    $datelap = date('d-m-Y', strtotime($row['NgayLapPhieu'] ));
-                                    $timelap = date('H:i:s', strtotime($row['NgayLapPhieu']));
+          //Lay NamHoc moi nhat
+        $sqlGetNamHoc = "SELECT id, NamHoc FROM namhoc ORDER BY id DESC LIMIT 1 ";
+        $queryNamHoc = mysqli_query($connect, $sqlGetNamHoc);
+        $rowNamHoc = mysqli_fetch_assoc($queryNamHoc);
 
-                                    $datecn = date('d-m-Y', strtotime($row['NgayCapNhat'] ));
-                                    $timecn = date('H:i:s', strtotime($row['NgayCapNhat']));
+          //Lay DS MaPhieu theo checkbox
+        $sqlGetListMaPhieu = "SELECT  MaHD FROM tblhoadon WHERE TrangThai = 10 AND MaHD in ($listCheck) ";
+        $queryMaPhieu = mysqli_query($connect, $sqlGetListMaPhieu);
 
-                                    $dateduyet = date('d-m-Y', strtotime($row['NgayDuyetPhieu'] ));
-                                    $timeduyet = date('H:i:s', strtotime($row['NgayDuyetPhieu']));
-                                $i++;  
-                                ?>
-                                <td style="width: 10px"><?php echo $i ?></td>
-                                <td style="width: 250px"><?php echo $row['TenDangNhap']; ?></td> 
-                                <td class="overflow" style="word-wrap:break-word;width: 217px;display: table-caption;border-bottom: 1px solid;"><?php  echo $row['MonHoc']  ?></td>
-                                <td class="overflow" style="word-wrap:break-word;width: 217px;display: table-caption;"><?php echo $row['NhomLop']  ?></td>
-                               <!--  <td><?php echo $row['SLSV']  ?></td> -->
-                                <td style="width: 150px"><?php echo $row['TenHK']  ?></td>
-                                        <td style="width: 150px"><?php echo $row['NamHoc']  ?></td>
-                                <td  style="width: 160px"><?php echo $datelap .'  '. $timelap ?></td>
+        //Lay SLSV
+        $sqlSum = "SELECT SLSV FROM tblhoadon WHERE TrangThai = 10 AND MaHD in($listCheck)";
+        $querySum = mysqli_query($connect, $sqlSum);
+        //echo $rowSum[1];
+        $slsvTotal = 0;
+        $arraySLSV = array();
+        $count = 0;
+        while($rowSum = mysqli_fetch_array($querySum))
+        {
+          $count ++;
+          $arraySLSV[$count] = $rowSum['SLSV'];
+        }
+        foreach ($arraySLSV as $key => $value) {
+          $slsvTotal = $slsvTotal + $value ;
+        }
+        //echo $slsvTotal;
+        //
+        $arrayNhomLop = array();
+        $arrayMonHoc = array();
+        $arraySLSV = array();
+        $arrayMaPhieu = array();
+        $i = 0;
+        while ($rowGetListMonHoc = mysqli_fetch_assoc($queryMonHoc))
+        {
+          $i++;
+             $arrayMonHoc[$i]=$rowGetListMonHoc['MonHoc'];
+        }
+        $strMonHoc = "";
+        foreach ($arrayMonHoc as $key => $value) {
+          $strMonHoc .= $value . ",";
+        }
+        //echo $strMonHoc;
+        $j = 0;
+         while ($rowGetListNhomLop = mysqli_fetch_assoc($queryNhomLop))
+        {
+          $j++;
+             $arrayNhomLop[$j]=$rowGetListNhomLop['NhomLop'];
+        }
 
-                               <!--  <td style="width: 110px"><?php  if($row['NgayCapNhat']){echo $datecn .'<br>'. $timecn; } ?></td> -->
-                                <!-- <?php if(isset($_SESSION['DPYCTB'])) { ?>
-                                  <td style="width: 110px"><?php if($row['NgayDuyetPhieu']){echo $dateduyet .'<br>'. $timeduyet; } ?></td>
-                                  <?php } ?> -->
-                             
-                                <?php  if($row['TrangThai']==6) {?>
-                                <td><span style="width: 106px;" class="badge badge-pill badge-dark">Chờ tổng hợp</span></td>
-                                <?php } ?>
+          $strNhomLop = "";
+        foreach ($arrayNhomLop as $key => $value) {
+          $strNhomLop .= $value . " ";
+        }
+       // echo $strNhomLop;
 
-                            <td>
-                                <a class="ti-eye"href="chitiet-phieu-yeu-cau-trangbi.php?MaHD=<?php echo $row['MaHD'] ?>"></a>
-                            </td>
-                        </tr>
-                        <?php } ?>   
-                             
-                    </tbody>
-                    
-                </table>
-                
-            </div>
-        </div>
-    </div>
+        $z = 0;
+         while ($rowGetListMaPhieu = mysqli_fetch_assoc($queryMaPhieu))
+        {
+          $z++;
+             $arrayMaPhieu[$z]=$rowGetListMaPhieu['MaHD'];
+        }
+
+          $strMaPhieu = "";
+        foreach ($arrayMaPhieu as $key => $value) {
+          $strMaPhieu .= $value . " ";
+        }
+       // echo $strMaPhieu;
+   date_default_timezone_set('Asia/Ho_Chi_Minh');
+    $today=date("Y-m-d H:i:s");
+    $uid = $_SESSION["uid"];
+    $nh = $rowNamHoc["id"];
+        $sqlInsert = "INSERT INTO tblhoadon (MaTK, MonHoc, NhomLop, NamHoc, SLSV, NgayLapPhieu, TrangThai, PhieuDuocTongHop) VALUES ('$uid','$strMonHoc','$strNhomLop','$nh','$slsvTotal','$today',0,'$strMaPhieu')";
+        $queryInsert = mysqli_query($connect, $sqlInsert);
+
+         $MaHD=mysqli_insert_id($connect);
+        $mp = explode(" ",$strMaPhieu);
+        $mpimp = implode(",",$mp);
+        $mprtrim=rtrim($mpimp,", ");
+        $sqlGroupBy = "SELECT MaVatTu, TenVatTu, DVT, SUM(SL) AS SL, ThongSoKT, XuatXu FROM tblphieuyeucautrangbi WHERE MaHD in ($mprtrim) GROUP BY MaVatTu, ThongSoKT, XuatXu";
+        $queryGroupBy = mysqli_query($connect, $sqlGroupBy);
+        while ($rowGB = mysqli_fetch_assoc($queryGroupBy)) {
+          $mavt = $rowGB["MaVatTu"];
+          $tenvt = $rowGB["TenVatTu"];
+          $dvt = $rowGB["DVT"];
+          $sl = $rowGB["SL"];
+          $tskt = $rowGB["ThongSoKT"];
+          $xx = $rowGB["XuatXu"];
+          $sqlInsertToCTPYC = "INSERT INTO tblphieuyeucautrangbi (MaHD, MaVatTu, TenVatTu, DVT, SL, ThongSoKT, XuatXu) VALUES ('$MaHD','$mavt','$tenvt','$dvt','$sl','$tskt','$xx')";
+          $queryInsertToCTPYC = mysqli_query($connect, $sqlInsertToCTPYC);
+
+          $sqlUpdateStatus = "UPDATE tblhoadon set TrangThai = 11 WHERE MaHD in ($listCheck)";
+        $queryUpdateStatus = mysqli_query($connect, $sqlUpdateStatus);
+          echo("<script>location.href = '"."danhsach-phieu-yeu-cau-trangbi.php';</script>");
+        }
+      }  
+    ?>
+
+  <form method="post" id="update_form">
+    <div align="left">
+      <!-- <input type="button" id="savedl" onclick="window.location.href='chitiet-phieu-yeu-cau-trangbi.php?MaHD=<?php echo $_GET['MaHD']?>'" value="Hoàn thành"/> -->
+      <button type="submit" name = "submit">Tổng hợp</button>
+     <!-- // <button type="reset" id = "delete">Xóa dữ liệu</button> -->
+      <a class="callback" style="float:right;" onclick="window.location.href='chitiet-phieu-yeu-cau-trangbi.php?MaHD=<?php echo $_GET['MaHD']?>'">Trở lại</a>
+  </div>
+
+  <br />
+  <div class="table-responsive">
+      <table class="table table-bordered table-striped">
+        <thead>
+          <th width="1%"> <input type="checkbox" name="select-all" id="select-all" /></th>
+          <th style="text-align: center" width="20%">Người lập phiếu</th>
+          <th style="text-align: center"  width="20%">Môn học</th>
+          <th style="text-align: center" width="10%">Lớp</th>
+          <th style="text-align: center" width="10%">Số lượng sv</th>
+          <th style="text-align: center"  width="10%">Ngày lập</th>
+          <th style="text-align: center" width="20%">Ghi chú</th>
+          <th width="5%"></th>
+      </thead> 
+      <tbody>
+        <?php 
+        $sql = "SELECT HoTen, MaHD, MonHoc, NhomLop, SLSV, NgayLapPhieu, GhiChu FROM tblhoadon hd, tbltaikhoan tk WHERE hd.TrangThai = 10 AND hd.MaTK = tk.MaTK";
+        $query = mysqli_query($connect, $sql);
+        while ($row = mysqli_fetch_assoc($query)) {
+
+         ?>
+         <tr>   
+          <th><input type="checkbox" class="check_box" name="MaPhieu[]" value = "<?php echo $row['MaHD'] ?>"></th>  
+          <th style="font-weight: normal;"> <?php echo $row['HoTen'] ?></th>
+          <th style="font-weight: normal;"> <?php echo $row['MonHoc'] ?></th>
+          <th style="font-weight: normal;"> <?php echo $row['NhomLop'] ?></th>
+          <th style="font-weight: normal;"> <?php echo $row['SLSV'] ?></th>
+          <th style="font-weight: normal;"> <?php echo $row['NgayLapPhieu'] ?></th>
+          <th style="font-weight: normal;"> <?php echo $row['GhiChu'] ?></th>
+          <th></th> 
+
+      </tr>
+  <?php } ?>
+</tbody>
+</table>
+</div>
+
+</form>
 </div>
 </div>
-</div>
 
-</div>
 <?php include 'scriptindex.php'; ?>
-</body>
+</body>  
+
 </html>
+<?php ob_flush(); ?>
+<script >
+  $('#select-all').click(function(event) {
+      if(this.checked) {
+          $('.check_box').each(function() {
+              this.checked = true;
+
+          });
+      }
+      else {
+        $('.check_box').each(function() {
+          this.checked = false;
+
+      });
+    }
+});
+  $('.check_box').click(function(event) {
+    $('#select-all').prop("checked", false);
+});
+</script>

@@ -31,12 +31,14 @@ list($HPCB)=mysqli_fetch_array($result_d,MYSQLI_NUM);
 
 if(isset($_POST['submit']))
 {
+  $mavt=$_POST['mavt'];
   $tenvt=$_POST['tenvt'];
   $sl=$_POST['sl'];
   $dvtinh=$_POST['dvtinh'];
   $thongso=$_POST['thongso'];
   $xuatxu=$_POST['xuatxu'];
   $ghichu=$_POST['ghichu'];
+  $goiydg=$_POST['goiydg'];
   $dongia=0;
   if($sl < 0)
   {
@@ -49,10 +51,10 @@ if(isset($_POST['submit']))
   else
   {
 
-    foreach ($tenvt as $k => $v)
+    foreach ($mavt as $k => $v)
     {
-      $query="INSERT INTO tblphieuyeucautrangbi(MaHD,TenVatTu,DVT,SL,ThongSoKT,XuatXu,GhiChu,DonGia) VALUES
-      ($MaHD,'$v','$dvtinh[$k]','$sl[$k]','$thongso[$k]','$xuatxu[$k]','$ghichu[$k]',0)";
+      $query="INSERT INTO tblphieuyeucautrangbi(MaHD,MaVatTu,TenVatTu,DVT,SL,GoiYDG,ThongSoKT,XuatXu,GhiChu,DonGia) VALUES
+      ($MaHD,'$v','$tenvt[$k]','$dvtinh[$k]','$sl[$k]','$goiydg[$k]','$thongso[$k]','$xuatxu[$k]','$ghichu[$k]',0)";
       $result=mysqli_query($connect,$query)or die("Query {$query} \n <br> MySql erros:".mysqli_errno($connect));
     }
     if(mysqli_affected_rows($connect)==1)
@@ -92,27 +94,31 @@ if(isset($_POST['import']))
     {
       if(!$first_row)
       {
-        $index = 1;
+        $index = 2;
         $cells = $row->getElementsByTagName('Cell');
         foreach ($cells as $cell)
         {
           $ind = $cell->getAttribute('Index');
           if($ind != null) $index = $ind;
-          if($index == 1)
-            $tenvattu = $cell->nodeValue;
           if($index == 2)
-            $dvt = $cell->nodeValue;
+            $mavattu = $cell->nodeValue;
           if($index == 3)
-            $sl = $cell->nodeValue;
+            $tenvattu = $cell->nodeValue;
           if($index == 4)
-            $thongso = $cell->nodeValue;
+            $dvt = $cell->nodeValue;
           if($index == 5)
-            $xuatxu = $cell->nodeValue;
+            $sl = $cell->nodeValue;
           if($index == 6)
+            $thongso = $cell->nodeValue;
+          if($index == 7)
+            $xuatxu = $cell->nodeValue;
+          if($index == 8)
             $ghichu = $cell->nodeValue;
+          
           $index++;
         }
         $data[]=array(
+          'MaVatTu' =>$mavattu,
           'TenVatTu' =>$tenvattu,
           'DVT'  =>$dvt,
           'SL'  =>$sl,
@@ -129,22 +135,22 @@ if(isset($_POST['import']))
     // echo "<pre>";
     // print_r($data);
     // echo "</pre>";
-    $dem_tt=0;
+    $dem_tt=1;
     foreach ($data as $row)
     {
-      if($dem_tt>=0)
+      if($dem_tt>1)
       {
         $dongia=0;
         $matk=$_SESSION['uid'];
-        $a1=$row['TenVatTu'];
-        echo $a1;
-        $a2=$row['DVT'];
-        $a3=$row['SL'];
-        $a4=$row['ThongSoKT'];
-        $a5=$row['XuatXu'];
-        $a6=$row['GhiChu'];
-        $query="INSERT INTO tblphieuyeucautrangbi(MaHD,TenVatTu,DVT,SL,DonGia,ThongSoKT,XuatXu,GhiChu)
-        VALUES($MaHD,'{$a1}','{$a2}',$a3,$dongia,'$a4','$a5','$a6')";
+        $a1=$row['MaVatTu'];
+        $a2=$row['TenVatTu'];
+        $a3=$row['DVT'];
+        $a4=$row['SL'];
+        $a5=$row['ThongSoKT'];
+        $a6=$row['XuatXu'];
+        $a7=$row['GhiChu'];
+        $query="INSERT INTO tblphieuyeucautrangbi(MaHD,MaVatTu,TenVatTu,DVT,SL,DonGia,ThongSoKT,XuatXu,GhiChu)
+        VALUES($MaHD,'{$a1}','{$a2}','{$a3}',$a4,$dongia,'$a5','$a6','$a7')";
         $results=mysqli_query($connect,$query);
       }
       $dem_tt++;
@@ -194,7 +200,7 @@ if(isset($_POST['huy']))
 }
 if(isset($_POST['guiphieu']))
 {
-  $query_g="UPDATE tblhoadon set TrangThai=0 WHERE MaHD='$MaHD'";
+  $query_g="UPDATE tblhoadon set TrangThai=6 WHERE MaHD='$MaHD'";
   $result_g=mysqli_query($connect,$query_g);
   if(mysqli_affected_rows($connect)==1)
   {
@@ -216,6 +222,84 @@ if(isset($_POST['luuhocphi']))
 
   }
 
+}
+
+if(isset($_POST['qlkduyet']))
+{
+   $query_g="UPDATE tblhoadon set TrangThai=8,idNhanVienKho=".$_SESSION['uid'].",NgayNVKDuyet='$ngaycn' WHERE MaHD='$MaHD'";
+  $result_g=mysqli_query($connect,$query_g);
+  if(mysqli_affected_rows($connect)==1)
+  {
+    echo  "<script type='text/javascript'>alert('Duyệt phiếu đề xuất thành công');</script>";
+    echo("<script>location.href = '"."danhsach-phieu-yeu-cau-trangbi.php';</script>");
+
+  }
+}
+if(isset($_POST['qlkhuy']))
+{
+   $query_g="UPDATE tblhoadon set TrangThai=7,NgayHuyPhieu='$ngaycn' WHERE MaHD='$MaHD'";
+  $result_g=mysqli_query($connect,$query_g);
+  if(mysqli_affected_rows($connect)==1)
+  {
+    echo  "<script type='text/javascript'>alert('Không duyệt phiếu đề xuất thành công');</script>";
+    echo("<script>location.href = '"."danhsach-phieu-yeu-cau-trangbi.php';</script>");
+
+  }
+}
+if(isset($_POST['qldvduyet']))
+{
+   $query_g="UPDATE tblhoadon set TrangThai=10,idLDDV=".$_SESSION['uid'].",NgayLDDVDuyet='$ngaycn' WHERE MaHD='$MaHD'";
+  $result_g=mysqli_query($connect,$query_g);
+  if(mysqli_affected_rows($connect)==1)
+  {
+    echo  "<script type='text/javascript'>alert('Duyệt phiếu đề xuất thành công');</script>";
+    echo("<script>location.href = '"."danhsach-phieu-yeu-cau-trangbi.php';</script>");
+
+  }
+}
+if(isset($_POST['qldvhuy']))
+{
+   $query_g="UPDATE tblhoadon set TrangThai=9,NgayHuyPhieu='$ngaycn' WHERE MaHD='$MaHD'";
+  $result_g=mysqli_query($connect,$query_g);
+  if(mysqli_affected_rows($connect)==1)
+  {
+    echo  "<script type='text/javascript'>alert('Không duyệt phiếu đề xuất thành công');</script>";
+    echo("<script>location.href = '"."danhsach-phieu-yeu-cau-trangbi.php';</script>");
+
+  }
+}
+if(isset($_POST['ldpqtduyet']))
+{
+   $query_g="UPDATE tblhoadon set TrangThai=2,idLDPQT=".$_SESSION['uid'].",NgayLDPQTDuyet='$ngaycn' WHERE MaHD='$MaHD'";
+  $result_g=mysqli_query($connect,$query_g);
+  if(mysqli_affected_rows($connect)==1)
+  {
+    echo  "<script type='text/javascript'>alert('Duyệt phiếu đề xuất thành công');</script>";
+    echo("<script>location.href = '"."danhsach-phieu-yeu-cau-trangbi.php';</script>");
+
+  }
+}
+if(isset($_POST['hpduyet']))
+{
+   $query_g="UPDATE tblhoadon set TrangThai=3,NgayDuyetPhieu='$ngaycn' WHERE MaHD='$MaHD'";
+  $result_g=mysqli_query($connect,$query_g);
+  if(mysqli_affected_rows($connect)==1)
+  {
+    echo  "<script type='text/javascript'>alert('Duyệt phiếu đề xuất thành công');</script>";
+    echo("<script>location.href = '"."danhsach-phieu-yeu-cau-trangbi.php';</script>");
+
+  }
+}
+if(isset($_POST['hphuy']))
+{
+   $query_g="UPDATE tblhoadon set TrangThai=4,NgayHuyPhieu='$ngaycn' WHERE MaHD='$MaHD'";
+  $result_g=mysqli_query($connect,$query_g);
+  if(mysqli_affected_rows($connect)==1)
+  {
+    echo  "<script type='text/javascript'>alert('Không duyệt phiếu đề xuất thành công');</script>";
+    echo("<script>location.href = '"."danhsach-phieu-yeu-cau-trangbi.php';</script>");
+
+  }
 }
 ?>
 
@@ -239,47 +323,9 @@ if(isset($_POST['luuhocphi']))
               <label for="">Tên đề xuất</label>
               <input class="form-control edit" type="text" name="TDX" value="<?php echo $TDX; ?>" disabled="">
             </div> -->
-            <div class="form-group col-lg-6">
-              <label for="">Mã môn học</label>
-              <select class="form-control edit" name="MonHoc" id="" disabled="">
-               <?php $queryK="SELECT * FROM monhoc";
-               $resultK=mysqli_query($connect,$queryK);
-               while ($item=mysqli_fetch_array($resultK,MYSQLI_ASSOC)) {
-                ?>
-                <option
-                <?php if($MonHoc==$item['MaMon'])
-                echo 'selected="selected"';
-                ?>
-                value="<?php echo $item['MaMon'] ?>"><?php echo $item['MaMon'] ?> - <?php echo $item['TenMon'] ?></option>
-                <?php
-              }
-              ?>
-            </select>
-
-          </div>
-
-          <div class="form-group  col-lg-6">
-            <?php 
-            $sqlK = "SELECT HeSoK FROM monhoc WHERE MaMon='$MonHoc'";
-            $queryK = mysqli_query($connect, $sqlK);
-            $rowK = mysqli_fetch_assoc($queryK);
-            ?>
-            <label for="">Hệ số K</label>
-            <input class="form-control edit overflow" type="text" name="HeSoK" value="<?php echo $rowK['HeSoK']; ?>" disabled="">
-          </select>
-
-        </div>
-        <div class="form-group  col-lg-6">
-          <label for="">Tên lớp</label>
-          <input class="form-control edit overflow" type="text" name="NhomLop" value="<?php echo $NhomLop; ?>" disabled="">
-        </div>
-        <div class="form-group  col-lg-6">
-          <label for="">Số lượng SV</label>
-          <input class="form-control edit" type="text" name="SLSV" value="<?php echo $SLSV; ?>" disabled="">
-        </div>
-        <div class="form-group  col-lg-6">
+            <div class="form-group  col-lg-6">
           <label for="">Đơn vị yêu cầu</label>
-          <select class="form-control edit" name="khoa" id="" disabled="">
+          <select class="form-control " name="khoa" id="" disabled="">
             <?php $query="SELECT * FROM tblkhoa";
             $result=mysqli_query($connect,$query);
             while ($item1=mysqli_fetch_array($result,MYSQLI_ASSOC)) {
@@ -294,10 +340,63 @@ if(isset($_POST['luuhocphi']))
             ?>
           </select>
         </div>
+            <div class="form-group col-lg-6">
+                <label for="">Mã môn học</label>
+              <label for="" style="margin-left: 180px;">Hệ số K</label>
+              <div style="display: flex;">
+                <?php if (count(explode(',', $MonHoc)) > 1){ ?>
+                  <input class="form-control  overflow" type="text" name="MonHoc" value="<?php echo $MonHoc; ?>" disabled="">
+                <?php } else { ?>
+                  <select class="form-control edit" name="MonHoc" id="" disabled="">
+                   <?php $queryK="SELECT * FROM monhoc";
+                   $resultK=mysqli_query($connect,$queryK);
+                   while ($item=mysqli_fetch_array($resultK,MYSQLI_ASSOC)) {
+                    ?>
+                    <option
+                    <?php if($MonHoc==$item['MaMon'])
+                    echo 'selected="selected"';
+                    ?>
+                    value="<?php echo $item['MaMon'] ?>"><?php echo $item['MaMon'] ?> - <?php echo $item['TenMon'] ?></option>
+                    <?php
+                  }
+                  ?>
+                </select>
+              <?php } ?>
+              <?php 
+              $sqlK = "SELECT HeSoK FROM monhoc WHERE MaMon='$MonHoc'";
+              $queryK = mysqli_query($connect, $sqlK);
+              $rowK = mysqli_fetch_assoc($queryK);
+              ?>
+              <input class="form-control  overflow" type="text" name="HeSoK" value="<?php echo $rowK['HeSoK']; ?>" disabled="">
+            </div>
+      </div>
+        <div class="form-group  col-lg-6">
+          <label for="">Tên lớp</label>
+           <label for="" style="margin-left: 210px;">Số lượng sinh viên</label>
+            <div style="display: flex;">
+          <input class="form-control edit overflow" type="text" name="NhomLop" value="<?php echo $NhomLop; ?>" disabled="">
+          <input class="form-control edit" type="text" name="SLSV" value="<?php echo $SLSV; ?>" disabled="">
+           </div>
+        </div>
+        
         <div class="form-group  col-lg-6" >
-          <label for="">Học kỳ</label>
-           <label for="" style="margin-left: 220px;">Năm học</label>
+          <label for="">Năm học</label>
+           <label for="" style="margin-left: 200px;">Học kỳ</label>
           <div style="display: flex;">
+           <select class="form-control edit" name="NamHoc" id="" disabled="">
+            <?php $query="SELECT * FROM namhoc ORDER BY id DESC LIMIT 0,1";
+            $result=mysqli_query($connect,$query);
+            while ($item1=mysqli_fetch_array($result,MYSQLI_ASSOC)) {
+              ?>
+              <option
+              <?php if($NamHoc==$item1['id'])
+              echo 'selected="selected"';
+              ?>
+              value="<?php echo $item1['id'] ?>"><?php echo $item1['NamHoc'] ?></option>
+              <?php
+            }
+            ?>
+          </select>
           <select class="form-control edit" name="HocKy" id="" disabled="">
             <?php $query="SELECT * FROM tblhocky";
             $result=mysqli_query($connect,$query);
@@ -313,24 +412,10 @@ if(isset($_POST['luuhocphi']))
             ?>
           </select>
           
-           <select class="form-control edit" name="NamHoc" id="" disabled="">
-            <?php $query="SELECT * FROM namhoc ORDER BY id DESC LIMIT 0,1";
-            $result=mysqli_query($connect,$query);
-            while ($item1=mysqli_fetch_array($result,MYSQLI_ASSOC)) {
-              ?>
-              <option
-              <?php if($NamHoc==$item1['id'])
-              echo 'selected="selected"';
-              ?>
-              value="<?php echo $item1['id'] ?>"><?php echo $item1['NamHoc'] ?></option>
-              <?php
-            }
-            ?>
-          </select>
           </div>
         </div>
          <div class="form-group  col-lg-6">
-          <label for="">Ghi chú</label>
+          <label for="">Lý do</label>
           <input class="form-control edit overflow" type="text" name="GhiChu" value="<?php echo $GhiChu; ?>" disabled="">
         </div>
 
@@ -353,27 +438,43 @@ if(isset($_POST['luuhocphi']))
         
       <?php }  ?>
       <div class="form-group  col-lg-6 edit">
-        <label for="">Tình trạng</label>
+        <label for="">Trạng thái</label>
         <br>
 
         <?php
         if($TrangThai==0){?>
-          <span class="badge badge-pill badge-primary">Chờ báo giá </span>
+          <span style="background-color: #ba60c9;width: auto;height: auto"  class="badge badge-pill badge-primary">Chờ báo giá </span>
         <?php }if($TrangThai==1) { ?>
-          <span class="badge badge-pill badge-warning">Chờ duyệt</span>
-        <?php } if($TrangThai==2) {?>
-          <span class="badge badge-pill badge-success">Đã duyệt</span>
-
+          <span style="background-color: #cd9513;width: auto;height: auto" class="badge badge-pill badge-warning">Chờ lãnh đạo phòng quản trị duyệt</span>
+           <?php } if($TrangThai==2) {?>
+          <span style="width: auto;height: auto"  class="badge badge-pill badge-success">Chờ ban giám hiệu duyệt</span>
+        <?php } if($TrangThai==3) {?>
+          <span  style="width: auto;height: auto"  class="badge badge-pill badge-success">Đã duyệt</span>
         <?php  }if($TrangThai==4) {?>
-          <span style="width: 150px" class="badge badge-pill badge-danger">Phiếu không được duyệt</span>
-        <?php  }if($TrangThai==5) {?>
-          <span style="width: 150px" class="badge badge-pill badge-info">Chờ thêm vật tư</span>
+          <span style="width: auto;height: auto" class="badge badge-pill badge-dark">Phiếu không được duyệt</span>
+        <?php  }if($TrangThai==5) {if(isset($_SESSION['YCTBVT'])){?>
+          <span  style="background-color: #7ec960;width: auto;height: auto"class="badge badge-pill badge-info">Chờ thêm vật tư</span>
           <label for="">Sửa thông tin đề xuất</label>
           <input type="checkbox" id="checkedit" name="edit">
           <button  style="background-color: #217346" type="submit" name="edit" id="show" class="hidden">Sửa</button>
-        <?php  }if($TrangThai==6) {?>
-          <span style="width: 150px" class="badge badge-pill badge-dark">Chờ tổng hợp</span>
- 
+
+        <?php  }}if($TrangThai==6) {if($_SESSION['QLK']){?>
+          <span style="background-color: #b0afab;width: auto;height: auto"class="badge badge-pill badge-dark">Chờ nhân viên quản lý kho duyệt</span>
+            <label for="">Sửa thông tin đề xuất</label>
+          <input type="checkbox" id="checkedit" name="edit">
+          <button  style="background-color: #217346" type="submit" name="edit" id="show" class="hidden">Sửa</button>
+        <?php  }}if($TrangThai==7 ||$TrangThai==9) {?>
+          <span style="width: auto;height: auto"class="badge badge-pill badge-danger">Không duyệt phiếu</span>
+          <?php  }if($TrangThai==8) {if($_SESSION['DP_LDDV']) {?>
+          <span style="width: auto;height: auto;background-color: #98979669" class="badge badge-pill badge-dark">Chờ lãnh đạo đơn vị duyệt</span>
+            <label for="">Sửa thông tin đề xuất</label>
+          <input type="checkbox" id="checkedit" name="edit">
+          <button  style="background-color: #217346" type="submit" name="edit" id="show" class="hidden">Sửa</button>
+          <?php  }}if($TrangThai==10) {?>
+          <span style="background-color: #b7ab8a;width: auto;height: auto" class="badge badge-pill badge-dark">Chờ tổng hợp</span>
+          <div style="float:right;">
+           
+          </div>
         <?php } ?>
 
 
@@ -400,13 +501,22 @@ $tmp = $rowK['HeSoK'] -1;
    $tien2 = $TongTien / $SLSV ;
   //echo number_format($tien2);
 
-    $tien3 = ( $tien2 / $tien1 ) * 100;
-    echo "Tỷ lệ phần trăm sau khi tính với hệ số K: ";
-    
-    
- ?>
-   <label <?php if ($tien3 > 60){ ?> style="color:red" <?php } ?>class="form-control-label"><?php echo number_format($tien3). '%'?></label>
- <?php } ?>
+if ($tien1 > 0)
+{
+  $tien3 = ( $tien2 / $tien1 ) * 100;
+  echo "Tỷ lệ phần trăm sau khi tính với hệ số K: ";
+} 
+else 
+{
+  echo "<script>alert('Vui lòng nhập học phí > 0')</script>";
+}
+  if (isset($tien3))
+{
+
+  ?>
+  <label <?php if ($tien3 > 100){ ?> style="color:red" <?php } ?>class="form-control-label"><?php echo number_format($tien3). '%'?></label>
+<?php } }?>
+
   <div class="table-responsive" >
     <?php if($TrangThai==0) { ?>
       <div>
@@ -434,9 +544,9 @@ $tmp = $rowK['HeSoK'] -1;
                   <button id="collapse" class="panel-collapse collapse" type="submit" name="import">Nhập excel</button>
                 </div>
               </form>
-              <?php if($SL >0) {?>
+              <?php if($SL >0)   { if(isset($_SESSION['YCTBVT'])) {?>
                 <input style="float:right;"  type="button" id="savedl" onclick="window.location.href='cap-nhat-table-import.php?MaHD=<?php echo $MaHD ?>'" value="Chỉnh sửa chi tiết"/>
-              <?php } ?>
+              <?php }} ?>
               <button data-toggle="collapse" href="#collapse1" class="collapsed"  style="background-color: #217346" type="submit">Thêm chi tiết</button>
               <?php if($SL >0) {?>
                <a href="export-chi-tiet-phieu-yeu-cau-trang-bi.php?id=<?php echo $_GET['MaHD'] ?>"><button  type="submit" class="callback"  name="import">Xuất excel</button> </a>
@@ -451,26 +561,67 @@ $tmp = $rowK['HeSoK'] -1;
               <?php } ?>
             </div>
           </div>
-        <?php }  elseif($TrangThai==1) {?>
-          <div id="row" >
-            <?php if(isset($_SESSION["DPYCTB"])) {?>
-              <div class="submit" style="float: right;margin-right: 1px">
-                <?php if($HPCB <=0) {?>
-                <input data-toggle="modal" data-target="#myModalduyet" type="button"  value="Nhập đơn giá chuẩn"/>
-                <?php } else  {?>
-                   <input type="button"  onclick="window.location.href='duyet-phieu-yeu-cau-trangbi.php?MaHD=<?php echo $MaHD ?>'"  value="Duyệt phiếu"/>
-                 <?php } ?>
-                <input type="button" style="background-color: #ff0000d6;float: right;" data-toggle="modal" data-target="#myModal" value="Không duyệt phiếu"/>
-              </div>
-            <?php } ?>
-          </div>
-     <?php }elseif($TrangThai==2) {?>
-          <div id="row" >
-            
-            <a href="http://localhost:8888/Report/public/report?id=<?php echo $MaHD ?>"><button  type="submit" class="callback"  name="import">Report</button> </a>
-          </div>
-        <?php }else echo ""; ?>
+ 
+        <?php }elseif($TrangThai==7) {?>
+          <div>
+              <form name='import' method="POST" enctype="multipart/form-data">
+                <div class="submit" style="float: left;margin-right: 1px">
+                  <button  style="background-color: #217346" type="submit" name="file" name="import"class="addfiles"><i class="ti-upload"></i> Import</button>
+                  <input data-toggle="collapse" href="#collapse" class="collapsed" id="file-upload" type="file" name="file" multiple style='display: none;'>
+                  <button id="collapse" class="panel-collapse collapse" type="submit" name="import">Nhập excel</button>
+                </div>
+              </form>
+              <?php if($SL >0) {?>
+                <input style="float:right;"  type="button" id="savedl" onclick="window.location.href='cap-nhat-table-import.php?MaHD=<?php echo $MaHD ?>'" value="Chỉnh sửa chi tiết"/>
+              <?php } ?>
+              <button data-toggle="collapse" href="#collapse1" class="collapsed"  style="background-color: #217346" type="submit">Thêm chi tiết</button>
+              <?php if($SL >0) {?>
+               <a href="export-chi-tiet-phieu-yeu-cau-trang-bi.php?id=<?php echo $_GET['MaHD'] ?>"><button  type="submit" class="callback"  name="import">Xuất excel</button> </a>
+             <?php } ?>
+             <!--  <input type="button" style="background-color: #ff0000d6;float: right;" onclick="window.location.href='huy-phieu-yeu-cau-trangbi.php?MaHD=<?php echo $MaHD ?>'" value="Hủy đơn"/> -->
+             <div>
+              <a onclick="return confirm('Bạn có muốn xóa')" href="xoa-phieu-yeu-cau-trangbi.php?MaHD=<?php echo $MaHD ?>"><input  type="button" style="background-color: #ff0000d6;float: right;"  value="Hủy"/></a>
+               <?php if($SL >0) {?>
+                <form action="" method="post">
+                  <button  style="float: right;" type="submit" name="guiphieu"  >Gửi phiếu</button>
+                </form>
+              <?php } ?>
+        <?php }elseif($TrangThai==6) {  if (isset($_SESSION["QLK"])) {?>
+            <form action="" method="post">
+              <button   type="reset" name="qlkhuyt"  >Không duyệt phiếu</button>
+            <button  style="float: right;" type="submit" name="qlkduyet"  >Duyệt phiếu</button>
+              <input style="float:right;"  type="button" id="savedl" onclick="window.location.href='cap-nhat-table-import.php?MaHD=<?php echo $MaHD ?>'" value="Chỉnh sửa chi tiết"/>
+              </form>
+             <button data-toggle="collapse" href="#collapse1" class="collapsed"  style="background-color: #217346" type="submit">Thêm chi tiết</button>
 
+          <?php }} elseif($TrangThai==8) {  if (isset($_SESSION["DP_LDDV"])) {?>
+            <form action="" method="post">
+                <button   type="reset" name="qldvhuy"  >Không duyệt phiếu</button>
+            <button  style="float: right;" type="submit" name="qldvduyet"  >Duyệt phiếu</button>
+              </form>
+              <button data-toggle="collapse" href="#collapse1" class="collapsed"  style="background-color: #217346" type="submit">Thêm chi tiết</button>
+
+          <?php }} elseif($TrangThai==1) {  if (isset($_SESSION["DP_LDPQT"])) {?>
+            <form action="" method="post">
+              <button   type="reset" name="hphuy"  >Không duyệt phiếu</button>
+            <button  style="float: right;" type="submit" name="ldpqtduyet"  >Duyệt phiếu</button>
+              </form>
+           <?php }} elseif($TrangThai==2) {  if (isset($_SESSION["DP_BGH"])) {?>
+            <form action="" method="post">
+               <button   type="reset" name="hphuy"  >Không duyệt phiếu</button>
+            <button  style="float: right;" type="submit" name="hpduyet"  >Duyệt phiếu</button>
+              </form>
+          <?php }} elseif($TrangThai==3) { ?>
+            <div id="row" >
+       <a href="http://localhost:8888/Report/public/report?id=<?php echo $MaHD ?>"><button  type="submit" class="callback"  name="import">Report</button> </a>
+          </div>
+         <?php } elseif($TrangThai==10)  {if(isset($_SESSION['DP_NVPQT'])) { ?>
+            <div id="row" >
+     <input type="button" id="savedl" onclick="window.location.href='cap-nhat-chi-tiet-phieu-ycvt.php?MaHD=<?php echo $MaHD ?>'" value="Báo giá [<?php echo $SL; ?>]"/>
+          </div>
+         <?php }} ?>
+
+          
         <div  class="content mt-3 " style="padding: 0;">
           <div class="animated fadeIn">
             <div class="row">
@@ -493,7 +644,9 @@ $tmp = $rowK['HeSoK'] -1;
                       <div class="wrapper">
 
                         <div  style="display: flex;">
-
+                          <div style="width: 90%;" id="lbform" class="form-control-label">
+                            <label  class="form-control-label">Mã vật tư</label>
+                          </div>
                           <div style="width: 90%;" id="lbform" class="form-control-label">
                             <label  class="form-control-label">Tên vật tư</label>
                           </div>
@@ -502,6 +655,9 @@ $tmp = $rowK['HeSoK'] -1;
                           </div>
                           <div style="width: 90%;" id="lbform" class="form-control-label">
                             <label class="form-control-label">Số lượng</label>
+                          </div>
+                            <div style="width: 90%;"id="lbform" class="form-control-label">
+                            <label class="form-control-label">Đơn Giá gợi ý</label>
                           </div>
                           <div style="width: 90%;"id="lbform" class="form-control-label">
                             <label class="form-control-label">Thông số kỹ thuật</label>
@@ -519,13 +675,19 @@ $tmp = $rowK['HeSoK'] -1;
                         </div>
                         <div  style="display: flex;">
                           <div style="width: 110%"class="form-group">
-                            <input type="text" name="tenvt[]" value="" placeholder="Nhập vào tên vật tư"class="form-control" required>
+                            <input type="text" name="mavt[]" value="" placeholder="Nhập vào mã vật tư"class="form-control" >
+                          </div>
+                          <div style="width: 110%"class="form-group">
+                            <input type="text" name="tenvt[]" value="" placeholder="Nhập vào tên vật tư"class="form-control" >
                           </div>
                           <div style="width: 110%"class="form-group">
                             <input type="text" value="" name="dvtinh[]" placeholder="Đơn vị tính"class="form-control" required>
                           </div>
                           <div style="width: 110%"class="form-group">
                             <input type="number" value="" name="sl[]" placeholder="Số lượng "class="form-control" required>
+                          </div>
+                          <div style="width: 110%"class="form-group">
+                            <input type="number" value="" name="goiydg[]" placeholder="Gợi ý đơn giá "class="form-control" >
                           </div>
                           <div style="width: 110%"class="form-group">
                             <input type="text" value="" name="thongso[]" placeholder="Thông số kỹ thuật"class="form-control" >
@@ -570,7 +732,7 @@ $tmp = $rowK['HeSoK'] -1;
               <div class="modal-body modal-body-sub_agile">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>  
                 <div class="card-body card-block">
-                  <h3 style="text-align: center;" class="agileinfo_sign">Không duyệt phiếu yêu cầu trang bị</h3>
+                  <h3 style="text-align: center;" class="agileinfo_sign">Không duyệt phiếu</h3>
                   <p style="width: 50px;"></p>
                   <form action="" method="post"  >
                     <div class=" form-group">
@@ -583,12 +745,10 @@ $tmp = $rowK['HeSoK'] -1;
             </div>
           </div>
         </div>
-        <div class="modal fade" id="myModalduyet" tabindex="-1" role="dialog">
-          <div class="modal-dialog">
-            <div class="modal-content" style="width: 600px;">
-              <div class="modal-body modal-body-sub_agile">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>  
-                <div class="card-body card-block">
+        <?php 
+        if ($TrangThai==1 && isset($rowK["HeSoK"])) {
+         ?>
+         <div class="card-body card-block">
                   <h3 style="text-align: center;" class="agileinfo_sign">Đơn giá chuẩn</h3>
                   <p style="width: 50px;"></p>
                   <form action="" method="post"  >
@@ -598,6 +758,13 @@ $tmp = $rowK['HeSoK'] -1;
                     <button class="btn btn-outline-danger" style="float:right;"type="submit" name="luuhocphi">Lưu</button>
                   </form>
                 </div>
+              <?php } ?>
+        <div class="modal fade" id="myModalduyet" tabindex="-1" role="dialog">
+          <div class="modal-dialog">
+            <div class="modal-content" style="width: 600px;">
+              <div class="modal-body modal-body-sub_agile">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>  
+               
               </div>
             </div>
           </div>
@@ -608,26 +775,38 @@ $tmp = $rowK['HeSoK'] -1;
           <table class="table table-bordered table-striped" style="">
             <thead>
               <th>STT</th>
-              <th width="">Tên Vật tư</th>
+               <th width="">Mã vật tư</th>
+              <th width="">Tên vật tư</th>
               <th width="">Đơn vị tính</th>
               <th width="">Số lượng</th>
-              <th width="">Đơn giá</th>
-              <th width="">Thành tiền</th>
+              <?php if(isset($_SESSION['YCTBVT']) || isset($_SESSION['QLK']) || isset($_SESSION['DP_LDDV']) || isset($_SESSION['DP_NVPQT'])) { ?>
+              <th width="">Gợi ý đơn giá</th>
+            <?php } ?>
+             <th width="">Đơn giá</th>
+            <th width="">Thành tiền</th>
+                 <th width="">Thông số KT</th>
+              <th width="">Xuất xứ</th>
               <th width="">Ghi chú</th>
             </thead>
             <?php $query="SELECT * FROM tblphieuyeucautrangbi WHERE MaHD='$MaHD'";
             $result=mysqli_query($connect,$query);
             while ($row=mysqli_fetch_array($result,MYSQLI_ASSOC)) {
-
               ?>
               <tbody>
 
                 <td><?php echo $i++; ?></td>
+                <td><?php echo $row['MaVatTu'] ?></td>
                 <td><?php echo $row['TenVatTu'] ?></td>
                 <td><?php echo $row['DVT'] ?></td>
                 <td><?php echo $row['SL'] ?></td>
-                <td><?php echo number_format($row['DonGia']) ?> VNĐ</td>
-                <td><?php echo number_format($row['DonGia']*$row['SL']) ?> VNĐ</td>
+              <?php if(isset($_SESSION['YCTBVT']) || isset($_SESSION['QLK']) || isset($_SESSION['DP_LDDV']) || isset($_SESSION['DP_NVPQT'])) { ?>
+               <td><?php echo number_format($row['GoiYDG']) ?> VNĐ</td>
+                  <?php }if(isset($_SESSION['DP_NVPQT']) || isset($_SESSION['DP_LDPQT']) || isset($_SESSION['DP_BGH'])){ ?>
+                  <td><?php echo number_format($row['DonGia']) ?> VNĐ</td> 
+              <td><?php echo number_format($row['ThanhTien']) ?> VNĐ</td> 
+            <?php } ?>
+                  <td><?php echo $row['ThongSoKT'] ?></td>
+                <td><?php echo $row['XuatXu'] ?></td>
                 <td><?php echo $row['GhiChu'] ?></td>
                 
               </tbody>
@@ -676,7 +855,7 @@ $(add_button).click(function(e){
 if(x < max_fields){
   x++;
   var selectPattern = $('#catalog-pattern').clone().html();
-  $(wrapper).append('<div> <div  style="display: flex;"> <div style="width: 110%"class="form-group"><input type="text" name="tenvt[]" value="" placeholder="Nhập vào tên vật tư"class="form-control" required> </div> <div style="width: 110%"class="form-group"> <input type="text" value="" name="dvtinh[]" placeholder="Đơn vị tính"class="form-control" required> </div>  <div style="width: 110%"class="form-group"> <input type="number" value="" name="sl[]" placeholder="Số lượng "class="form-control" required> </div> <div style="width: 110%"class="form-group"> <input type="text" value="" name="thongso[]" placeholder="Thông số kỹ thuật"class="form-control" >  </div> <div style="width: 110%"class="form-group">  <input type="text" value="" name="xuatxu[]" placeholder="Xuất xứ"class="form-control" > </div> <div style="width: 110%"class="form-group"> <input type="text" value="" name="ghichu[]" placeholder="Ghi chú"class="form-control" >  </div>  <a href="javascript:void(0);" class="remove_field"><div class="input-group-addon"><i class="fa fa-minus-square"></i></div></a></div></div>');
+  $(wrapper).append('<div> <div  style="display: flex;"> <div style="width: 110%"class="form-group"><input type="text" name="mavt[]" value="" placeholder="Nhập vào mã vật tư"class="form-control" > </div><div style="width: 110%"class="form-group"><input type="text" name="tenvt[]" value="" placeholder="Nhập vào tên vật tư"class="form-control" > </div> <div style="width: 110%"class="form-group"> <input type="text" value="" name="dvtinh[]" placeholder="Đơn vị tính"class="form-control" required> </div>  <div style="width: 110%"class="form-group"> <input type="number" value="" name="sl[]" placeholder="Số lượng "class="form-control" required> </div><div style="width: 110%"class="form-group"><input type="text" name="goiydg[]" value="" placeholder="Gợi ý đơn giá"class="form-control" > </div> <div style="width: 110%"class="form-group"> <input type="text" value="" name="thongso[]" placeholder="Thông số kỹ thuật"class="form-control" >  </div> <div style="width: 110%"class="form-group">  <input type="text" value="" name="xuatxu[]" placeholder="Xuất xứ"class="form-control" > </div> <div style="width: 110%"class="form-group"> <input type="text" value="" name="ghichu[]" placeholder="Ghi chú"class="form-control" >  </div>  <a href="javascript:void(0);" class="remove_field"><div class="input-group-addon"><i class="fa fa-minus-square"></i></div></a></div></div>');
 }
 });
 //when user click on remove button
@@ -691,4 +870,19 @@ x--;
   function goBack() {
     window.history.back();
   }
+   console.log('0:báo giá');
+  console.log('1:Chờ lãnh đạo phòng quản trị duyệt');
+     console.log('2:Chờ ban giám hiệu duyệt');
+     console.log('3:đã duyệt');
+     console.log('4:không duyệt phiếu');
+  console.log('5:chờ thêm vật tư');
+  console.log('6:chờ nhân viên quản lý kho duyệt');
+  console.log('7:không duyệt phiếu trả về giảng viên');
+  console.log('8:chờ lãnh đạo đơn vị duyệt');
+    console.log('9:không duyệt phiếu trả về nhân viên qlk');
+  // console.log('10:chờ nhân viên phòng quản trị duyệt');
+  console.log('10:chờ tổng hợp');
+ console.log('11: đã tổng hợp');
+  console.log('12: đã nhập kho');
+
 </script>

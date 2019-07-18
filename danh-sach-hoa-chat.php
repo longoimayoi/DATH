@@ -46,8 +46,10 @@
       ?>
       <form method = "post">
         <div align="left">
+          <button type="submit"><a style="color:white" href="them-hoa-chat.php">Thêm vật tư</a></button>
           <button type="submit" name="update" id="update">Cập nhật dữ liệu</button>
           <button style="background-color: #ff0000d6"type="submit" name="delete" id="delete">Xóa dữ liệu</button>
+
         </div>
         
       </form>
@@ -113,6 +115,14 @@
                <input type="file" name="hinh"  >
             </div>
 
+          </div>
+          <div class="row form-group">
+            <div class="col col-md-3"><label class=" form-control-label">Thông số kỹ thuật:</label></div>
+            <div class="col-12 col-md-9"><input type="text"  value="<?php echo $row['ThongSoKT']; ?>"name="ThongSoKT"class="form-control"></div>
+          </div>
+          <div class="row form-group">
+            <div class="col col-md-3"><label class=" form-control-label">Xuất xứ:</label></div>
+            <div class="col-12 col-md-9"><input type="text"  value="<?php echo $row['XuatXu']; ?>"name="XuatXu"class="form-control"></div>
           </div>
           <div class="row form-group">
             <div class="col col-md-3"><label class=" form-control-label">Ngày mở nắp:</label></div>

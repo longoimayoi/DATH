@@ -90,7 +90,7 @@ $qh=explode(',', $a);
         <div class="card" >
           <div class="card-header">
             <strong>CHI TIẾT TÀI KHOẢN <label for=""><?php echo $item['TenDangNhap'] ?></label></strong>
-            <button  style="float: left;background: transparent;color: #ff0000d6;border: 1.65px solid;width: 60px;" type="reset" onclick="goBack()"> <span style="margin-left: -8px"class="ti-arrow-left"></span></button>
+            <button  style="float: left;background: transparent;color: #ff0000d6;border: 1.65px solid;width: 60px;" type="reset" onclick="window.location.href='danh-sach-tai-khoan.php'"> <span style="margin-left: -8px"class="ti-arrow-left"></span></button>
             
           </div >
 <!--                 <?php if(isset($message)){ ?>

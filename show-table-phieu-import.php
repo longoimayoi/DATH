@@ -24,6 +24,7 @@
           <table class="table table-bordered table-striped">
             <thead>
               <th>STT</th>
+              <th width="">Mã Vật tư</th>
               <th width="20%">Tên Vật tư</th>
               <th width="10%">Đơn vị tính</th>
               <th width="10%">Số lượng</th>
@@ -38,6 +39,7 @@
             <tbody>
              
                <td><?php echo $i++; ?></td>
+               <td><?php echo $row['MaVatTu'] ?></td>
                 <td><?php echo $row['TenVatTu'] ?></td>
                 <td><?php echo $row['DVT'] ?></td>
                 <td><?php echo $row['SL'] ?></td>

@@ -1,18 +1,98 @@
 <?php include 'header.php'; ?>
 <body>
     <?php include 'leftpanel.php' ; ?>
+     <?php
+       $idKhoa = $_GET['id'];
+  if(isset($_POST['import']))
+  {
+  $data=array();
+  if($_FILES['file']['tmp_name'])
+  {
+  $dom = DOMDocument::load($_FILES['file']['tmp_name']);
+  $rows = $dom->getElementsByTagName('Row');
+  $first_row = true;
+  foreach ($rows as $row)
+  {
+  if(!$first_row)
+  {
+  $index = 1;
+  $cells = $row->getElementsByTagName('Cell');
+  foreach ($cells as $cell)
+  {
+  $ind = $cell->getAttribute('Index');
+  if($ind != null) $index = $ind;
+  if($index == 1)
+  $mamh = $cell->nodeValue;
+  if($index == 2)
+  $tenmh = $cell->nodeValue;
+  if($index == 3)
+  $hsk = $cell->nodeValue;
+  if($index == 4)
+  $stc = $cell->nodeValue;
+   $index++;
+  }
+   date_default_timezone_set('Asia/Ho_Chi_Minh');
+  $data[]=array(
+  'MaMon' =>$mamh,
+  'TenMon' =>$tenmh,
+  'HeSoK'  =>$hsk,
+  'SoTinChi'  =>$stc,
+  );
+  }
+  $first_row = false;
+  }
+  }
+  if($data)
+  {
+  $dem_tt=0;
+  foreach ($data as $row)
+  {
+  if($dem_tt>0)
+  {
+  // date_default_timezone_set('Asia/Ho_Chi_Minh');
+  // $today=date("Y-m-d H:i:s");
+ 
+  $a1=$row['MaMon'];
+  $a2=$row['TenMon'];
+  $a3=$row['HeSoK'];
+  $a4=$row['SoTinChi'];
+  $query="INSERT INTO monhoc (MaMon,TenMon,HeSoK,SoTinChi,MaKhoa)
+  VALUES('$a1','{$a2}','$a3','$a4','$idKhoa')";
+  $results=mysqli_query($connect,$query);
+  }
+  $dem_tt++;
+  }
+  echo("<script>location.href = '"."mon-hoc.php?id=".$idKhoa."';</script>");
+  }
+  }
+  ?>
+
+
+
+
     <div class="content mt-3">
         <div class="animated fadeIn">
             <div class="row">
-
                 <div class="col-sm-12">
                     <div class="row">
-                    <div style="margin-left:  14px"class="card-body text-secondary"><button style="background:transparent;border: 1.65px solid #007bffeb"type="submit" data-toggle="modal" data-target="#taophieuxuat">   <i style="color: #007bffeb"class="fa fa-plus" aria-hidden="true"></i></button></div>
-                     <div class="card-body text-secondary"><button style="margin-right:  14px;float: right;border: 1.65px solid #007bffeb"type="submit" data-toggle="modal" data-target="#xemthongtin">  Sửa ảnh khoa </button></div>
+                        <div style="margin-left:  14px"class="card-body text-secondary"><button style="background:transparent;border: 1.65px solid #007bffeb"type="submit" data-toggle="modal" data-target="#taophieuxuat">   <i style="color: #007bffeb"class="fa fa-plus" aria-hidden="true"></i></button></div>
+
+                        <div class="card-body text-secondary"><button style="margin-right:  14px;float: right"type="submit" data-toggle="modal" data-target="#xemthongtin">  Sửa ảnh khoa </button></div>
+                       <!--  <div id="row" > -->
+                            <form class="card-body text-secondary" style="margin-right: 10px" name='import' method="POST" enctype="multipart/form-data">
+                            <div class="submit" style="float: right;margin-right: 1px">
+                                <button for="file-upload" style="background-color: #217346" type="submit" name="file" name="import"class="addfiles"><i class="ti-upload"> Chọn</i> </button>
+                                <input id="file-upload" type="file" name="file" multiple style='display: none;'>
+                                <button type="submit" name="import">Nhập excel</button>
+                                  </form>
+                            <!-- </div> -->
+                        
+                    </div>
+                    
+                    
                     
                 </div>
-                </div>
-               
+                
                 
                 <div class="col">
                     <button style="display: none">X</button>
@@ -75,7 +155,7 @@
                                 <td><?php echo $row[3] ?></td>
                                 <td><?php echo $row[4] ?></td>
                                 <td>
-                                    <a title="Xem chi tiết" href="chi-tiet-mon.php?id=<?php echo $row[0] ?>"  class="ti-eye"></a>
+                                    <a title="Xem chi tiết" data-toggle="modal" data-target="#xemchitiet<?php echo $row[0] ?>" href="chi-tiet-mon.php?id=<?php echo $row[0] ?>"  class="ti-eye"></a>
                                 </td>
                             </tr>
                             <?php } ?>
@@ -179,6 +259,66 @@ else
                         <div class="modal-footer">
                             <button type="reset" class="btn btn-default" data-dismiss="modal">Thoát</button>
                             <button type="submit" name = "submit" class="btn btn-primary">Tạo mới</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-----====================================================================================================--->
+<!-----========================================POPUP CHI TIẾT MÔN HỌC==================================--->
+<?php
+include('connect/function.php') ;
+$query="SELECT * FROM monhoc WHERE MaKhoa = '{$idKhoa}' ORDER BY id ";
+$result = mysqli_query($connect, $query);
+$item = mysqli_fetch_assoc($result);
+if(isset($_POST['update']))
+{
+$MaMon = $_POST["mamon"];
+$TenMon = $_POST["tenmon"];
+$HeSoK = $_POST["hesok"];
+$SoTinChi = $_POST["sotinchi"];
+$sql1 = "UPDATE monhoc set  MaMon='$MaMon', TenMon='$TenMon',HeSoK='$HeSoK',SoTinChi='$SoTinChi' WHERE id=".$item['id'];
+$query = mysqli_query($connect,$sql1);
+if(mysqli_affected_rows($connect)==1)
+{
+echo "<script>alert('Sửa môn học thành công')</script>";
+echo"<script>window.location.reload()</script>";
+}
+}
+?>
+<div class="modal fade" id="xemchitiet<?php echo $item['id'] ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" style="max-width: 800px!important;" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <!--   <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
+                <label style="margin: 0 auto">CHỈNH SỬA THÔNG TIN MÔN <?php echo $item['MaMon'] ?></label>
+                <!--    <input type="checkbox" id="checkedit" name="edit">
+                <button  style="background-color: #217346" type="submit" name="edit" id="show" class="hidden">Sửa</button> -->
+            </div>
+            <div class="modal-body" >
+                <form method = "post" >
+                    <div id="checkopenedit">
+                        <div class="row form-group">
+                            <div class="col col-md-3"><label class="form-control-label">Mã môn học:</label></div>
+                            <div class="col-12 col-md-9"><input type="text"  name="mamon" value="<?php echo $item['MaMon'] ?>" class="form-control"></div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-3"><label class=" form-control-label">Tên môn học:</label></div>
+                            <div class="col-12 col-md-9"><input type="text"  name="tenmon" value="<?php echo $item['TenMon'] ?>" class="form-control"></div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-3"><label  class=" form-control-label">Hệ số k:</label></div>
+                            <div class="col-12 col-md-9"><input type="text"  name="hesok" value="<?php echo $item['HeSoK'] ?>" class="form-control"></div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-3"><label  class=" form-control-label">Số tín chỉ:</label></div>
+                            <div class="col-12 col-md-9"><input type="text"  name="sotinchi" value="<?php echo $item['SoTinChi'] ?>" class="form-control"></div>
+                        </div>
+                        <div class="modal-footer">
+                            <!--      <button type="reset" name="delete" data-dismiss="modal">Xóa</button> -->
+                            <button type="submit" name = "update" class="btn btn-primary">Lưu</button>
                         </div>
                     </div>
                 </form>
