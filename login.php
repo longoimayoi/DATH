@@ -133,7 +133,8 @@ exit(header('Location: index.php'));
         }
         ?>
         <div class="sufee-login d-flex align-content-center flex-wrap">
-            <div class="container">
+            <img style="width: 100%; height: 100vh; position: relative;opacity: 0.6"src="images/background.jpg" alt="Background">
+            <div style="position: fixed; top: 25%;left: 50%; width:30em; height:18em;margin-top: -9em;margin-left: -15em;"class="container">
                 <div class="login-content">
                     <div class="login-logo">
                         <a href="index.html">
@@ -144,12 +145,12 @@ exit(header('Location: index.php'));
                         <form method="post" id = "login_form">
                             <div class="form-group">
                                 
-                                <label>Email đăng nhập:</label>
-                                <input type="text" name="Username" class="form-control" placeholder="Nhập vào email">
+                                <label>Tên đăng nhập:</label>
+                                <input type="text" name="Username" class="form-control" placeholder="Nhập tên đăng nhập">
                                 <?php
                                 if(isset($error)&& in_array('Username', $error))
                                 {
-                                echo "<p class='required'>Chưa nhập email</p>";
+                                echo "<p class='required'>Vui lòng nhập tên đăng nhập!</p>";
                                 }
                                 ?>
                             </div>
@@ -159,20 +160,21 @@ exit(header('Location: index.php'));
                                 <?php
                                 if(isset($error)&& in_array('password', $error))
                                 {
-                                echo "<p class='required'>Chưa nhập mật khẩu</p>";
+                                echo "<p class='required'>Vui lòng nhập mật khẩu!</p>";
+
                                 }
                                 ?>
                             </div>
-                            <div class="checkbox">
+<!--                             <div class="checkbox">
                                 <label class="pull-right">
                                     <a href="quenmatkhau.php">Quên mật khẩu?</a>
                                 </label>
-                            </div>
+                            </div> -->
                             <input type="submit" name="submit" class="btn btn-success btn-flat m-b-30 m-t-30" value="đăng nhập" >
-                            <hr>
+                          <!--   <hr>
                             <div class="register-link m-t-15 text-center">
                                 <p>Chưa có tài khoản? <a href="register.php">Đăng ký</a></p>
-                            </div>
+                            </div> -->
                             <?php
                             if(isset($message))
                             {

@@ -1,7 +1,5 @@
 <?php include 'header.php'; ?>
-<?php
-session_start();
-?>
+
 <?php include('connect/myconnect.php');?>
 <body>
     <?php include 'leftpanel.php' ; ?>
@@ -23,7 +21,7 @@ session_start();
     ?>
     <?php
     $id = $_GET['id'];
-    $sql = "Select MaDanhMuc,TenHoaChat,SLT,DVT from tblhoachat where id={$id}";
+    $sql = "Select * from tblhoachat where id={$id}";
     $result = mysqli_query($connect, $sql);
     $row=mysqli_fetch_array($result,MYSQLI_ASSOC);
     ?>
@@ -38,23 +36,23 @@ session_start();
                         <div class="card-body card-block">
                             <form action="" method="post" class="form-horizontal">
                                 <div class="row form-group">
-                                    <div class="col col-sm-5"><label for="input-small" class=" form-control-label">Mã danh mục</label></div>
-                                    <div class="col col-sm-6"><input type="text" id="input-normal" name="input-small" value=" <?php echo $row["MaDanhMuc"]; ?>" disabled='true' class="input-sm form-control-sm form-control"></div>
+                                    <div class="col col-sm-5"><label for="input-normal" class=" form-control-label">Mã vật tư</label></div>
+                                    <div class="col col-sm-6"><input type="text" id="input-normal" name="input-small" value=" <?php echo $row["MaVatTu"]; ?>" disabled='true' class="form-control"></div>
                                 </div>
                                 <div class="row form-group">
-                                    <div class="col col-sm-5"><label for="input-normal" class=" form-control-label">Tên hóa chất</label></div>
+                                    <div class="col col-sm-5"><label for="input-normal" class=" form-control-label">Tên vật tư</label></div>
                                     <div class="col col-sm-6"><input type="text" id="input-normal" name="thc" value="<?php echo $row["TenHoaChat"]; ?>"  class="form-control"></div>
                                 </div>
                                 <div class="row form-group">
-                                    <div class="col col-sm-5"><label for="input-large" class=" form-control-label">Số lượng tồn</label></div>
-                                    <div class="col col-sm-6"><input type="text" id="input-normal" name="slt" value="<?php echo $row["SLT"]; ?>"  class="input-lg form-control-lg form-control"></div>
+                                    <div class="col col-sm-5"><label for="input-normal" class=" form-control-label">Số lượng tồn</label></div>
+                                    <div class="col col-sm-6"><input type="text" id="input-normal" name="slt" value="<?php echo $row["SLT"]; ?>"  class="form-control"></div>
                                 </div>
                                 <div class="row form-group">
-                                    <div class="col col-sm-5"><label for="input-large" class=" form-control-label">Đơn vị tính</label></div>
-                                    <div class="col col-sm-6"><input type="text" id="input-normal" name="dvt" value="<?php echo $row["DVT"]; ?>"  class="input-lg form-control-lg form-control"></div>
+                                    <div class="col col-sm-5"><label for="input-normal" class=" form-control-label">Đơn vị tính</label></div>
+                                    <div class="col col-sm-6"><input type="text" id="input-normal" name="dvt" value="<?php echo $row["DVT"]; ?>"  class="form-control"></div>
                                 </div>
-                                <div class="card-footer">
-                                    <input type="submit" name ="submit" class="btn btn-primary btn-flat m-b-30 m-t-30" value="Lưu thông tin">
+                                <div style="float: right;" class="row">
+                                    <button type="submit" name ="submit" >Lưu thông tin</button>
                                     
                                 </div>
                             </form>

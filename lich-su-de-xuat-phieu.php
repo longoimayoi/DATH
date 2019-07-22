@@ -24,9 +24,8 @@ $i=0;
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <strong class="card-title"><?php if(isset($_SESSION['YCTBVT']) && isset($_SESSION['DPYCTB'])) { echo "DANH SÁCH THEO DÕI & LỊCH SỬ DUYỆT PHIẾU"; }elseif(isset($_SESSION['YCTBVT'])) { echo "LỊCH SỬ ĐỀ XUẤT"; } elseif(isset($_SESSION['DPYCTB'])) { echo "LỊCH SỬ DUYỆT PHIẾU";  } ?></strong>
-
-                    </div>
+                        <strong class="card-title">LỊCH SỬ LẬP PHIẾU</strong>
+                      </div>
                    <!--   <button data-toggle="collapse" href="#collapse1" class="collapsed"  style="background-color: #217346" type="submit">hiển thị</button> -->
                     <div class="card-body" >
                         <table  id="bootstrap-data-table-export"  class="table table-striped table-bordered">
@@ -136,6 +135,10 @@ $i=0;
                                   <?php } if($row['TrangThai']==11) {?>
 
                                   <td style="text-align: center;"><span style="background-color: #6ecf72; width: auto;height: auto" class="badge badge-pill badge-dark">Đã tổng hợp </span></td>
+                                
+                                <?php } if($row['TrangThai']==12) {?>
+
+                                  <td style="text-align: center;"><span style="background-color: #debfe8; width: auto;height: auto" class="badge badge-pill badge-dark">Đã nhập kho</span></td>
                                   <?php } ?>
                             <td>
                                 <a class="ti-eye"href="chitiet-phieu-yeu-cau-trangbi.php?MaHD=<?php echo $row['MaHD'] ?>"></a>

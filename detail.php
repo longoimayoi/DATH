@@ -29,10 +29,10 @@
                             <table id="bootstrap-data-table-export" class="table bordered">
                                 <thead>
                                     <tr>
-                                        <th scope="col">Mã hóa chất</th>
+                                        <th scope="col">Mã vật tư</th>
                                         <!--  <th scope="col">First</th>
                                         <th scope="col">Last</th> -->
-                                        <th scope="col">Tên hóa chất</th>
+                                        <th scope="col">Tên vật tư</th>
                                         <th scope="col">Số lượng tồn</th>
                                         <th scope="col">Đơn vị tính</th>
                                         <th style="width: 30px" scope="colo"></th>
@@ -48,7 +48,7 @@
                                     {
                                     ?>
                                     <tr>
-                                        <td><?php echo $row['id'] ?></td>
+                                        <td><?php echo $row['MaVatTu'] ?></td>
                                         <td><?php echo ($row['TenHoaChat']);?></td>
                                         <td><?php echo ($row['SLT']);?></td>
                                         <td><?php echo ($row['DVT']);?></td>
