@@ -186,7 +186,7 @@ if(isset($_POST['submit']))
                                     <td style="text-align: center;"><span   style="background-color: #7ec960;width: auto;height: auto" class="badge badge-pill badge-info">Chờ thêm vật tư</span></td>
                                   <?php } if($row['TrangThai']==6) {?>
                                     <td style="text-align: center;"><span   style="background-color: #b0afab;width: auto;height: auto" class="badge badge-pill badge-warning">Chờ nhân viên<br> quản lý kho duyệt</span></td>
-                                  <?php } if($row['TrangThai']==7 || $row['TrangThai']==9) {?>
+                                  <?php } if($row['TrangThai']==7 || $row['TrangThai']==9 ||  $row['TrangThai']==4) {?>
                                     <td style="text-align: center;"><span  style="width: auto;height: auto"class="badge badge-pill badge-danger">Không duyệt phiếu</span></td>
                                   <?php } if($row['TrangThai']==8) {?>
                                     <td style="text-align: center;"><span  style="width: auto;height: auto;background-color: #98979669" class="badge badge-pill badge-dark">Chờ lãnh đạo<br> đơn vị duyệt</span></td>

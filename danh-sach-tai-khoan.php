@@ -69,8 +69,16 @@ include('mo-khoa-tai-khoan.php');
                             <select class="form-control" name="searchKhoa" id="searchKhoa" text-align-last: center>
                                 <option  value="0">--Tất cả bộ phận--</option>
                                 <?php
-                                $query_k="SELECT * FROM tblkhoa";
-                                $result_k=mysqli_query($connect,$query_k);
+                                 if (isset($_SESSION["DP_LDDV"]) || isset($_SESSION["YCTBVT"]))
+                                {
+                                	$query_k="SELECT * FROM tblkhoa WHERE MaKhoa = '{$_SESSION['MaKhoa']}'";
+                                	$result_k=mysqli_query($connect,$query_k);
+                                }
+                                else
+                                {
+                                	$query_k="SELECT * FROM tblkhoa";
+                                	$result_k=mysqli_query($connect,$query_k);
+                                }
                                 while ($item_k=mysqli_fetch_array($result_k,MYSQLI_ASSOC)) {
 
 
@@ -100,8 +108,19 @@ include('mo-khoa-tai-khoan.php');
                             </thead>
                             
                             <tbody id="table">
-                                <?php $query="SELECT MaTK,TenDangNhap,HoTen,SDT,TenKhoa,TrangThai  FROM tbltaikhoan tk, tblkhoa k  WHERE tk.MaKhoa=k.MaKhoa ORDER BY MaTK ASC    ";
+
+                                <?php 
+                                  if (isset($_SESSION["DP_LDDV"]) || isset($_SESSION["YCTBVT"]))
+                                {
+                                	$query="SELECT MaTK,TenDangNhap,HoTen,SDT,TenKhoa,TrangThai  FROM tbltaikhoan tk, tblkhoa k  WHERE tk.MaKhoa=k.MaKhoa and tk.MaKhoa = '{$_SESSION['MaKhoa']}' ORDER BY MaTK ASC    ";
                                 $result = mysqli_query($connect, $query);
+                                }
+                                else
+                                {
+                                	$query="SELECT MaTK,TenDangNhap,HoTen,SDT,TenKhoa,TrangThai  FROM tbltaikhoan tk, tblkhoa k  WHERE tk.MaKhoa=k.MaKhoa ORDER BY MaTK ASC    ";
+                                $result = mysqli_query($connect, $query);
+                                }
+                                
                                 $STT=0;
                                 while ($row=mysqli_fetch_array($result,MYSQLI_ASSOC))
                                 {
@@ -210,9 +229,9 @@ include('mo-khoa-tai-khoan.php');
                 </div>
             <?php } }?>
             <div class="modal fade" id="myModala" tabindex="-1" role="dialog">
-                <div class="modal-dialog">
+                <div style="margin: 1em; padding-left: 40vh" class="modal-dialog">
                     <!-- Modal content-->
-                    <div class="modal-content" style="width: 850px;">
+                    <div class="modal-content" style="width: 1000px;">
                         <div class="modal-body modal-body-sub_agile">
                             <button type="button" class="close" data-dismiss="modal">&times;</button>  
                             <div class="card-body card-block">
@@ -226,7 +245,20 @@ include('mo-khoa-tai-khoan.php');
                                     </div>
                                     <div class=" form-group">
                                         <select class="form-control" name="khoa" id="">
-                                            <option  value="1">Khoa</option>
+                                        	<?php  if (!isset($_SESSION["DP_LDDV"]) || !isset($_SESSION["YCTBVT"])){
+                                        		  $query="SELECT * FROM tblkhoa WHERE MaKhoa = '{$_SESSION['MaKhoa']}'";
+                                            $result=mysqli_query($connect,$query);
+                                            while ($item=mysqli_fetch_array($result,MYSQLI_ASSOC)) {
+                                                ?>
+                                                <option  value="<?php echo $item['MaKhoa'] ?>"><?php echo $item['TenKhoa'] ?></option>
+                                                <?php
+                                            }
+                                        }
+                                            else{
+                                        	 ?>
+                                            
+                                            <option  value="0">--Chọn khoa--</option>
+                                        
                                             <?php $query="SELECT * FROM tblkhoa";
                                             $result=mysqli_query($connect,$query);
                                             while ($item=mysqli_fetch_array($result,MYSQLI_ASSOC)) {
@@ -234,6 +266,7 @@ include('mo-khoa-tai-khoan.php');
                                                 <option  value="<?php echo $item['MaKhoa'] ?>"><?php echo $item['TenKhoa'] ?></option>
                                                 <?php
                                             }
+                                        }
                                             ?>
                                         </select>
                                     </div>
@@ -252,8 +285,17 @@ include('mo-khoa-tai-khoan.php');
                             <input type="password" placeholder="Xác nhận mật khẩu" name="confirm"  required=""class="form-control">
                         </div> -->
                         <div class="row">
-                            <?php  $sql = "SELECT * FROM tblquyenhan ORDER BY TenQH";
-                            $query = mysqli_query($connect, $sql);
+                            <?php 
+                            if (isset($_SESSION["DP_LDDV"]) || isset($_SESSION["YCTBVT"]))
+                            {
+                            	$sql = "SELECT * FROM tblquyenhan WHERE TheoDonVi = 1 ORDER BY TenQH ";
+                              $query = mysqli_query($connect, $sql);
+                            }
+                           else
+                           {
+                           	 $sql = "SELECT * FROM tblquyenhan ORDER BY TenQH";
+                              $query = mysqli_query($connect, $sql);
+                           }
                             while ($row = mysqli_fetch_array($query,MYSQLI_ASSOC))
                             {
                                 ?>

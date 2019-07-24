@@ -1,25 +1,14 @@
 <?php
 include 'header.php';
 include('connect/myconnect.php');
-?>
-<?php include ('leftpanel.php') ; ?>
-<?php
-	$servername = "localhost";
-	$database = "dath";
-	$username = "root";
-	$password = "";
-	$conn = mysqli_connect($servername, $username, $password, $database);
-	mysqli_select_db($conn,$database);
-	if(!$conn){
-		die("Connection failed: ". mysqli_connect_error());
-	}
+include ('leftpanel.php') ;
 	if(isset($_POST['submit'])){
 		$oldpass = md5($_POST['mkcu']);
-		$query = mysqli_query($conn, "SELECT MatKhau from tbltaikhoan where MaTK = '{$_SESSION['uid']}' and MatKhau = '$oldpass' ");
+		$query = mysqli_query($connect, "SELECT MatKhau from tbltaikhoan where MaTK = '{$_SESSION['uid']}' and MatKhau = '$oldpass' ");
 		if (mysqli_num_rows($query)==1)
 		{
 			$pwd = md5($_POST['pass']);
-		$result = mysqli_query($conn,"UPDATE tbltaikhoan SET MatKhau='$pwd'");
+		$result = mysqli_query($connect,"UPDATE tbltaikhoan SET MatKhau='$pwd'");
 		if($result){
 echo "<script>alert('Đổi mật khẩu thành công!');</script>";
 }
@@ -29,7 +18,7 @@ else{
 echo "<script>alert('Đổi mật khẩu không thành công do nhập không đúng mật khẩu cũ!');</script>";
 }
 }
-$conn->close();
+$connect->close();
 ?>
 <div class="content mt-3">
 	<div class="animated fadeIn">

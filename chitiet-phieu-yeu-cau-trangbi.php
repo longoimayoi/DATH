@@ -584,7 +584,7 @@ $result_g=mysqli_query($connect,$query_g);
               </form>
               <?php }} elseif($TrangThai==3) { ?>
               <div id="row" >
-                <a href="http://localhost:8888/Report/public/report?id=<?php echo $MaHD ?>"><button type="submit" class="callback"  name="import">Report</button> </a>
+                <a href="http://quanlyvattu.hutech.edu.vn/report/report?id=<?php echo $MaHD ?>"><button type="submit" class="callback"  name="import">Report</button> </a>
               </div>
               <?php } elseif($TrangThai==10)  {if(isset($_SESSION['DP_NVPQT'])) { ?>
               <div id="row" >
