@@ -140,12 +140,12 @@ include('mo-khoa-tai-khoan.php');
                                             <?php }  ?>
                                             <?php if($row['TrangThai']==0) { ?>
                                                 <td>
-                                                    <a href="vo-hieu-hoa-tai-khoan.php?id=<?php echo $row['MaTK'] ?>" data-toggle="modal" data-target="#myModal<?php echo  $i++ ?>">
+                                                    <a href="vo-hieu-hoa-tai-khoan.php?id=<?php echo $row['MaTK'] ?>" data-toggle="modal" data-target="#myModal<?php echo  $row['MaTK'] ?>">
                                                         <span class="ti-lock" aria-hidden="true"></span></a>
                                                     </td>
                                                 <?php } else {  ?>
                                                     <td>
-                                                        <a href="mo-khoa-tai-khoan.php?id=<?php echo $row['MaTK'] ?>" data-toggle="modal" data-target="#myModal<?php echo  $i++ ?>">
+                                                        <a href="mo-khoa-tai-khoan.php?id=<?php echo $row['MaTK'] ?>" data-toggle="modal" data-target="#myModal<?php echo $row['MaTK'] ?>">
                                                             <span class="ti-unlock" aria-hidden="true"></span></a>
                                                         </td>
                                                     <?php } ?>
@@ -179,7 +179,7 @@ include('mo-khoa-tai-khoan.php');
             if($row_1['TrangThai']==1)
             {
                 ?>
-                <div class="modal fade" id="myModal<?php echo $a++ ?>" tabindex="-1" role="dialog">
+                <div class="modal fade" id="myModal<?php echo $row_1['MaTK'] ?>" tabindex="-1" role="dialog">
                     <div class="modal-dialog">
                         <!-- Modal content-->
                         <div class="modal-content">
@@ -203,7 +203,7 @@ include('mo-khoa-tai-khoan.php');
                     </div>
                 </div>
             <?php }else { ?>
-                <div class="modal fade" id="myModal<?php echo $a++ ?>" tabindex="-1" role="dialog">
+                <div class="modal fade" id="myModal<?php echo $row_1['MaTK'] ?>" tabindex="-1" role="dialog">
                     <div class="modal-dialog">
                         <!-- Modal content-->
                         <div class="modal-content">
