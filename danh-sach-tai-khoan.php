@@ -149,7 +149,7 @@ include('mo-khoa-tai-khoan.php');
                                                             <span class="ti-unlock" aria-hidden="true"></span></a>
                                                         </td>
                                                     <?php } ?>
-                                                </td>
+                                                </td> 
                                                 <td>
                                                     <a  href="chitiet-tai-khoan.php?id=<?php echo $row['MaTK'] ?>"  class="ti-eye"></a>
                                                 </td>
@@ -351,9 +351,9 @@ include('mo-khoa-tai-khoan.php');
                                 html += '<td ><span class="badge badge-pill badge-danger">'+'Bị vô hiệu hóa'+'</td>';
                             if(value.TrangThai==1)
                             {
-                                html +='<td><a href="mo-khoa-tai-khoan.php?id='+value.MaTK+'" data-toggle="modal" data-target="#myModal'+value.MaTK+++'"><span class="ti-lock" aria-hidden="true"></span></a></td>';  }
+                                html +='<td><a href="mo-khoa-tai-khoan.php?id='+value.MaTK+'" data-toggle="modal" data-target="#myModal'+value.MaTK+'"><span class="ti-lock" aria-hidden="true"></span></a></td>';  }
                                 else{
-                                    html +='<td><a href="vo-hieu-hoa-tai-khoan.php?id='+value.MaTK+'" data-toggle="modal" data-target="#myModal'+value.MaTK+++'"><span class="ti-unlock" aria-hidden="true"></span></a></td>';   }
+                                    html +='<td><a href="vo-hieu-hoa-tai-khoan.php?id='+value.MaTK+'" data-toggle="modal" data-target="#myModal'+value.MaTK+'"><span class="ti-unlock" aria-hidden="true"></span></a></td>';   }
                                     html += '<td> <a class="ti-eye"   href="chitiet-tai-khoan.php?id='+value.MaTK+'">'+'</a></td>';
                                     html += '<td><a class="ti-trash" href="delete-tai-khoan.php?id='+value.MaTK+'">'+'</a></td>';
                                     html += '</tr>';
