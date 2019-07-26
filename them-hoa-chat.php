@@ -208,9 +208,10 @@ echo("<script>location.href = '"."them-hoa-chat.php';</script>");
 // }
 }
 ?>
-<div class="col-lg-12">
-  <div style="float: right;margin-right: 20px">
-     <a href = "template/file-them-vat-tu.xml" download><button type="submit" name="taiFileMau">Tải file mẫu</button></a>
+<div class="col-lg-12" style="">
+
+  <div style="float: right;margin-right: 20px;display: flex">
+     <a style="float:left;" href = "template/file-them-vat-tu.xml" download><button type="submit" name="taiFileMau">Tải file mẫu</button></a>
     <form class=".col-md-4 .ml-auto"name='import' method="POST" enctype="multipart/form-data">
       <div id="row" >
         <div class="submit" style="float: right;margin-right: 1px">
