@@ -11,7 +11,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="img_bg">
-                        <img src="images/background.jpg">
+                        <img style="height: 87vh; width: 100%"src="images/background.jpg">
                         
                         
                         <!--   <div class="m1 col-sm-3">

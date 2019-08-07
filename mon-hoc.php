@@ -78,7 +78,6 @@
                         <div style="margin-left:  14px"class="card-body text-secondary"><button style="background:transparent;border: 1.65px solid #007bffeb"type="submit" data-toggle="modal" data-target="#taophieuxuat">   <i style="color: #007bffeb"class="fa fa-plus" aria-hidden="true"></i></button></div>
 
                         <div class="card-body text-secondary"><button style="margin-right:  14px;float: right"type="submit" data-toggle="modal" data-target="#xemthongtin">  Sửa ảnh khoa </button></div>
-                          <a href = "template/file-them-mon-hoc.xml" download><button type="submit" name="taiFileMau">Tải file mẫu</button></a>
                        <!--  <div id="row" > -->
                             <form class="card-body text-secondary" style="margin-right: 10px" name='import' method="POST" enctype="multipart/form-data">
                             <div class="submit" style="float: right;margin-right: 1px">
