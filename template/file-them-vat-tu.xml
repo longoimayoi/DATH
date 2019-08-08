@@ -16,8 +16,8 @@
   <AllowPNG/>
  </OfficeDocumentSettings>
  <ExcelWorkbook xmlns="urn:schemas-microsoft-com:office:excel">
-  <WindowHeight>5880</WindowHeight>
-  <WindowWidth>17256</WindowWidth>
+  <WindowHeight>9192</WindowHeight>
+  <WindowWidth>23040</WindowWidth>
   <WindowTopX>0</WindowTopX>
   <WindowTopY>0</WindowTopY>
   <ProtectStructure>False</ProtectStructure>
@@ -43,7 +43,52 @@
   <Style ss:ID="s63">
    <NumberFormat ss:Format="yyyy\-mm\-dd;@"/>
   </Style>
+  <Style ss:ID="s64">
+   <Borders>
+    <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"/>
+    <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"/>
+    <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1"/>
+    <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1"/>
+   </Borders>
+   <Font ss:FontName="Times New Roman" x:Family="Roman" ss:Size="12"
+    ss:Color="#333333" ss:Bold="1"/>
+  </Style>
+  <Style ss:ID="s65">
+   <Borders>
+    <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"/>
+    <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"/>
+    <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1"/>
+    <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1"/>
+   </Borders>
+   <Font ss:FontName="Times New Roman" x:Family="Roman" ss:Size="12"
+    ss:Color="#333333" ss:Bold="1"/>
+   <NumberFormat ss:Format="mm/dd/yy;@"/>
+  </Style>
+  <Style ss:ID="s66">
+   <Borders>
+    <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"/>
+    <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"/>
+    <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1"/>
+    <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1"/>
+   </Borders>
+   <Font ss:FontName="Times New Roman" x:Family="Roman" ss:Size="12"
+    ss:Color="#333333" ss:Bold="1"/>
+   <NumberFormat ss:Format="yyyy\-mm\-dd;@"/>
+  </Style>
   <Style ss:ID="s69" ss:Parent="s62">
+   <Alignment ss:Horizontal="Right" ss:Vertical="Bottom" ss:WrapText="1"/>
+   <Borders>
+    <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"
+     ss:Color="#C0C0C0"/>
+    <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"
+     ss:Color="#C0C0C0"/>
+    <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1"
+     ss:Color="#C0C0C0"/>
+   </Borders>
+   <Font ss:FontName="Calibri" x:Family="Swiss" ss:Size="11" ss:Color="#000000"/>
+   <Interior/>
+  </Style>
+  <Style ss:ID="s70" ss:Parent="s62">
    <Alignment ss:Horizontal="Right" ss:Vertical="Bottom" ss:WrapText="1"/>
    <Borders>
     <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"
@@ -58,20 +103,16 @@
    <Font ss:FontName="Calibri" x:Family="Swiss" ss:Size="11" ss:Color="#000000"/>
    <Interior/>
   </Style>
-  <Style ss:ID="s75" ss:Parent="s62">
-   <Alignment ss:Horizontal="Right" ss:Vertical="Bottom" ss:WrapText="1"/>
+  <Style ss:ID="s71">
    <Borders>
-    <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"
-     ss:Color="#C0C0C0"/>
-    <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"
-     ss:Color="#C0C0C0"/>
-    <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1"
-     ss:Color="#C0C0C0"/>
+    <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"/>
+    <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"/>
+    <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1"/>
    </Borders>
-   <Font ss:FontName="Calibri" x:Family="Swiss" ss:Size="11" ss:Color="#000000"/>
-   <Interior/>
+   <Font ss:FontName="Times New Roman" x:Family="Roman" ss:Size="12"
+    ss:Color="#333333" ss:Bold="1"/>
   </Style>
-  <Style ss:ID="s76">
+  <Style ss:ID="s84">
    <Borders>
     <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"/>
     <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"/>
@@ -81,7 +122,8 @@
    <Font ss:FontName="Times New Roman" x:Family="Roman" ss:Size="12"
     ss:Color="#333333" ss:Bold="1"/>
   </Style>
-  <Style ss:ID="s77">
+  <Style ss:ID="s85" ss:Parent="s62">
+   <Alignment ss:Vertical="Bottom" ss:WrapText="1"/>
    <Borders>
     <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"/>
     <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"/>
@@ -89,29 +131,12 @@
     <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1"/>
    </Borders>
    <Font ss:FontName="Times New Roman" x:Family="Roman" ss:Size="12"
-    ss:Color="#333333" ss:Bold="1"/>
-   <NumberFormat ss:Format="mm/dd/yy;@"/>
-  </Style>
-  <Style ss:ID="s78">
-   <Borders>
-    <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"/>
-    <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"/>
-    <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1"/>
-    <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1"/>
-   </Borders>
-   <Font ss:FontName="Times New Roman" x:Family="Roman" ss:Size="12"
-    ss:Color="#333333" ss:Bold="1"/>
-   <NumberFormat ss:Format="yyyy\-mm\-dd;@"/>
-  </Style>
-  <Style ss:ID="s81" ss:Parent="s62">
-   <Alignment ss:Horizontal="Right" ss:Vertical="Bottom" ss:WrapText="1"/>
-   <Borders/>
-   <Font ss:FontName="Calibri" x:Family="Swiss" ss:Size="11" ss:Color="#000000"/>
+    ss:Color="#000000" ss:Bold="1"/>
    <Interior/>
   </Style>
  </Styles>
  <Worksheet ss:Name="Sheet1">
-  <Table ss:ExpandedColumnCount="11" ss:ExpandedRowCount="4" x:FullColumns="1"
+  <Table ss:ExpandedColumnCount="12" ss:ExpandedRowCount="4" x:FullColumns="1"
    x:FullRows="1" ss:DefaultRowHeight="15">
    <Column ss:Width="57.6"/>
    <Column ss:Width="60.6"/>
@@ -123,27 +148,28 @@
    <Column ss:StyleID="s63" ss:Width="75"/>
    <Column ss:StyleID="s63" ss:Width="77.399999999999991"/>
    <Column ss:Width="132.6"/>
+   <Column ss:AutoFitWidth="0" ss:Width="131.4"/>
+   <Column ss:AutoFitWidth="0" ss:Width="114.6"/>
    <Row ss:AutoFitHeight="0"/>
    <Row ss:AutoFitHeight="0" ss:Height="60">
-    <Cell ss:StyleID="s76"><ss:Data ss:Type="String"
-      xmlns="http://www.w3.org/TR/REC-html40"><B><Font html:Color="#333333">Mã vật tư</Font></B><Font
-       html:Color="#333333"> </Font></ss:Data></Cell>
-    <Cell ss:StyleID="s76"><Data ss:Type="String">Tên vật tư</Data></Cell>
-    <Cell ss:StyleID="s76"><Data ss:Type="String">Đơn vị tính</Data></Cell>
-    <Cell ss:StyleID="s76"><Data ss:Type="String">Số lượng </Data></Cell>
-    <Cell ss:StyleID="s76"><Data ss:Type="String">Vị trí đặt</Data></Cell>
-    <Cell ss:StyleID="s76"><Data ss:Type="String">Chú ý</Data></Cell>
-    <Cell ss:StyleID="s76"><Data ss:Type="String">Điều kiện bảo quản</Data></Cell>
-    <Cell ss:StyleID="s77"><Data ss:Type="String">Hạn sử dụng</Data></Cell>
-    <Cell ss:StyleID="s78"><Data ss:Type="String">Ngày mở nắp</Data></Cell>
-    <Cell ss:StyleID="s76"><Data ss:Type="String">Hạn sử dụng sau mở nắp</Data></Cell>
-    <Cell ss:StyleID="s81"/>
+    <Cell ss:StyleID="s64"><Data ss:Type="String">Mã vật tư </Data></Cell>
+    <Cell ss:StyleID="s64"><Data ss:Type="String">Tên vật tư</Data></Cell>
+    <Cell ss:StyleID="s64"><Data ss:Type="String">Đơn vị tính</Data></Cell>
+    <Cell ss:StyleID="s64"><Data ss:Type="String">Số lượng </Data></Cell>
+    <Cell ss:StyleID="s64"><Data ss:Type="String">Vị trí đặt</Data></Cell>
+    <Cell ss:StyleID="s64"><Data ss:Type="String">Chú ý</Data></Cell>
+    <Cell ss:StyleID="s64"><Data ss:Type="String">Điều kiện bảo quản</Data></Cell>
+    <Cell ss:StyleID="s65"><Data ss:Type="String">Hạn sử dụng</Data></Cell>
+    <Cell ss:StyleID="s66"><Data ss:Type="String">Ngày mở nắp</Data></Cell>
+    <Cell ss:StyleID="s71"><Data ss:Type="String">Hạn sử dụng sau mở nắp</Data></Cell>
+    <Cell ss:StyleID="s85"><Data ss:Type="String">Thông số kỹ thuật</Data></Cell>
+    <Cell ss:StyleID="s84"><Data ss:Type="String">Xuất xứ</Data></Cell>
    </Row>
-   <Row ss:Height="14.4">
-    <Cell ss:Index="11" ss:StyleID="s75"/>
-   </Row>
-   <Row ss:Height="14.4">
+   <Row ss:AutoFitHeight="0" ss:Height="14.55">
     <Cell ss:Index="11" ss:StyleID="s69"/>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="14.55">
+    <Cell ss:Index="11" ss:StyleID="s70"/>
    </Row>
   </Table>
   <WorksheetOptions xmlns="urn:schemas-microsoft-com:office:excel">
@@ -163,8 +189,8 @@
    <Panes>
     <Pane>
      <Number>3</Number>
-     <ActiveRow>3</ActiveRow>
-     <ActiveCol>7</ActiveCol>
+     <ActiveRow>6</ActiveRow>
+     <ActiveCol>11</ActiveCol>
     </Pane>
    </Panes>
    <ProtectObjects>False</ProtectObjects>
