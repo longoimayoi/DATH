@@ -23,39 +23,38 @@ if(isset($_POST['import']))
     {
       if(!$first_row)
       {
-        $index = 1;
+        $index = 2;
         $cells = $row->getElementsByTagName('Cell');
         foreach ($cells as $cell)
         {
           $ind = $cell->getAttribute('Index');
           if($ind != null) $index = $ind;
-          if($index == 1)
-            $mavt = $cell->nodeValue;
           if($index == 2)
-            $tenhc = $cell->nodeValue;
+            $mavt = $cell->nodeValue;
           if($index == 3)
-            $dvt = $cell->nodeValue;
+            $tenhc = $cell->nodeValue;
           if($index == 4)
-            $slt = $cell->nodeValue;
+            $dvt = $cell->nodeValue;
           if($index == 5)
-            $vitri = $cell->nodeValue;
+            $slt = $cell->nodeValue;
           if($index == 6)
-            $chuy = $cell->nodeValue;
+            $vitri = $cell->nodeValue;
           if($index == 7)
-            $dkbq = $cell->nodeValue;
+            $chuy = $cell->nodeValue;
           if($index == 8)
-            $ngayhethan = $cell->nodeValue;
+            $dkbq = $cell->nodeValue;
           if($index == 9)
-            $ngaymonap = $cell->nodeValue;
+            $ngayhethan = $cell->nodeValue;
           if($index == 10)
-            $songayhethan = $cell->nodeValue;
+            $ngaymonap = $cell->nodeValue;
           if($index == 11)
-            $thongso = $cell->nodeValue;
+            $songayhethan = $cell->nodeValue;
           if($index == 12)
+            $thongso = $cell->nodeValue;
+          if($index == 13)
             $xuatxu = $cell->nodeValue;
           $index++;
         }
-       
         $data[]=array(
           'MaVatTu' =>$mavt,
           'TenHoaChat' =>$tenhc,
@@ -76,13 +75,17 @@ if(isset($_POST['import']))
   }
   if($data)
   {
+//               echo "<pre>";
+//       print_r($data);
+// echo "</pre>";
     $dem_tt=1;
     foreach ($data as $row)
     {
       if($dem_tt>1)
       {
-// date_default_timezone_set('Asia/Ho_Chi_Minh');
-// $today=date("Y-m-d H:i:s");
+date_default_timezone_set('Asia/Ho_Chi_Minh');
+$today=date("Y-m-d H:i:s");
+
         $a1=$row['MaVatTu'];
         $a2=$row['TenHoaChat'];
         $a3=$row['DVT'];
@@ -96,7 +99,7 @@ if(isset($_POST['import']))
         $a11=$row['ThongSoKT'];
         $a12=$row['XuatXu'];
         $query="INSERT INTO tblhoachat(MaVatTu,TenHoaChat,DVT,SLT,ViTriDat,ChuY,DieuKienBaoQuan,NgayHetHan,NgayMoNap,SoNgayHetHanSMN,ThongSoKT,XuatXu,TrangThai)
-        VALUES('{$a1}','{$a2}','$a3',$a4,'$a5','$a6','$a7','$a8','$a9',$a10,'$a11','$a12',1)";
+        VALUES('{$a1}','{$a2}','$a3','{$a4}','$a5','$a6','$a7','$a8','$a9','{$a10}','$a11','$a12',1)";
         $results=mysqli_query($connect,$query)or die("Query {$query} \n <br> MySql erros:".mysqli_errno($connect));
          
           }
@@ -114,6 +117,7 @@ if(isset($_POST['import']))
          
   }
 }
+
 ?>
 <?php
 if(isset($_POST['submit']))
