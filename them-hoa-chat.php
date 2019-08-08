@@ -98,7 +98,11 @@ if(isset($_POST['import']))
         $query="INSERT INTO tblhoachat(MaVatTu,TenHoaChat,DVT,SLT,ViTriDat,ChuY,DieuKienBaoQuan,NgayHetHan,NgayMoNap,SoNgayHetHanSMN,ThongSoKT,XuatXu,TrangThai)
         VALUES('{$a1}','{$a2}','$a3',$a4,'$a5','$a6','$a7','$a8','$a9','$a10','$a11','$a12',1)";
         $results=mysqli_query($connect,$query)or die("Query {$query} \n <br> MySql erros:".mysqli_errno($connect));
-         if(mysqli_affected_rows($connect)==1)
+         
+            }
+            $dem_tt++;
+          }
+          if(mysqli_affected_rows($connect)==1)
         {
           echo  "<script type='text/javascript'>alert('import hóa chất thành công');</script>";
           echo("<script>location.href = '"."danh-sach-hoa-chat.php';</script>");
@@ -107,10 +111,7 @@ if(isset($_POST['import']))
         {
           echo "<script>alert('ERROR')</script>";
         }
-            }
-            $dem_tt++;
-          }
-          echo("<script>location.href = '"."danh-sach-hoa-chat.php';</script>");
+         
   }
 }
 ?>
