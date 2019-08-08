@@ -10,6 +10,7 @@ include('connect/function.php');
 <?php
 include 'leftpanel.php' ;?>
 <?php
+ date_default_timezone_set('Asia/Ho_Chi_Minh');
 if(isset($_POST['import']))
 {
   $data=array();
@@ -54,7 +55,7 @@ if(isset($_POST['import']))
             $xuatxu = $cell->nodeValue;
           $index++;
         }
-        date_default_timezone_set('Asia/Ho_Chi_Minh');
+       
         $data[]=array(
           'MaVatTu' =>$mavt,
           'TenHoaChat' =>$tenhc,
@@ -82,7 +83,6 @@ if(isset($_POST['import']))
       {
 // date_default_timezone_set('Asia/Ho_Chi_Minh');
 // $today=date("Y-m-d H:i:s");
-        $trangthai=2;
         $a1=$row['MaVatTu'];
         $a2=$row['TenHoaChat'];
         $a3=$row['DVT'];
@@ -99,7 +99,7 @@ if(isset($_POST['import']))
         VALUES('{$a1}','{$a2}','$a3',$a4,'$a5','$a6','$a7','$a8','$a9','$a10','$a11','$a12',1)";
         $results=mysqli_query($connect,$query)or die("Query {$query} \n <br> MySql erros:".mysqli_errno($connect));
          
-            }
+          }
             $dem_tt++;
           }
           if(mysqli_affected_rows($connect)==1)
