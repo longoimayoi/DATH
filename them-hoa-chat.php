@@ -22,35 +22,35 @@ if(isset($_POST['import']))
     {
       if(!$first_row)
       {
-        $index = 1;
+        $index = 2;
         $cells = $row->getElementsByTagName('Cell');
         foreach ($cells as $cell)
         {
           $ind = $cell->getAttribute('Index');
           if($ind != null) $index = $ind;
-          if($index == 1)
-            $mavt = $cell->nodeValue;
           if($index == 2)
-            $tenhc = $cell->nodeValue;
+            $mavt = $cell->nodeValue;
           if($index == 3)
-            $dvt = $cell->nodeValue;
+            $tenhc = $cell->nodeValue;
           if($index == 4)
-            $slt = $cell->nodeValue;
+            $dvt = $cell->nodeValue;
           if($index == 5)
-            $vitri = $cell->nodeValue;
+            $slt = $cell->nodeValue;
           if($index == 6)
-            $chuy = $cell->nodeValue;
+            $vitri = $cell->nodeValue;
           if($index == 7)
-            $dkbq = $cell->nodeValue;
+            $chuy = $cell->nodeValue;
           if($index == 8)
-            $ngayhethan = $cell->nodeValue;
+            $dkbq = $cell->nodeValue;
           if($index == 9)
-            $ngaymonap = $cell->nodeValue;
+            $ngayhethan = $cell->nodeValue;
           if($index == 10)
-            $songayhethan = $cell->nodeValue;
+            $ngaymonap = $cell->nodeValue;
           if($index == 11)
-            $thongso = $cell->nodeValue;
+            $songayhethan = $cell->nodeValue;
           if($index == 12)
+            $thongso = $cell->nodeValue;
+          if($index == 13)
             $xuatxu = $cell->nodeValue;
           $index++;
         }
