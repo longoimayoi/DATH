@@ -100,7 +100,7 @@ $today=date("Y-m-d H:i:s");
         $a12=$row['XuatXu'];
         $trangthai=1;
         $query="INSERT INTO tblhoachat(MaVatTu,TenHoaChat,DVT,SLT,ViTriDat,ChuY,DieuKienBaoQuan,NgayHetHan,NgayMoNap,SoNgayHetHanSMN,ThongSoKT,XuatXu,TrangThai)
-        VALUES('$a1','$a2','$a3',$a4,'$a5','$a6','$a7','$a8','$a9',$a10,'$a11','$a12',$trangthai)";
+        VALUES('{$a1}','{$a2}','{$a3}','{$a4}','{$a5}','{$a6}','{$a7}','{$a8}','{$a9}','{$a10}','{$a11}','{$a12}',$trangthai)";
         $results=mysqli_query($connect,$query)or die("Query {$query} \n <br> MySql erros:".mysqli_errno($connect));
          
           }
